@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pg_project_chatter_signal_list" model="ir.ui.view">
+        <field name="name">pg.project.chatter.signal.list</field>
+        <field name="model">pg.project.chatter.signal</field>
+        <field name="arch" type="xml">
+            <list create="0" delete="0" edit="0">
+                <field name="occurred_at"/>
+                <field name="project_id" optional="show"/>
+                <field name="task_id" optional="show"/>
+                <field name="signal_type"/>
+                <field name="signal_state"/>
+                <field name="visibility"/>
+                <field name="confidence"/>
+                <field name="summary"/>
+                <field name="author_id" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pg_project_chatter_signal_form" model="ir.ui.view">
+        <field name="name">pg.project.chatter.signal.form</field>
+        <field name="model">pg.project.chatter.signal</field>
+        <field name="arch" type="xml">
+            <form create="0" delete="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="project_id" readonly="1"/>
+                            <field name="task_id" readonly="1"/>
+                            <field name="signal_type" readonly="1"/>
+                            <field name="signal_state" readonly="1"/>
+                            <field name="visibility" readonly="1"/>
+                            <field name="confidence" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="author_id" readonly="1"/>
+                            <field name="occurred_at" readonly="1"/>
+                            <field name="engine" readonly="1"/>
+                            <field name="message_id" readonly="1"/>
+                            <field name="source_model" readonly="1"/>
+                            <field name="source_record_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="summary" readonly="1"/>
+                        <field name="evidence_excerpt" readonly="1"/>
+                        <field name="validation_feedback" readonly="1"/>
+                        <field name="content_hash" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pg_project_chatter_signal_search" model="ir.ui.view">
+        <field name="name">pg.project.chatter.signal.search</field>
+        <field name="model">pg.project.chatter.signal</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="summary"/>
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="signal_type"/>
+                <field name="signal_state"/>
+                <filter name="filter_validated" string="Validated" domain="[('signal_state', '=', 'validated')]"/>
+                <filter name="filter_candidate" string="Candidate" domain="[('signal_state', '=', 'candidate')]"/>
+                <filter name="filter_stale" string="Stale" domain="[('signal_state', '=', 'stale')]"/>
+                <group>
+                    <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                    <filter name="group_task" string="Task" context="{'group_by': 'task_id'}"/>
+                    <filter name="group_type" string="Signal Type" context="{'group_by': 'signal_type'}"/>
+                    <filter name="group_state" string="Signal State" context="{'group_by': 'signal_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pg_project_chatter_signal" model="ir.actions.act_window">
+        <field name="name">PG Chatter Signals</field>
+        <field name="res_model">pg.project.chatter.signal</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_pg_project_chatter_signal_search"/>
+    </record>
+</odoo>

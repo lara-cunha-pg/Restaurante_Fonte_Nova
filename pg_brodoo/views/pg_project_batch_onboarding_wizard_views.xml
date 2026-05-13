@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_pg_project_batch_onboarding_wizard_form" model="ir.ui.view">
+        <field name="name">pg.project.batch.onboarding.wizard.form</field>
+        <field name="model">pg.project.batch.onboarding.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Onboarding em Batch — Mirror Inicial">
+                <sheet>
+
+                    <!-- Passo 1: Confirmação -->
+                    <group invisible="state != 'confirm'">
+                        <div class="alert alert-info mb-3" role="alert">
+                            <strong><field name="eligible_count" readonly="1" nolabel="1"/> projeto(s)</strong>
+                            serão sincronizados via Mirror Total para os repositórios GitHub configurados.
+                            <span invisible="ineligible_count == 0">
+                                <field name="ineligible_count" readonly="1" nolabel="1"/> projeto(s) sem repositório ou branch serão ignorados.
+                            </span>
+                        </div>
+                        <div invisible="eligible_count != 0" class="alert alert-warning" role="alert">
+                            Nenhum projeto selecionado tem repositório e branch configurados.
+                            Configure os campos <strong>Repositório</strong> e <strong>Branch</strong> nos projetos antes de continuar.
+                        </div>
+                    </group>
+
+                    <group string="Projetos Elegíveis" invisible="state != 'confirm' or eligible_count == 0">
+                        <field name="eligible_project_ids" nolabel="1" readonly="1">
+                            <list string="Elegíveis">
+                                <field name="name" string="Projeto"/>
+                                <field name="pg_repository_id" string="Repositório"/>
+                                <field name="pg_repo_branch" string="Branch"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <group string="Projetos Ignorados" invisible="state != 'confirm' or ineligible_count == 0">
+                        <field name="ineligible_project_ids" nolabel="1" readonly="1">
+                            <list string="Ignorados">
+                                <field name="name" string="Projeto"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <!-- Passo 2: Resultado -->
+                    <group invisible="state != 'done'">
+                        <div class="row text-center mb-3">
+                            <div class="col-4">
+                                <span class="fw-bold text-success fs-4"><field name="success_count" readonly="1" nolabel="1"/></span>
+                                <div class="text-muted small">Sucesso</div>
+                            </div>
+                            <div class="col-4">
+                                <span class="fw-bold text-danger fs-4"><field name="error_count" readonly="1" nolabel="1"/></span>
+                                <div class="text-muted small">Erro(s)</div>
+                            </div>
+                            <div class="col-4">
+                                <span class="fw-bold text-muted fs-4"><field name="skipped_count" readonly="1" nolabel="1"/></span>
+                                <div class="text-muted small">Ignorado(s)</div>
+                            </div>
+                        </div>
+                    </group>
+
+                    <group string="Detalhe por Projeto" invisible="state != 'done'">
+                        <field name="result_line_ids" nolabel="1" readonly="1">
+                            <list string="Resultados" decoration-success="status == 'success'" decoration-danger="status == 'error'" decoration-muted="status == 'skipped'">
+                                <field name="project_id" string="Projeto"/>
+                                <field name="status" string="Estado"/>
+                                <field name="message" string="Mensagem"/>
+                            </list>
+                        </field>
+                    </group>
+
+                </sheet>
+                <footer>
+                    <button string="Iniciar Sync" name="action_run_batch_onboarding" type="object"
+                            class="btn-primary" invisible="state != 'confirm' or eligible_count == 0"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"
+                            invisible="state != 'confirm'"/>
+                    <button string="Fechar" class="btn-primary" special="cancel"
+                            invisible="state != 'done'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_server_pg_project_batch_onboarding" model="ir.actions.server">
+        <field name="name">Onboarding em Batch</field>
+        <field name="model_id" ref="project.model_project_project"/>
+        <field name="binding_model_id" ref="project.model_project_project"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = {
+    'type': 'ir.actions.act_window',
+    'name': 'Onboarding em Batch — Mirror Inicial',
+    'res_model': 'pg.project.batch.onboarding.wizard',
+    'view_mode': 'form',
+    'target': 'new',
+    'context': dict(env.context, default_project_ids=records.ids),
+}</field>
+    </record>
+
+</odoo>

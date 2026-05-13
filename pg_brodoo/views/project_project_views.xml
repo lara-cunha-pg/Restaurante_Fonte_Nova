@@ -1,0 +1,784 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_project_form_pg_scope_sync" model="ir.ui.view">
+        <field name="name">project.project.form.pg.scope.sync</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_open_pg_onboarding"
+                    type="object"
+                    string="Onboarding"
+                    class="btn-primary"
+                    icon="fa-rocket"
+                    groups="project.group_project_user"
+                    invisible="not id"
+                />
+                <button
+                    name="action_sync_project_mirror_now"
+                    type="object"
+                    string="Sincronizar Agora"
+                    class="btn-secondary"
+                    icon="fa-refresh"
+                    groups="project.group_project_user"
+                    invisible="not id or not pg_repository_id or not pg_repo_branch"
+                />
+                <button
+                    name="action_migrate_legacy_project_mirror"
+                    type="object"
+                    string="Migrar Legacy"
+                    class="btn-secondary"
+                    icon="fa-random"
+                    groups="project.group_project_user"
+                    invisible="not id or not pg_mirror_migration_needed"
+                />
+                <button
+                    name="action_rebuild_project_context"
+                    type="object"
+                    string="Regerar Contexto"
+                    class="btn-secondary"
+                    icon="fa-file-text-o"
+                    groups="project.group_project_user"
+                    invisible="not id or not pg_repository_id or not pg_repo_branch"
+                />
+                <button
+                    name="action_generate_scope_enrichment_drafts"
+                    type="object"
+                    string="Rever Scope"
+                    class="btn-secondary"
+                    icon="fa-magic"
+                    groups="project.group_project_user"
+                    invisible="1"
+                />
+                <button
+                    name="action_apply_scope_enrichment_drafts"
+                    type="object"
+                    string="Aplicar Sugestões de Âmbito"
+                    class="btn-secondary"
+                    icon="fa-clone"
+                    groups="project.group_project_user"
+                    invisible="1"
+                />
+                <button
+                    name="action_generate_status_draft"
+                    type="object"
+                    string="Rever Estado"
+                    class="btn-secondary"
+                    icon="fa-magic"
+                    groups="project.group_project_user"
+                    invisible="1"
+                />
+                <button
+                    name="action_publish_scope_to_repository"
+                    type="object"
+                    string="Publicar Âmbito"
+                    class="btn-primary"
+                    icon="fa-upload"
+                    groups="project.group_project_user"
+                    invisible="1"
+                />
+                <button
+                    name="action_publish_status_to_repository"
+                    type="object"
+                    string="Publicar Estado"
+                    class="btn-secondary"
+                    icon="fa-upload"
+                    groups="project.group_project_user"
+                    invisible="1"
+                />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="pg_scope_sync" string="Brodoo">
+                    <notebook>
+                        <page string="Espelho do Projeto">
+                            <group string="Percurso Principal">
+                                <group>
+                                    <field name="pg_repository_id" options="{'no_create': True}"/>
+                                    <field name="pg_repo_branch"/>
+                                    <field name="pg_onboarding_last_applied_at" readonly="1"/>
+                                    <field name="pg_onboarding_last_status" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_mirror_sync_last_status" readonly="1"/>
+                                    <field name="pg_mirror_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_mirror_sync_run_count" readonly="1"/>
+                                    <field name="pg_scope_sync_mode" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Ações Principais" col="4">
+                                <button
+                                    name="action_open_pg_onboarding"
+                                    type="object"
+                                    string="Abrir Onboarding"
+                                    class="btn-primary"
+                                    icon="fa-rocket"
+                                    groups="project.group_project_user"
+                                    invisible="not id"
+                                />
+                                <button
+                                    name="action_sync_project_mirror_now"
+                                    type="object"
+                                    string="Sincronizar Agora"
+                                    class="btn-secondary"
+                                    icon="fa-refresh"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_repository_id or not pg_repo_branch"
+                                />
+                                <button
+                                    name="action_migrate_legacy_project_mirror"
+                                    type="object"
+                                    string="Migrar Legacy"
+                                    class="btn-secondary"
+                                    icon="fa-random"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_mirror_migration_needed"
+                                />
+                                <button
+                                    name="action_rebuild_project_context"
+                                    type="object"
+                                    string="Regerar Contexto"
+                                    class="btn-secondary"
+                                    icon="fa-file-text-o"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_repository_id or not pg_repo_branch"
+                                />
+                                <button
+                                    name="action_view_mirror_sync_runs"
+                                    type="object"
+                                    string="Ver Runs do Espelho"
+                                    class="btn-secondary"
+                                    icon="fa-list"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_mirror_sync_run_count"
+                                />
+                            </group>
+
+                            <group string="Estado do Espelho">
+                                <group>
+                                    <field name="pg_mirror_sync_quality_review_status" readonly="1"/>
+                                    <field name="pg_mirror_sync_quality_blocking_count" readonly="1"/>
+                                    <field name="pg_mirror_sync_quality_warning_count" readonly="1"/>
+                                    <field name="pg_mirror_included_scope_count" readonly="1"/>
+                                    <field name="pg_mirror_scope_backlog_count" readonly="1"/>
+                                    <field name="pg_mirror_scope_backlog_reason_summary" readonly="1"/>
+                                    <field name="pg_mirror_excluded_noise_count" readonly="1"/>
+                                    <field name="pg_mirror_excluded_noise_reason_summary" readonly="1"/>
+                                    <field name="pg_mirror_sync_last_message" readonly="1" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_mirror_scope_signal_feedback" readonly="1" nolabel="1"/>
+                                    <field name="pg_mirror_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                    <field name="pg_mirror_scope_backlog_feedback" readonly="1" nolabel="1"/>
+                                    <field name="pg_mirror_excluded_noise_feedback" readonly="1" nolabel="1"/>
+                                    <field name="pg_onboarding_last_message" readonly="1" nolabel="1"/>
+                                    <field name="pg_mirror_migration_last_message" readonly="1" nolabel="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Elegibilidade Operacional">
+                                <group>
+                                    <field name="pg_mirror_operational_eligibility_status" readonly="1"/>
+                                    <field name="pg_mirror_operational_eligibility_warning_count" readonly="1"/>
+                                    <field name="pg_mirror_operational_eligibility_not_eligible_count" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_mirror_operational_eligibility_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Migração e Piloto">
+                                <group>
+                                    <field name="pg_mirror_migration_needed" readonly="1"/>
+                                    <field name="pg_mirror_migration_last_at" readonly="1"/>
+                                    <field name="pg_mirror_migration_last_status" readonly="1"/>
+                                </group>
+                                <group>
+                                    <div class="text-muted">
+                                        Use Migrar Legacy para bootstrapar projetos antigos para o novo espelho
+                                        antes da validação em produção.
+                                    </div>
+                                </group>
+                            </group>
+
+                            <group string="Contexto Base do Projeto">
+                                <group>
+                                    <field name="pg_repository_summary"/>
+                                    <field name="pg_business_goal"/>
+                                    <field name="pg_current_request"/>
+                                    <field name="pg_project_phase"/>
+                                </group>
+                                <group>
+                                    <field name="pg_onboarding_scope_included_text"/>
+                                    <field name="pg_onboarding_scope_excluded_text"/>
+                                    <field name="pg_onboarding_deliverables_text"/>
+                                    <field name="pg_onboarding_stakeholders_text"/>
+                                </group>
+                            </group>
+
+                            <separator string="Fluxos Legados"/>
+                            <div class="text-muted">
+                                As tabs seguintes mantem os fluxos antigos de revisao, publicacao e diagnostico.
+                                O percurso principal desta V1 passa por Onboarding, Sincronizar Agora e Regerar Contexto.
+                            </div>
+                        </page>
+                        <page string="Visao Geral">
+                            <group string="Estado do Projeto">
+                                <group>
+                                    <field name="pg_client_unit"/>
+                                    <field name="pg_repository_summary"/>
+                                    <field name="pg_project_phase"/>
+                                    <field name="pg_odoo_version"/>
+                                    <field name="pg_odoo_edition"/>
+                                    <field name="pg_odoo_environment"/>
+                                    <field name="pg_urgency"/>
+                                </group>
+                                <group>
+                                    <field name="pg_standard_allowed"/>
+                                    <field name="pg_additional_modules_allowed"/>
+                                    <field name="pg_studio_allowed"/>
+                                    <field name="pg_custom_allowed"/>
+                                    <field name="pg_additional_contract_restrictions"/>
+                                </group>
+                            </group>
+
+                            <group string="Âmbito Atual">
+                                <field name="pg_business_goal"/>
+                                <field name="pg_current_request"/>
+                                <field name="pg_current_process"/>
+                                <field name="pg_problem_or_need"/>
+                                <field name="pg_business_impact"/>
+                                <field name="pg_trigger"/>
+                                <field name="pg_frequency"/>
+                                <field name="pg_volumes"/>
+                            </group>
+
+                            <group string="Estado Operacional">
+                                <group>
+                                    <field name="pg_status_last_update_at" readonly="1"/>
+                                    <field name="pg_status_owner_id"/>
+                                    <field name="pg_status_go_live_target"/>
+                                    <field name="pg_status_summary"/>
+                                </group>
+                                <group>
+                                    <field name="pg_status_milestones_text"/>
+                                    <field name="pg_status_blockers_text"/>
+                                    <field name="pg_status_risks_text"/>
+                                    <field name="pg_status_next_steps_text"/>
+                                    <field name="pg_status_pending_decisions_text"/>
+                                </group>
+                            </group>
+
+                            <group string="Riscos Oficiais">
+                                <field name="pg_risk_ids" context="{'default_project_id': id}">
+                                    <list editable="bottom">
+                                        <field name="sequence"/>
+                                        <field name="active"/>
+                                        <field name="name"/>
+                                        <field name="severity"/>
+                                        <field name="state"/>
+                                        <field name="owner_id"/>
+                                        <field name="last_review_at"/>
+                                        <field name="description"/>
+                                        <field name="mitigation"/>
+                                        <field name="source_reference"/>
+                                    </list>
+                                </field>
+                            </group>
+
+                            <group string="Entregaveis Oficiais" invisible="not allow_milestones">
+                                <field name="milestone_ids" context="{'default_project_id': id}">
+                                    <list editable="bottom">
+                                        <field name="sequence"/>
+                                        <field name="active"/>
+                                        <field name="name"/>
+                                        <field name="deadline"/>
+                                        <field name="pg_delivery_state"/>
+                                        <field name="pg_acceptance_state"/>
+                                        <field name="pg_delivery_owner_id"/>
+                                        <field name="reached_date" readonly="1"/>
+                                        <field name="pg_delivery_source_reference"/>
+                                    </list>
+                                </field>
+                            </group>
+
+                            <group string="Plano Oficial" invisible="not allow_milestones">
+                                <field name="pg_project_plan_milestone_ids" context="{'default_project_id': id}">
+                                    <list editable="bottom">
+                                        <field name="sequence"/>
+                                        <field name="active"/>
+                                        <field name="name"/>
+                                        <field name="pg_plan_start_date"/>
+                                        <field name="deadline"/>
+                                        <field name="pg_plan_status"/>
+                                        <field name="pg_plan_owner_id"/>
+                                        <field name="pg_plan_dependency_refs"/>
+                                    </list>
+                                </field>
+                            </group>
+
+                            <group string="Budget Oficial">
+                                <group>
+                                    <field name="pg_budget_currency_id" options="{'no_create': True}"/>
+                                    <field name="pg_budget_owner_id"/>
+                                    <field name="pg_budget_baseline_status"/>
+                                    <field name="pg_budget_materiality_threshold"/>
+                                </group>
+                                <group>
+                                    <field name="pg_budget_line_ids" context="{'default_project_id': id}">
+                                        <list editable="bottom">
+                                            <field name="sequence"/>
+                                            <field name="active"/>
+                                            <field name="category"/>
+                                            <field name="planned_amount"/>
+                                            <field name="approved_amount"/>
+                                            <field name="consumed_amount"/>
+                                            <field name="status"/>
+                                            <field name="owner_id"/>
+                                            <field name="source_reference"/>
+                                            <field name="notes"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Revisão (Legacy)">
+                            <group string="Ações de Revisão" col="4">
+                                <button
+                                    name="action_generate_scope_enrichment_drafts"
+                                    type="object"
+                                    string="Gerar Draft de Âmbito"
+                                    class="btn-secondary"
+                                    icon="fa-magic"
+                                    groups="project.group_project_user"
+                                    invisible="not id"
+                                />
+                                <button
+                                    name="action_apply_scope_enrichment_drafts"
+                                    type="object"
+                                    string="Aplicar Sugestões de Âmbito"
+                                    class="btn-secondary"
+                                    icon="fa-clone"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_scope_enrichment_pending_count or pg_scope_enrichment_pending_count == pg_scope_enrichment_needs_review_count"
+                                />
+                                <button
+                                    name="action_view_scope_enrichment_tasks"
+                                    type="object"
+                                    string="Ver Drafts de Âmbito"
+                                    class="btn-secondary"
+                                    icon="fa-list"
+                                    groups="project.group_project_user"
+                                    invisible="not id"
+                                />
+                                <button
+                                    name="action_generate_status_draft"
+                                    type="object"
+                                    string="Gerar Draft de Estado"
+                                    class="btn-secondary"
+                                    icon="fa-magic"
+                                    groups="project.group_project_user"
+                                    invisible="not id"
+                                />
+                                <button
+                                    name="action_apply_status_draft"
+                                    type="object"
+                                    string="Aplicar Draft ao Estado"
+                                    class="btn-secondary"
+                                    icon="fa-clone"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_status_draft_generated_at"
+                                />
+                                <button
+                                    name="action_refresh_chatter_signals"
+                                    type="object"
+                                    string="Atualizar Sinais do Chatter"
+                                    class="btn-secondary"
+                                    icon="fa-comments"
+                                    groups="project.group_project_user"
+                                    invisible="not id"
+                                />
+                                <button
+                                    name="action_view_chatter_signals"
+                                    type="object"
+                                    string="Ver Sinais do Chatter"
+                                    class="btn-secondary"
+                                    icon="fa-list-ul"
+                                    groups="project.group_project_user"
+                                    invisible="not id"
+                                />
+                            </group>
+
+                            <field name="pg_status_sync_review_feedback" readonly="1" nolabel="1"/>
+
+                            <group string="Brownfield em Revisao">
+                                <group>
+                                    <field name="pg_scope_enrichment_last_run_at" readonly="1"/>
+                                    <field name="pg_scope_enrichment_last_run_by_id" readonly="1"/>
+                                    <field name="pg_scope_enrichment_pending_count" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_scope_enrichment_needs_review_count" readonly="1"/>
+                                    <field name="pg_scope_enrichment_applied_count" readonly="1"/>
+                                    <field name="pg_scope_enrichment_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Draft de Estado" invisible="not pg_status_draft_generated_at">
+                                <group>
+                                    <field name="pg_status_draft_generated_at" readonly="1"/>
+                                    <field name="pg_status_draft_generated_by_id" readonly="1"/>
+                                    <field name="pg_status_draft_source" readonly="1"/>
+                                    <field name="pg_status_draft_confidence" readonly="1"/>
+                                    <field name="pg_status_draft_feedback" readonly="1" nolabel="1"/>
+                                    <field name="pg_status_draft_quality_rationale" readonly="1"/>
+                                    <field name="pg_status_draft_summary" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_status_draft_milestones_text" readonly="1"/>
+                                    <field name="pg_status_draft_blockers_text" readonly="1"/>
+                                    <field name="pg_status_draft_risks_text" readonly="1"/>
+                                    <field name="pg_status_draft_next_steps_text" readonly="1"/>
+                                    <field name="pg_status_draft_pending_decisions_text" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Resumo dos Sinais do Chatter">
+                                <group>
+                                    <field name="pg_chatter_signals_dirty" readonly="1"/>
+                                    <field name="pg_chatter_last_scanned_at" readonly="1"/>
+                                    <field name="pg_chatter_signal_total_count" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_chatter_signal_validated_count" readonly="1"/>
+                                    <field name="pg_chatter_signal_candidate_count" readonly="1"/>
+                                    <field name="pg_chatter_signal_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Publicação (Legacy)">
+                            <group string="Ações de Publicação" col="4">
+                                <button
+                                    name="action_publish_scope_to_repository"
+                                    type="object"
+                                    string="Publicar Âmbito"
+                                    class="btn-primary"
+                                    icon="fa-upload"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_scope_sync_enabled or not pg_repository_id or not pg_repo_branch"
+                                />
+                                <button
+                                    name="action_publish_status_to_repository"
+                                    type="object"
+                                    string="Publicar Ponto de Situacao"
+                                    class="btn-secondary"
+                                    icon="fa-upload"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_status_sync_enabled or not pg_repository_id or not pg_repo_branch"
+                                />
+                                <button
+                                    name="action_publish_decisions_to_repository"
+                                    type="object"
+                                    string="Publicar Decisoes"
+                                    class="btn-secondary"
+                                    icon="fa-upload"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_decisions_sync_enabled or not pg_repository_id or not pg_repo_branch"
+                                />
+                                <button
+                                    name="action_publish_risks_to_repository"
+                                    type="object"
+                                    string="Publicar Riscos"
+                                    class="btn-secondary"
+                                    icon="fa-upload"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_risks_sync_enabled or not pg_repository_id or not pg_repo_branch"
+                                />
+                                <button
+                                    name="action_publish_deliveries_to_repository"
+                                    type="object"
+                                    string="Publicar Entregaveis"
+                                    class="btn-secondary"
+                                    icon="fa-upload"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_deliveries_sync_enabled or not pg_repository_id or not pg_repo_branch"
+                                />
+                                <button
+                                    name="action_publish_requirements_to_repository"
+                                    type="object"
+                                    string="Publicar Requisitos"
+                                    class="btn-secondary"
+                                    icon="fa-upload"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_requirements_sync_enabled or not pg_repository_id or not pg_repo_branch"
+                                />
+                                <button
+                                    name="action_publish_project_plan_to_repository"
+                                    type="object"
+                                    string="Publicar Plano"
+                                    class="btn-secondary"
+                                    icon="fa-upload"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_project_plan_sync_enabled or not pg_repository_id or not pg_repo_branch"
+                                />
+                                <button
+                                    name="action_publish_budget_to_repository"
+                                    type="object"
+                                    string="Publicar Budget"
+                                    class="btn-secondary"
+                                    icon="fa-upload"
+                                    groups="project.group_project_user"
+                                    invisible="not id or not pg_budget_sync_enabled or not pg_repository_id or not pg_repo_branch"
+                                />
+                            </group>
+
+                            <group string="Estado da Publicacao">
+                                <group string="Ambito e Estado">
+                                    <field name="pg_scope_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_scope_sync_last_message" readonly="1"/>
+                                    <field name="pg_status_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_status_sync_last_message" readonly="1"/>
+                                    <field name="pg_status_sync_needs_publish" readonly="1"/>
+                                </group>
+                                <group string="Artefactos Oficiais">
+                                    <field name="pg_decisions_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_decisions_sync_last_message" readonly="1"/>
+                                    <field name="pg_risks_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_risks_sync_last_message" readonly="1"/>
+                                    <field name="pg_deliveries_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_deliveries_sync_last_message" readonly="1"/>
+                                    <field name="pg_requirements_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_requirements_sync_last_message" readonly="1"/>
+                                    <field name="pg_project_plan_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_project_plan_sync_last_message" readonly="1"/>
+                                    <field name="pg_budget_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_budget_sync_last_message" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Configuracao">
+                            <group string="Estado do Onboarding">
+                                <group>
+                                    <field name="pg_onboarding_last_applied_at" readonly="1"/>
+                                    <field name="pg_onboarding_last_status" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_onboarding_last_message" readonly="1" nolabel="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Configuracao e Repositorio">
+                                <group>
+                                    <field name="pg_scope_sync_enabled"/>
+                                    <field name="pg_status_sync_enabled"/>
+                                    <field name="pg_decisions_sync_enabled"/>
+                                    <field name="pg_risks_sync_enabled"/>
+                                    <field name="pg_deliveries_sync_enabled"/>
+                                    <field name="pg_requirements_sync_enabled"/>
+                                    <field name="pg_project_plan_sync_enabled"/>
+                                    <field name="pg_budget_sync_enabled"/>
+                                </group>
+                                <group>
+                                    <field name="allow_milestones"/>
+                                    <field name="pg_scope_sync_mode"/>
+                                    <field name="pg_repository_id" options="{'no_create': True}"/>
+                                    <field name="pg_repo_branch"/>
+                                </group>
+                            </group>
+
+                            <group string="Telemetria do Espelho">
+                                <group>
+                                    <field name="pg_mirror_sync_last_status" readonly="1"/>
+                                    <field name="pg_mirror_sync_quality_review_status" readonly="1"/>
+                                    <field name="pg_mirror_sync_quality_blocking_count" readonly="1"/>
+                                    <field name="pg_mirror_sync_quality_warning_count" readonly="1"/>
+                                    <field name="pg_mirror_included_scope_count" readonly="1"/>
+                                    <field name="pg_mirror_scope_backlog_count" readonly="1"/>
+                                    <field name="pg_mirror_excluded_noise_count" readonly="1"/>
+                                    <field name="pg_mirror_sync_last_payload_hash" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_mirror_sync_last_published_at" readonly="1"/>
+                                    <field name="pg_mirror_sync_last_message" readonly="1" nolabel="1"/>
+                                    <field name="pg_mirror_scope_signal_feedback" readonly="1" nolabel="1"/>
+                                    <field name="pg_mirror_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                    <field name="pg_mirror_scope_backlog_feedback" readonly="1" nolabel="1"/>
+                                    <field name="pg_mirror_excluded_noise_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Telemetria de Publicacao">
+                                <group>
+                                    <field name="pg_scope_sync_last_status" readonly="1"/>
+                                    <field name="pg_scope_sync_last_payload_hash" readonly="1"/>
+                                    <field name="pg_status_sync_last_status" readonly="1"/>
+                                    <field name="pg_status_sync_last_payload_hash" readonly="1"/>
+                                    <field name="pg_decisions_sync_last_status" readonly="1"/>
+                                    <field name="pg_decisions_sync_last_payload_hash" readonly="1"/>
+                                    <field name="pg_risks_sync_last_status" readonly="1"/>
+                                    <field name="pg_risks_sync_last_payload_hash" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_deliveries_sync_last_status" readonly="1"/>
+                                    <field name="pg_deliveries_sync_last_payload_hash" readonly="1"/>
+                                    <field name="pg_requirements_sync_last_status" readonly="1"/>
+                                    <field name="pg_requirements_sync_last_payload_hash" readonly="1"/>
+                                    <field name="pg_project_plan_sync_last_status" readonly="1"/>
+                                    <field name="pg_project_plan_sync_last_payload_hash" readonly="1"/>
+                                    <field name="pg_budget_sync_last_status" readonly="1"/>
+                                    <field name="pg_budget_sync_last_payload_hash" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Quality Review Pre-Publicacao">
+                                <group>
+                                    <field name="pg_mirror_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_scope_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_status_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_decisions_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_risks_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_deliveries_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_requirements_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_project_plan_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                                <group>
+                                    <field name="pg_budget_sync_quality_review_feedback" readonly="1" nolabel="1"/>
+                                </group>
+                            </group>
+
+                            <separator string="Estrutura de Âmbito"/>
+                            <field name="pg_scope_line_ids" context="{'default_project_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence"/>
+                                    <field name="line_type"/>
+                                    <field name="text"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+
+                            <separator string="Runs Recentes do Espelho"/>
+                            <field name="pg_mirror_sync_run_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="create_date"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="quality_review_status"/>
+                                    <field name="quality_review_blocking_count"/>
+                                    <field name="quality_review_warning_count"/>
+                                    <field name="included_scope_count"/>
+                                    <field name="factual_scope_backlog_count"/>
+                                    <field name="excluded_noise_count"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Runs Recentes de Âmbito"/>
+                            <field name="pg_scope_sync_run_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="create_date"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Runs Recentes de Estado"/>
+                            <field name="pg_status_sync_run_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="create_date"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Runs Recentes de Decisoes"/>
+                            <field name="pg_decisions_sync_run_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="create_date"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Runs Recentes de Riscos"/>
+                            <field name="pg_risks_sync_run_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="create_date"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Runs Recentes de Entregaveis"/>
+                            <field name="pg_deliveries_sync_run_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="create_date"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Runs Recentes de Requisitos"/>
+                            <field name="pg_requirements_sync_run_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="create_date"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Runs Recentes de Plano"/>
+                            <field name="pg_project_plan_sync_run_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="create_date"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Runs Recentes de Budget"/>
+                            <field name="pg_budget_sync_run_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="create_date"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

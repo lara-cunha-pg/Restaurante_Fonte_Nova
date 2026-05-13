@@ -1,0 +1,394 @@
+.o_form_view {
+    --pg-ai-border: #d8dee8;
+    --pg-ai-border-strong: #c6d0dc;
+    --pg-ai-surface: #ffffff;
+    --pg-ai-surface-soft: #f7f9fc;
+    --pg-ai-surface-contrast: #f9fbfd;
+    --pg-ai-surface-accent: linear-gradient(135deg, #f5fbff 0%, #fff8f0 100%);
+    --pg-ai-surface-result: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+    --pg-ai-input-bg: #ffffff;
+    --pg-ai-input-bg-soft: #f9fbfd;
+    --pg-ai-error-bg: #fff8f8;
+    --pg-ai-error-border: #e8c8c8;
+    --pg-ai-info-bg: #f6f8fb;
+    --pg-ai-info-border: #c6d0dc;
+    --pg-ai-pill-bg: #eef6ff;
+    --pg-ai-pill-color: #27527e;
+    --pg-ai-pill-border: #c6ddf3;
+    --pg-ai-eyebrow: #9a6a2f;
+    --pg-ai-title: #203041;
+    --pg-ai-body: #314457;
+    --pg-ai-muted: #657487;
+    --pg-ai-status-bg: #1f5f95;
+    --pg-ai-status-color: #ffffff;
+    --pg-ai-shadow: 0 10px 24px rgba(26, 45, 72, 0.08);
+    --pg-ai-radius-lg: 18px;
+    --pg-ai-radius-md: 14px;
+}
+
+.o_form_view .pg_ai_settings_panel,
+.o_form_view .pg_ai_task_workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.o_form_view .pg_ai_panel_header,
+.o_form_view .pg_ai_task_card_header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.o_form_view .pg_ai_panel_eyebrow {
+    color: var(--pg-ai-eyebrow);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.o_form_view .pg_ai_panel_title {
+    color: var(--pg-ai-title);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.o_form_view .pg_ai_panel_subtitle {
+    color: var(--pg-ai-muted);
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 720px;
+    margin-top: 6px;
+}
+
+.o_form_view .pg_ai_button_row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.o_form_view .pg_ai_pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: var(--pg-ai-pill-bg);
+    color: var(--pg-ai-pill-color);
+    border: 1px solid var(--pg-ai-pill-border);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.o_form_view .pg_ai_section_heading {
+    color: var(--pg-ai-title);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding-top: 4px;
+    margin-top: 2px;
+}
+
+.o_form_view .pg_ai_settings_grid,
+.o_form_view .pg_ai_stats_grid,
+.o_form_view .pg_ai_toggle_grid,
+.o_form_view .pg_ai_dual_column,
+.o_form_view .pg_ai_task_hero {
+    display: grid;
+    gap: 16px;
+}
+
+.o_form_view .pg_ai_settings_grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.o_form_view .pg_ai_settings_grid--compact {
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.o_form_view .pg_ai_stats_grid,
+.o_form_view .pg_ai_dual_column,
+.o_form_view .pg_ai_task_hero {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.o_form_view .pg_ai_toggle_grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.o_form_view .pg_ai_field_card,
+.o_form_view .pg_ai_stat_card,
+.o_form_view .pg_ai_toggle_card,
+.o_form_view .pg_ai_task_card {
+    background: var(--pg-ai-surface);
+    border: 1px solid var(--pg-ai-border);
+    border-radius: var(--pg-ai-radius-md);
+    box-shadow: var(--pg-ai-shadow);
+    color: var(--pg-ai-body);
+}
+
+.o_form_view .pg_ai_field_card,
+.o_form_view .pg_ai_toggle_card,
+.o_form_view .pg_ai_task_card {
+    padding: 18px 18px 16px;
+}
+
+.o_form_view .pg_ai_field_card--tall {
+    min-height: 100%;
+}
+
+.o_form_view .pg_ai_stat_card {
+    padding: 16px 18px;
+    background: var(--pg-ai-surface-soft);
+}
+
+.o_form_view .pg_ai_task_card--accent {
+    background: var(--pg-ai-surface-accent);
+    border-color: var(--pg-ai-border-strong);
+}
+
+.o_form_view .pg_ai_task_card--result {
+    background: var(--pg-ai-surface-result);
+}
+
+.o_form_view .pg_ai_stat_label,
+.o_form_view .pg_ai_metric_label {
+    color: var(--pg-ai-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.o_form_view .pg_ai_field_card > label,
+.o_form_view .pg_ai_toggle_top > label,
+.o_form_view .pg_ai_task_card label {
+    display: block;
+    color: var(--pg-ai-title);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.o_form_view .pg_ai_field_hint {
+    color: var(--pg-ai-muted);
+    font-size: 12px;
+    line-height: 1.45;
+    margin-top: 10px;
+}
+
+.o_form_view .pg_ai_toggle_top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.o_form_view .pg_ai_field_card .o_field_widget,
+.o_form_view .pg_ai_stat_card .o_field_widget,
+.o_form_view .pg_ai_toggle_card .o_field_widget,
+.o_form_view .pg_ai_task_card .o_field_widget {
+    width: 100%;
+}
+
+.o_form_view .pg_ai_field_card .o_input,
+.o_form_view .pg_ai_task_card .o_input,
+.o_form_view .pg_ai_field_card textarea,
+.o_form_view .pg_ai_task_card textarea,
+.o_form_view .pg_ai_field_card .o-autocomplete,
+.o_form_view .pg_ai_task_card .o-autocomplete {
+    width: 100%;
+}
+
+.o_form_view .pg_ai_field_card textarea,
+.o_form_view .pg_ai_task_card textarea {
+    min-height: 104px;
+    padding: 12px 14px;
+    line-height: 1.5;
+    border-radius: 12px;
+    border-color: var(--pg-ai-border-strong);
+    background: var(--pg-ai-input-bg);
+    color: var(--pg-ai-body);
+}
+
+.o_form_view .pg_ai_textarea--xs textarea {
+    min-height: 70px;
+}
+
+.o_form_view .pg_ai_textarea--sm textarea {
+    min-height: 120px;
+}
+
+.o_form_view .pg_ai_textarea--lg textarea {
+    min-height: 180px;
+}
+
+.o_form_view .pg_ai_textarea--xl textarea {
+    min-height: 260px;
+}
+
+.o_form_view .pg_ai_textarea--prompt textarea {
+    min-height: 360px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.o_form_view .pg_ai_textarea--result textarea {
+    min-height: 220px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.o_form_view .pg_ai_textarea--timeline textarea {
+    min-height: 180px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    background: var(--pg-ai-input-bg-soft);
+}
+
+.o_form_view .pg_ai_textarea--error textarea {
+    min-height: 130px;
+    font-family: Consolas, "Courier New", monospace;
+    border-color: var(--pg-ai-error-border);
+    background: var(--pg-ai-error-bg);
+}
+
+.o_form_view .pg_ai_field_card .o_input,
+.o_form_view .pg_ai_task_card .o_input,
+.o_form_view .pg_ai_field_card .o-autocomplete--input,
+.o_form_view .pg_ai_task_card .o-autocomplete--input {
+    background: var(--pg-ai-input-bg);
+    border-color: var(--pg-ai-border-strong);
+    color: var(--pg-ai-body);
+}
+
+.o_form_view .pg_ai_field_card .o_input::placeholder,
+.o_form_view .pg_ai_task_card .o_input::placeholder,
+.o_form_view .pg_ai_field_card textarea::placeholder,
+.o_form_view .pg_ai_task_card textarea::placeholder {
+    color: var(--pg-ai-muted);
+    opacity: 0.78;
+}
+
+.o_form_view .pg_ai_status_wrap {
+    display: flex;
+    align-items: center;
+}
+
+.o_form_view .pg_ai_status_badge {
+    width: auto;
+}
+
+.o_form_view .pg_ai_status_badge .badge,
+.o_form_view .pg_ai_status_badge .o_badge {
+    background: var(--pg-ai-status-bg);
+    color: var(--pg-ai-status-color);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.o_form_view .pg_ai_metrics_list {
+    display: grid;
+    gap: 14px;
+}
+
+.o_form_view .pg_ai_task_card .o_list_renderer {
+    background: var(--pg-ai-surface-contrast);
+    border: 1px solid var(--pg-ai-border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.o_form_view .pg_ai_task_card .o_list_table {
+    --table-bg: var(--pg-ai-surface-contrast);
+    --table-striped-bg: var(--pg-ai-surface-soft);
+    --table-striped-color: var(--pg-ai-body);
+    --ListRenderer-thead-bg-color: var(--pg-ai-surface-soft);
+    color: var(--pg-ai-body);
+}
+
+.o_form_view .pg_ai_task_card .o_list_table thead th,
+.o_form_view .pg_ai_task_card .o_list_table tbody td,
+.o_form_view .pg_ai_task_card .o_list_table tbody th,
+.o_form_view .pg_ai_task_card .o_list_table tfoot td,
+.o_form_view .pg_ai_task_card .o_list_table tfoot th {
+    background-color: var(--table-bg);
+    border-color: var(--pg-ai-border);
+    color: var(--pg-ai-body);
+}
+
+.o_form_view .pg_ai_task_card .o_list_table thead th {
+    background-color: var(--ListRenderer-thead-bg-color);
+    color: var(--pg-ai-title);
+}
+
+.o_form_view .pg_ai_task_card .o_list_table tbody tr:nth-child(even) td,
+.o_form_view .pg_ai_task_card .o_list_table tbody tr:nth-child(even) th {
+    background-color: var(--pg-ai-surface-soft);
+}
+
+.o_form_view .pg_ai_task_card .o_list_table .o_data_row:hover td,
+.o_form_view .pg_ai_task_card .o_list_table .o_data_row:hover th {
+    background-color: var(--pg-ai-info-bg);
+}
+
+.o_form_view .pg_ai_task_card .o_list_renderer .o_optional_columns_dropdown_toggle {
+    color: var(--pg-ai-muted);
+}
+
+.o_form_view .pg_ai_metric_item {
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--pg-ai-surface-soft);
+    border: 1px solid var(--pg-ai-border);
+}
+
+.o_form_view .pg_ai_info_note {
+    color: var(--pg-ai-muted);
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--pg-ai-info-bg);
+    border: 1px dashed var(--pg-ai-info-border);
+    margin-top: 12px;
+}
+
+.o_form_view .o_setting_box .pg_ai_settings_panel {
+    padding: 10px 0 2px;
+}
+
+.o_form_view .o_setting_box .pg_ai_field_card,
+.o_form_view .o_setting_box .pg_ai_stat_card,
+.o_form_view .o_setting_box .pg_ai_toggle_card {
+    box-shadow: none;
+}
+
+@media (max-width: 991.98px) {
+    .o_form_view .pg_ai_field_card,
+    .o_form_view .pg_ai_task_card,
+    .o_form_view .pg_ai_toggle_card {
+        padding: 16px;
+    }
+
+    .o_form_view .pg_ai_panel_title {
+        font-size: 18px;
+    }
+
+    .o_form_view .pg_ai_textarea--prompt textarea {
+        min-height: 280px;
+    }
+}

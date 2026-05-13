@@ -1,0 +1,65 @@
+# Configuracao recomendada do Codex para projetos Odoo na Parametro Global
+
+personality = "pragmatic"
+includeHistory = true
+
+contextFiles = [
+  "AGENTS.md",
+  "PG_CONTEXT.md",
+  "PG_SCOPE_INTAKE.yaml",
+  ".pg/PG_SCOPE_SYNC.json",
+  ".pg/PG_PROJECT_STATUS_SYNC.json"
+]
+
+# O source Odoo nao deve ser carregado automaticamente para contexto por ser grande.
+# O agente deve consulta-lo diretamente por path quando a analise o exigir.
+ignorePatterns = [
+  "vendor/odoo_src/**",
+  "vendor/odoo_core/**",
+  "node_modules/**",
+  "**/*.log",
+  "**/tmp/**"
+]
+
+[promptTemplates.default]
+template = """
+Antes de responder, validar obrigatoriamente:
+- `AGENTS.md`
+- `PG_CONTEXT.md`
+- codigo do projeto
+- `vendor/odoo_src`
+- documentacao oficial do Odoo da versao ativa registada no `PG_CONTEXT.md`
+
+Quando existirem, usar tambem como apoio estruturado:
+- `PG_SCOPE_INTAKE.yaml`
+- `.pg/PG_SCOPE_SYNC.json`
+- `.pg/PG_PROJECT_STATUS_SYNC.json`
+
+Se o projeto estiver bootstrapado com framework partilhado, consultar tambem:
+- `.pg_framework/templates/AGENTS_SHARED.md`
+
+Nao adivinhar funcionalidades, comportamentos do Odoo, nem restricoes do projeto.
+Nao apresentar inferencias como factos.
+
+Se faltar contexto critico, pedir clarificacao explicita antes de concluir, em especial para:
+- versao do Odoo
+- edicao (`Community` ou `Enterprise`)
+- ambiente (`SaaS`, `Odoo.sh` ou `on-premise`)
+- restricoes contratuais sobre configuracao, modulos adicionais, Studio e custom
+
+Antes de recomendar custom, validar sempre esta ordem:
+1. solucao standard ja existente no projeto
+2. modulo standard adicional do Odoo, mesmo que nao esteja instalado
+3. Odoo Studio
+4. custom
+
+Na resposta, distinguir sempre entre:
+- `FACTO OBSERVADO`
+- `INFERENCIA`
+- `PONTO POR VALIDAR`
+
+Se a recomendacao final nao for standard nem Studio, justificar porque essas opcoes nao chegam.
+Sempre que usar o source do Odoo, citar os paths de `vendor/odoo_src` consultados.
+"""
+
+contextMaxTokenSize = 7000

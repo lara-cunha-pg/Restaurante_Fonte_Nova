@@ -1,0 +1,25 @@
+.o_form_view {
+    --pg-ai-border: rgba(151, 164, 184, 0.22);
+    --pg-ai-border-strong: rgba(151, 164, 184, 0.38);
+    --pg-ai-surface: #232934;
+    --pg-ai-surface-soft: #1d2430;
+    --pg-ai-surface-contrast: #171d26;
+    --pg-ai-surface-accent: linear-gradient(135deg, rgba(40, 87, 122, 0.46) 0%, rgba(88, 62, 33, 0.38) 100%);
+    --pg-ai-surface-result: linear-gradient(180deg, #202732 0%, #171d26 100%);
+    --pg-ai-input-bg: #141a22;
+    --pg-ai-input-bg-soft: #10161e;
+    --pg-ai-error-bg: rgba(122, 43, 43, 0.32);
+    --pg-ai-error-border: rgba(232, 143, 143, 0.36);
+    --pg-ai-info-bg: rgba(117, 140, 170, 0.1);
+    --pg-ai-info-border: rgba(151, 164, 184, 0.36);
+    --pg-ai-pill-bg: rgba(74, 136, 196, 0.18);
+    --pg-ai-pill-color: #b9dcff;
+    --pg-ai-pill-border: rgba(113, 174, 237, 0.32);
+    --pg-ai-eyebrow: #e2b46e;
+    --pg-ai-title: #f3f7fd;
+    --pg-ai-body: rgba(233, 239, 247, 0.96);
+    --pg-ai-muted: rgba(194, 206, 223, 0.78);
+    --pg-ai-status-bg: #5d97d5;
+    --pg-ai-status-color: #0b1320;
+    --pg-ai-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}

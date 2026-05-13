@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_pg_brodoo" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.pg.ai.dev.assistant</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="project.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='project']" position="inside">
+                <block title="AI Development" name="pg_brodoo_settings">
+                    <setting
+                        id="pg_brodoo_openai"
+                        string="AI Prompt Generation"
+                        help="Generate a technical prompt from the task functional description."
+                    >
+                        <div class="pg_ai_settings_panel">
+                            <div class="pg_ai_panel_header">
+                                <div>
+                                    <div class="pg_ai_panel_eyebrow">Prompt Design</div>
+                                    <div class="pg_ai_panel_title">OpenAI prompt builder</div>
+                                    <div class="pg_ai_panel_subtitle">
+                                        Define how the functional description is converted into a technical prompt.
+                                    </div>
+                                </div>
+                                <div class="pg_ai_button_row">
+                                    <button
+                                        name="action_refresh_gpt_models"
+                                        type="object"
+                                        string="Atualizar Modelos"
+                                        class="btn btn-secondary"
+                                        icon="fa-refresh"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_openai_api_key" class="o_light_label"/>
+                                    <field name="pg_openai_api_key" password="True" placeholder="sk-..."/>
+                                    <div class="pg_ai_field_hint">Token usado para gerar prompts e obter os modelos disponiveis.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_openai_model" class="o_light_label"/>
+                                    <field name="pg_openai_model"/>
+                                    <div class="pg_ai_field_hint">Modelo principal para transformar requisitos funcionais em instrucoes tecnicas.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_openai_timeout" class="o_light_label"/>
+                                    <field name="pg_openai_timeout"/>
+                                    <div class="pg_ai_field_hint">Tempo maximo de espera por pedido a OpenAI.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_status_draft_llm_redraft_enabled" class="o_light_label"/>
+                                    <field name="pg_status_draft_llm_redraft_enabled"/>
+                                    <div class="pg_ai_field_hint">Ativa o redraft assistido por LLM para drafts de status antes da revisao manual do PM.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_sync_quality_review_enabled" class="o_light_label"/>
+                                    <field name="pg_sync_quality_review_enabled"/>
+                                    <div class="pg_ai_field_hint">Ativa a revisao consultiva de qualidade antes do publish de scope e status, sem mutar o payload factual.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_ai_task_context_history_limit" class="o_light_label"/>
+                                    <field name="pg_ai_task_context_history_limit"/>
+                                    <div class="pg_ai_field_hint">Numero de interacoes anteriores da task usadas como memoria contextual.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_ai_task_context_excerpt_chars" class="o_light_label"/>
+                                    <field name="pg_ai_task_context_excerpt_chars"/>
+                                    <div class="pg_ai_field_hint">Limite de caracteres por entrada ao montar a memoria acumulada da task.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_odoo_version" class="o_light_label"/>
+                                    <field name="pg_odoo_version"/>
+                                    <div class="pg_ai_field_hint">Versao de Odoo usada como contexto base para os prompts.</div>
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_section_heading">Templates e Fallbacks</div>
+                            <div class="pg_ai_settings_grid">
+                                <div class="pg_ai_field_card pg_ai_field_card--tall">
+                                    <label for="pg_openai_fallback_models" class="o_light_label"/>
+                                    <field
+                                        name="pg_openai_fallback_models"
+                                        placeholder="gpt-4.1-mini, gpt-5.4, gpt-5.3-codex"
+                                        class="pg_ai_textarea pg_ai_textarea--sm"
+                                    />
+                                    <div class="pg_ai_field_hint">Lista de modelos alternativos, um por linha ou separados por virgula.</div>
+                                </div>
+                                <div class="pg_ai_field_card pg_ai_field_card--tall">
+                                    <label for="pg_openai_prompt_instructions" class="o_light_label"/>
+                                    <field
+                                        name="pg_openai_prompt_instructions"
+                                        placeholder="Instrucoes do pedido de prompt tecnico..."
+                                        class="pg_ai_textarea pg_ai_textarea--sm"
+                                    />
+                                    <div class="pg_ai_field_hint">Regras adicionais que o modelo deve seguir ao gerar o prompt.</div>
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_field_card pg_ai_field_card--tall">
+                                <label for="pg_openai_prompt_template" class="o_light_label"/>
+                                <field
+                                    name="pg_openai_prompt_template"
+                                    placeholder="Template do prompt com {task_name}, {task_description}, {odoo_version}"
+                                    class="pg_ai_textarea pg_ai_textarea--xl"
+                                />
+                                <div class="pg_ai_field_hint">Template principal enviado ao modelo para montar o prompt final.</div>
+                            </div>
+                        </div>
+                    </setting>
+
+                    <setting
+                        id="pg_brodoo_codex"
+                        string="Codex Execution"
+                        help="Choose how Codex runs tasks: local CLI on the Odoo server or cloud API."
+                    >
+                        <div class="pg_ai_settings_panel">
+                            <div class="pg_ai_panel_header">
+                                <div>
+                                    <div class="pg_ai_panel_eyebrow">Execution Engine</div>
+                                    <div class="pg_ai_panel_title">Codex execution profile</div>
+                                    <div class="pg_ai_panel_subtitle">
+                                        Configure the local workspace, the CLI launcher and the cloud fallback behavior.
+                                    </div>
+                                </div>
+                                <div class="pg_ai_button_row">
+                                    <button
+                                        name="action_import_codex_configuration"
+                                        type="object"
+                                        string="Detetar Codex CLI"
+                                        class="btn btn-secondary"
+                                        icon="fa-terminal"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_stats_grid" invisible="codex_execution_mode != 'cli'">
+                                <div class="pg_ai_stat_card">
+                                    <div class="pg_ai_stat_label">Launcher detetado</div>
+                                    <field name="codex_cli_detected_command" readonly="1"/>
+                                </div>
+                                <div class="pg_ai_stat_card">
+                                    <div class="pg_ai_stat_label">Versao</div>
+                                    <field name="codex_cli_detected_version" readonly="1"/>
+                                </div>
+                                <div class="pg_ai_stat_card">
+                                    <div class="pg_ai_stat_label">Modo</div>
+                                    <field name="codex_execution_mode" readonly="1"/>
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_execution_mode" class="o_light_label"/>
+                                    <field name="codex_execution_mode"/>
+                                    <div class="pg_ai_field_hint">Seleciona se a task corre via Codex CLI local ou via OpenAI API.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_execution_model" class="o_light_label"/>
+                                    <field name="codex_execution_model"/>
+                                    <div class="pg_ai_field_hint">Modelo usado pelo Codex, tanto no modo CLI como no modo cloud.</div>
+                                </div>
+                                <div class="pg_ai_field_card" invisible="codex_execution_mode != 'cli'">
+                                    <label for="codex_cli_command" class="o_light_label"/>
+                                    <field name="codex_cli_command" placeholder="npx"/>
+                                    <div class="pg_ai_field_hint">Executavel base do launcher local, por exemplo <code>npx</code> ou <code>codex</code>.</div>
+                                </div>
+                                <div class="pg_ai_field_card" invisible="codex_execution_mode != 'cli'">
+                                    <label for="codex_cli_args" class="o_light_label"/>
+                                    <field name="codex_cli_args" placeholder="@openai/codex"/>
+                                    <div class="pg_ai_field_hint">Argumentos fixos antes de <code>exec</code>, por exemplo <code>@openai/codex</code>.</div>
+                                </div>
+                                <div class="pg_ai_field_card" invisible="codex_execution_mode != 'cli'">
+                                    <label for="codex_cli_runtime_profile" class="o_light_label"/>
+                                    <field name="codex_cli_runtime_profile"/>
+                                    <div class="pg_ai_field_hint">O Codex CLI corre sempre sem sandbox neste ambiente para evitar falhas do Odoo.sh.</div>
+                                </div>
+                                <div class="pg_ai_field_card" invisible="codex_execution_mode != 'cli'">
+                                    <label for="codex_cli_extra_args" class="o_light_label"/>
+                                    <field name="codex_cli_extra_args" placeholder="--search"/>
+                                    <div class="pg_ai_field_hint">Flags extra opcionais acrescentadas ao comando do Codex local.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_working_dir" class="o_light_label"/>
+                                    <field name="codex_working_dir" placeholder="/srv/odoo/codex"/>
+                                    <div class="pg_ai_field_hint">Pasta base para workspaces temporarias do Git. Quando a limpeza automatica esta ativa, os repositorios sao apagados no fim da execucao.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_timeout" class="o_light_label"/>
+                                    <field name="codex_timeout"/>
+                                    <div class="pg_ai_field_hint">Timeout maximo da execucao de cada etapa do fluxo AI.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_ai_cleanup_local_workspace" class="o_light_label"/>
+                                    <field name="pg_ai_cleanup_local_workspace"/>
+                                    <div class="pg_ai_field_hint">Apaga a copia local temporaria do repositorio no fim de cada execucao.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_branch_prefix" class="o_light_label"/>
+                                    <field name="codex_branch_prefix" placeholder="ai/task"/>
+                                    <div class="pg_ai_field_hint">Prefixo usado para criar as branches de trabalho automaticas.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_repo_tree_file_limit" class="o_light_label"/>
+                                    <field name="codex_repo_tree_file_limit"/>
+                                    <div class="pg_ai_field_hint">Numero maximo de ficheiros mostrados na arvore enviada ao modelo.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_selected_file_limit" class="o_light_label"/>
+                                    <field name="codex_selected_file_limit"/>
+                                    <div class="pg_ai_field_hint">Numero maximo de ficheiros lidos antes de pedir alteracoes.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_file_content_char_limit" class="o_light_label"/>
+                                    <field name="codex_file_content_char_limit"/>
+                                    <div class="pg_ai_field_hint">Limite de caracteres por ficheiro enviado ao Codex.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_git_user_name" class="o_light_label"/>
+                                    <field name="codex_git_user_name"/>
+                                    <div class="pg_ai_field_hint">Nome usado na configuracao Git local para os commits automaticos.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_git_user_email" class="o_light_label"/>
+                                    <field name="codex_git_user_email"/>
+                                    <div class="pg_ai_field_hint">Email associado aos commits gerados pelo assistente.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_fallback_extensions" class="o_light_label"/>
+                                    <field name="codex_fallback_extensions" placeholder=".py,.xml,.js,.csv,.md,.rst"/>
+                                    <div class="pg_ai_field_hint">Extensoes consideradas quando a selecao inteligente de ficheiros falha.</div>
+                                </div>
+                                <div class="pg_ai_field_card pg_ai_field_card--tall">
+                                    <label for="codex_fallback_priority_filenames" class="o_light_label"/>
+                                    <field
+                                        name="codex_fallback_priority_filenames"
+                                        placeholder="__manifest__.py, README.md, requirements.txt"
+                                        class="pg_ai_textarea pg_ai_textarea--sm"
+                                    />
+                                    <div class="pg_ai_field_hint">Ficheiros prioritarios no fallback, um por linha ou separados por virgula.</div>
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_section_heading">Instructions e Templates</div>
+                            <div class="pg_ai_settings_grid">
+                                <div class="pg_ai_field_card pg_ai_field_card--tall" invisible="codex_execution_mode != 'service'">
+                                    <label for="codex_file_selection_instructions" class="o_light_label"/>
+                                    <field name="codex_file_selection_instructions" class="pg_ai_textarea pg_ai_textarea--sm"/>
+                                    <div class="pg_ai_field_hint">Prompt usado para selecionar os ficheiros mais relevantes da task no modo cloud.</div>
+                                </div>
+                                <div class="pg_ai_field_card pg_ai_field_card--tall" invisible="codex_execution_mode != 'service'">
+                                    <label for="codex_change_request_instructions" class="o_light_label"/>
+                                    <field name="codex_change_request_instructions" class="pg_ai_textarea pg_ai_textarea--sm"/>
+                                    <div class="pg_ai_field_hint">Prompt de alto nivel usado para pedir as alteracoes ao Codex cloud.</div>
+                                </div>
+                                <div class="pg_ai_field_card pg_ai_field_card--tall" invisible="codex_execution_mode != 'cli'">
+                                    <label for="codex_cli_instructions" class="o_light_label"/>
+                                    <field name="codex_cli_instructions" class="pg_ai_textarea pg_ai_textarea--sm"/>
+                                    <div class="pg_ai_field_hint">Instrucoes adicionais para o agente Codex quando corre localmente com <code>exec</code>.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_commit_message_template" class="o_light_label"/>
+                                    <field name="codex_commit_message_template" placeholder="[AI] {task_name}" class="pg_ai_textarea pg_ai_textarea--xs"/>
+                                    <div class="pg_ai_field_hint">Template da mensagem de commit.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="codex_pr_title_template" class="o_light_label"/>
+                                    <field name="codex_pr_title_template" placeholder="[AI] {task_name}" class="pg_ai_textarea pg_ai_textarea--xs"/>
+                                    <div class="pg_ai_field_hint">Template do titulo do pull request.</div>
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_field_card pg_ai_field_card--tall">
+                                <label for="codex_pr_body_template" class="o_light_label"/>
+                                <field
+                                    name="codex_pr_body_template"
+                                    placeholder="Template com {task_name}, {branch_name}, {base_branch}, {repo_full_name}"
+                                    class="pg_ai_textarea pg_ai_textarea--lg"
+                                />
+                                <div class="pg_ai_field_hint">Template completo do corpo do PR criado automaticamente.</div>
+                            </div>
+                        </div>
+                    </setting>
+
+                    <setting
+                        id="pg_brodoo_github"
+                        string="GitHub Delivery"
+                        help="Configure the GitHub integration used by the Codex automation flow."
+                    >
+                        <div class="pg_ai_settings_panel">
+                            <div class="pg_ai_panel_header">
+                                <div>
+                                    <div class="pg_ai_panel_eyebrow">Repository Access</div>
+                                    <div class="pg_ai_panel_title">GitHub account and sync</div>
+                                    <div class="pg_ai_panel_subtitle">
+                                        Connect the account, refresh repositories and control branch delivery defaults.
+                                    </div>
+                                </div>
+                                <div class="pg_ai_button_row">
+                                    <button
+                                        name="action_open_pg_ai_onboarding_wizard"
+                                        type="object"
+                                        string="Wizard de Onboarding"
+                                        class="btn btn-secondary"
+                                        icon="fa-compass"
+                                    />
+                                    <button
+                                        name="action_import_github_configuration"
+                                        type="object"
+                                        string="Importar Conta GitHub"
+                                        class="btn btn-secondary"
+                                        icon="fa-download"
+                                    />
+                                    <button
+                                        name="action_sync_github_repositories"
+                                        type="object"
+                                        string="Sincronizar Repositórios"
+                                        class="btn btn-secondary"
+                                        icon="fa-refresh"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_stats_grid">
+                                <div class="pg_ai_stat_card">
+                                    <div class="pg_ai_stat_label">Conta GitHub</div>
+                                    <field name="pg_github_account_login" readonly="1"/>
+                                </div>
+                                <div class="pg_ai_stat_card">
+                                    <div class="pg_ai_stat_label">Nome</div>
+                                    <field name="pg_github_account_name" readonly="1"/>
+                                </div>
+                                <div class="pg_ai_stat_card">
+                                    <div class="pg_ai_stat_label">Repositorios</div>
+                                    <field name="pg_github_repo_count" readonly="1"/>
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_github_token" class="o_light_label"/>
+                                    <field name="pg_github_token" password="True" placeholder="ghp_..."/>
+                                    <div class="pg_ai_field_hint">Token usado para sincronizar repositorios, branches e abrir PRs.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_github_default_owner" class="o_light_label"/>
+                                    <field name="pg_github_default_owner"/>
+                                    <div class="pg_ai_field_hint">Owner sugerido por defeito ao trabalhar com repositorios da conta ligada.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_github_default_branch" class="o_light_label"/>
+                                    <field name="pg_github_default_branch" placeholder="main"/>
+                                    <div class="pg_ai_field_hint">Branch base usada quando o repositorio nao define outra.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_github_timeout" class="o_light_label"/>
+                                    <field name="pg_github_timeout"/>
+                                    <div class="pg_ai_field_hint">Timeout maximo das chamadas a API do GitHub.</div>
+                                </div>
+                                <div class="pg_ai_field_card">
+                                    <label for="pg_github_repository_sort" class="o_light_label"/>
+                                    <field name="pg_github_repository_sort"/>
+                                    <div class="pg_ai_field_hint">Ordenacao usada ao sincronizar e listar repositorios da conta.</div>
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_section_heading">Automation Defaults</div>
+                            <div class="pg_ai_toggle_grid">
+                                <div class="pg_ai_toggle_card">
+                                    <div class="pg_ai_toggle_top">
+                                        <label for="pg_ai_push_direct_to_selected_branch" class="o_light_label"/>
+                                        <field name="pg_ai_push_direct_to_selected_branch"/>
+                                    </div>
+                                    <div class="pg_ai_field_hint">Faz commit e push diretamente na branch selecionada na task, sem branch AI intermedia.</div>
+                                </div>
+                                <div class="pg_ai_toggle_card" invisible="pg_ai_push_direct_to_selected_branch">
+                                    <div class="pg_ai_toggle_top">
+                                        <label for="pg_github_create_pr_by_default" class="o_light_label"/>
+                                        <field name="pg_github_create_pr_by_default"/>
+                                    </div>
+                                    <div class="pg_ai_field_hint">Cria automaticamente um pull request depois do push da branch AI.</div>
+                                </div>
+                                <div class="pg_ai_toggle_card">
+                                    <div class="pg_ai_toggle_top">
+                                        <label for="pg_github_autosync_on_search" class="o_light_label"/>
+                                        <field name="pg_github_autosync_on_search"/>
+                                    </div>
+                                    <div class="pg_ai_field_hint">Atualiza os repositorios locais quando o utilizador pesquisa ou sincroniza dados.</div>
+                                </div>
+                                <div class="pg_ai_toggle_card">
+                                    <div class="pg_ai_toggle_top">
+                                        <label for="pg_ai_autosync_branches_on_repo_change" class="o_light_label"/>
+                                        <field name="pg_ai_autosync_branches_on_repo_change"/>
+                                    </div>
+                                    <div class="pg_ai_field_hint">Sincroniza as branches sempre que o repositorio muda na task.</div>
+                                </div>
+                                <div class="pg_ai_toggle_card">
+                                    <div class="pg_ai_toggle_top">
+                                        <label for="pg_ai_auto_select_default_branch" class="o_light_label"/>
+                                        <field name="pg_ai_auto_select_default_branch"/>
+                                    </div>
+                                    <div class="pg_ai_field_hint">Seleciona automaticamente a branch base por defeito do repositorio.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

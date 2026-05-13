@@ -1,0 +1,461 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pg_operational_dashboard_form" model="ir.ui.view">
+        <field name="name">pg.operational.dashboard.form</field>
+        <field name="model">pg.operational.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard Brodoo" create="0" edit="0" delete="0">
+                <header>
+                    <button
+                        name="action_open_scope_attention_projects"
+                        type="object"
+                        string="Projetos por Rever"
+                        class="btn-secondary"
+                        icon="fa-exclamation-triangle"
+                    />
+                    <button
+                        name="action_open_status_attention_projects"
+                        type="object"
+                        string="Estado por Publicar"
+                        class="btn-secondary"
+                        icon="fa-flag"
+                    />
+                    <button
+                        name="action_open_blocked_ai_tasks"
+                        type="object"
+                        string="Tasks Bloqueadas"
+                        class="btn-secondary"
+                        icon="fa-lock"
+                    />
+                    <button
+                        name="action_open_ready_ai_tasks"
+                        type="object"
+                        string="Tasks Prontas"
+                        class="btn-secondary"
+                        icon="fa-check"
+                    />
+                </header>
+                <sheet>
+                    <group string="Prioridades Operacionais">
+                        <group>
+                            <field name="scope_attention_project_count" readonly="1"/>
+                            <field name="status_attention_project_count" readonly="1"/>
+                            <field name="blocked_ai_task_count" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="ready_ai_task_count" readonly="1"/>
+                            <field name="failed_scope_run_count" readonly="1"/>
+                            <field name="failed_status_run_count" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Prioridades">
+                            <group string="Ações Rápidas" col="4">
+                                <button
+                                    name="action_open_scope_attention_projects"
+                                    type="object"
+                                    string="Projetos por Rever"
+                                    class="btn-secondary"
+                                    icon="fa-exclamation-triangle"
+                                />
+                                <button
+                                    name="action_open_status_attention_projects"
+                                    type="object"
+                                    string="Estado por Publicar"
+                                    class="btn-secondary"
+                                    icon="fa-flag"
+                                />
+                                <button
+                                    name="action_open_blocked_ai_tasks"
+                                    type="object"
+                                    string="Tasks Bloqueadas"
+                                    class="btn-secondary"
+                                    icon="fa-lock"
+                                />
+                                <button
+                                    name="action_open_ready_ai_tasks"
+                                    type="object"
+                                    string="Tasks Prontas"
+                                    class="btn-secondary"
+                                    icon="fa-check"
+                                />
+                            </group>
+
+                            <separator string="Projetos com atenção de âmbito"/>
+                            <field name="scope_attention_project_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="pg_scope_sync_enabled"/>
+                                    <field name="pg_scope_sync_last_status"/>
+                                    <field name="pg_scope_sync_last_published_at"/>
+                                    <field name="pg_scope_sync_last_message"/>
+                                </list>
+                            </field>
+
+                            <separator string="Projetos com atenção de estado"/>
+                            <field name="status_attention_project_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="pg_status_sync_enabled"/>
+                                    <field name="pg_status_sync_needs_publish"/>
+                                    <field name="pg_status_sync_last_status"/>
+                                    <field name="pg_status_sync_last_published_at"/>
+                                    <field name="pg_status_sync_review_feedback"/>
+                                </list>
+                            </field>
+
+                            <separator string="Tasks bloqueadas pelo gate consultivo"/>
+                            <field name="blocked_ai_task_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="project_id"/>
+                                    <field name="pg_ai_consultive_flow_stage"/>
+                                    <field name="pg_ai_recommendation_class"/>
+                                    <field name="pg_ai_consultive_gate_state"/>
+                                    <field name="ai_status"/>
+                                </list>
+                            </field>
+
+                            <separator string="Tasks prontas para Brodoo"/>
+                            <field name="ready_ai_task_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="project_id"/>
+                                    <field name="pg_ai_consultive_flow_stage"/>
+                                    <field name="pg_ai_recommendation_class"/>
+                                    <field name="pg_ai_consultive_gate_state"/>
+                                    <field name="ai_status"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Diagnóstico">
+                            <group string="Ações de Diagnóstico" col="4">
+                                <button
+                                    name="action_open_failed_scope_runs"
+                                    type="object"
+                                    string="Falhas de Scope"
+                                    class="btn-secondary"
+                                    icon="fa-times-circle"
+                                />
+                                <button
+                                    name="action_open_failed_status_runs"
+                                    type="object"
+                                    string="Falhas de Status"
+                                    class="btn-secondary"
+                                    icon="fa-times-circle"
+                                />
+                                <button
+                                    name="action_open_brownfield_needs_review_tasks"
+                                    type="object"
+                                    string="Candidatos Brownfield"
+                                    class="btn-secondary"
+                                    icon="fa-wrench"
+                                />
+                                <button
+                                    name="action_open_chatter_dirty_projects"
+                                    type="object"
+                                    string="Projetos com Chatter Dirty"
+                                    class="btn-secondary"
+                                    icon="fa-comments"
+                                />
+                                <button
+                                    name="action_open_candidate_chatter_signals"
+                                    type="object"
+                                    string="Sinais Candidatos"
+                                    class="btn-secondary"
+                                    icon="fa-filter"
+                                />
+                                <button
+                                    name="action_open_stale_chatter_signals"
+                                    type="object"
+                                    string="Sinais Stale"
+                                    class="btn-secondary"
+                                    icon="fa-history"
+                                />
+                            </group>
+
+                            <group string="Brownfield Controlado">
+                                <group>
+                                    <field name="brownfield_missing_scope_summary_count" readonly="1"/>
+                                    <field name="brownfield_missing_acceptance_criteria_count" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="brownfield_missing_scope_kind_count" readonly="1"/>
+                                    <field name="brownfield_needs_review_task_count" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Indicadores Chatter">
+                                <group>
+                                    <field name="chatter_dirty_project_count" readonly="1"/>
+                                    <field name="chatter_dirty_task_count" readonly="1"/>
+                                    <field name="chatter_validated_signal_count" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="chatter_candidate_signal_count" readonly="1"/>
+                                    <field name="chatter_stale_signal_count" readonly="1"/>
+                                    <field name="chatter_rejected_signal_count" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <separator string="Falhas de Sincronização de Âmbito"/>
+                            <field name="failed_scope_run_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="project_id"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Falhas de Sincronização de Estado"/>
+                            <field name="failed_status_run_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="project_id"/>
+                                    <field name="trigger_type"/>
+                                    <field name="status"/>
+                                    <field name="message"/>
+                                    <field name="finished_at"/>
+                                </list>
+                            </field>
+
+                            <separator string="Gaps de consolidacao - sem Scope Summary"/>
+                            <field name="brownfield_missing_scope_summary_task_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="project_id"/>
+                                    <field name="pg_scope_track"/>
+                                    <field name="pg_scope_state"/>
+                                    <field name="pg_scope_enrichment_status"/>
+                                    <field name="pg_scope_enrichment_confidence"/>
+                                </list>
+                            </field>
+
+                            <separator string="Gaps de consolidacao - sem Acceptance Criteria"/>
+                            <field name="brownfield_missing_acceptance_criteria_task_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="project_id"/>
+                                    <field name="pg_scope_track"/>
+                                    <field name="pg_scope_state"/>
+                                    <field name="pg_scope_enrichment_status"/>
+                                    <field name="pg_scope_enrichment_confidence"/>
+                                </list>
+                            </field>
+
+                            <separator string="Gaps de consolidacao - sem Scope Kind"/>
+                            <field name="brownfield_missing_scope_kind_task_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="project_id"/>
+                                    <field name="pg_scope_track"/>
+                                    <field name="pg_scope_state"/>
+                                    <field name="pg_scope_enrichment_status"/>
+                                    <field name="pg_scope_enrichment_confidence"/>
+                                </list>
+                            </field>
+
+                            <separator string="Candidatos brownfield por rever"/>
+                            <field name="brownfield_needs_review_task_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="project_id"/>
+                                    <field name="pg_scope_track"/>
+                                    <field name="pg_scope_state"/>
+                                    <field name="pg_scope_enrichment_status"/>
+                                    <field name="pg_scope_enrichment_confidence"/>
+                                    <field name="pg_scope_enrichment_feedback"/>
+                                </list>
+                            </field>
+
+                            <separator string="Projetos com refresh de chatter em falta"/>
+                            <field name="chatter_dirty_project_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="pg_chatter_signals_dirty"/>
+                                    <field name="pg_chatter_last_scanned_at"/>
+                                    <field name="pg_chatter_signal_validated_count"/>
+                                    <field name="pg_chatter_signal_candidate_count"/>
+                                </list>
+                            </field>
+
+                            <separator string="Tasks com refresh de chatter em falta"/>
+                            <field name="chatter_dirty_task_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="name"/>
+                                    <field name="project_id"/>
+                                    <field name="pg_chatter_signals_dirty"/>
+                                    <field name="pg_chatter_last_scanned_at"/>
+                                    <field name="pg_chatter_signal_validated_count"/>
+                                    <field name="pg_chatter_signal_candidate_count"/>
+                                </list>
+                            </field>
+
+                            <separator string="Sinais validados do chatter"/>
+                            <field name="chatter_validated_signal_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="occurred_at"/>
+                                    <field name="project_id"/>
+                                    <field name="task_id"/>
+                                    <field name="signal_type"/>
+                                    <field name="confidence"/>
+                                    <field name="summary"/>
+                                </list>
+                            </field>
+
+                            <separator string="Sinais candidate do chatter"/>
+                            <field name="chatter_candidate_signal_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="occurred_at"/>
+                                    <field name="project_id"/>
+                                    <field name="task_id"/>
+                                    <field name="signal_type"/>
+                                    <field name="confidence"/>
+                                    <field name="summary"/>
+                                    <field name="validation_feedback"/>
+                                </list>
+                            </field>
+
+                            <separator string="Sinais stale do chatter"/>
+                            <field name="chatter_stale_signal_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="occurred_at"/>
+                                    <field name="project_id"/>
+                                    <field name="task_id"/>
+                                    <field name="signal_type"/>
+                                    <field name="summary"/>
+                                    <field name="validation_feedback"/>
+                                </list>
+                            </field>
+
+                            <separator string="Sinais rejected do chatter"/>
+                            <field name="chatter_rejected_signal_ids" readonly="1" nolabel="1">
+                                <list create="0" delete="0" edit="0" open_form_view="1">
+                                    <field name="occurred_at"/>
+                                    <field name="project_id"/>
+                                    <field name="task_id"/>
+                                    <field name="signal_type"/>
+                                    <field name="summary"/>
+                                    <field name="validation_feedback"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pg_operational_dashboard_project_list" model="ir.ui.view">
+        <field name="name">project.project.list.pg.operational.dashboard</field>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <list string="Projects" sample="0" create="0" edit="0" delete="0">
+                <field name="name"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="company_id"/>
+                <field name="user_id" string="Project Manager"/>
+                <field name="stage_id" string="Stage"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pg_operational_dashboard_project_search" model="ir.ui.view">
+        <field name="name">project.project.search.pg.operational.dashboard</field>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="company_id"/>
+                <field name="user_id"/>
+                <field name="stage_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_pg_operational_dashboard_task_list" model="ir.ui.view">
+        <field name="name">project.task.list.pg.operational.dashboard</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <list string="Tasks" sample="0" create="0" edit="0" delete="0">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="pg_ai_consultive_flow_stage"/>
+                <field name="pg_ai_recommendation_class"/>
+                <field name="pg_ai_consultive_gate_state"/>
+                <field name="ai_status"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pg_operational_dashboard_task_search" model="ir.ui.view">
+        <field name="name">project.task.search.pg.operational.dashboard</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="pg_ai_consultive_flow_stage"/>
+                <field name="pg_ai_recommendation_class"/>
+                <field name="pg_ai_consultive_gate_state"/>
+                <field name="ai_status"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pg_operational_scope_attention_projects" model="ir.actions.act_window">
+        <field name="name">PG Projects With Scope Attention</field>
+        <field name="res_model">project.project</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_pg_operational_dashboard_project_list"/>
+        <field name="search_view_id" ref="view_pg_operational_dashboard_project_search"/>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_pg_operational_status_attention_projects" model="ir.actions.act_window">
+        <field name="name">PG Projects With Status Attention</field>
+        <field name="res_model">project.project</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_pg_operational_dashboard_project_list"/>
+        <field name="search_view_id" ref="view_pg_operational_dashboard_project_search"/>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_pg_operational_blocked_ai_tasks" model="ir.actions.act_window">
+        <field name="name">PG Blocked AI Tasks</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_pg_operational_dashboard_task_list"/>
+        <field name="search_view_id" ref="view_pg_operational_dashboard_task_search"/>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_pg_operational_ready_ai_tasks" model="ir.actions.act_window">
+        <field name="name">Tarefas Prontas — Brodoo</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_pg_operational_dashboard_task_list"/>
+        <field name="search_view_id" ref="view_pg_operational_dashboard_task_search"/>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_pg_operational_dashboard" model="ir.actions.act_window">
+        <field name="name">Diagnóstico Legacy</field>
+        <field name="res_model">pg.operational.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem
+        id="menu_project_config_pg_operational_dashboard"
+        name="Diagnóstico Legacy"
+        parent="pg_brodoo.menu_project_pg_ai_root"
+        action="action_pg_operational_dashboard"
+        sequence="40"
+        groups="project.group_project_user"
+    />
+</odoo>

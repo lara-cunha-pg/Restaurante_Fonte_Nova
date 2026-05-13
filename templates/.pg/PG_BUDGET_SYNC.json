@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "project_name": null,
+  "project_id": null,
+  "budget_currency": null,
+  "budget_owner": null,
+  "baseline_status": null,
+  "published_budget_line_count": 0,
+  "materiality_threshold": null,
+  "budget_lines": [],
+  "source_metadata": {
+    "source_system": "odoo_parametro_global",
+    "source_model": "project.project",
+    "source_record_id": null,
+    "source_record_url": null,
+    "sync_trigger": "manual_button",
+    "sync_published_at": null,
+    "sync_published_by": null,
+    "repo_branch": null,
+    "payload_hash": null
+  }
+}

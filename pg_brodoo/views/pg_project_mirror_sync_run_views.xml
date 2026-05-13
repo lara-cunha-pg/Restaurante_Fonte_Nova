@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pg_project_mirror_sync_run_list" model="ir.ui.view">
+        <field name="name">pg.project.mirror.sync.run.list</field>
+        <field name="model">pg.project.mirror.sync.run</field>
+        <field name="arch" type="xml">
+            <list string="Runs de Espelho" create="0" delete="0" edit="0">
+                <field name="create_date"/>
+                <field name="project_id"/>
+                <field name="trigger_type"/>
+                <field name="status"/>
+                <field name="quality_review_status"/>
+                <field name="quality_review_blocking_count"/>
+                <field name="quality_review_warning_count"/>
+                <field name="included_scope_count"/>
+                <field name="factual_scope_backlog_count"/>
+                <field name="excluded_noise_count"/>
+                <field name="message"/>
+                <field name="finished_at"/>
+                <button name="action_process_now" type="object" string="Processar" invisible="status != 'queued'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pg_project_mirror_sync_run_form" model="ir.ui.view">
+        <field name="name">pg.project.mirror.sync.run.form</field>
+        <field name="model">pg.project.mirror.sync.run</field>
+        <field name="arch" type="xml">
+            <form string="Run de Espelho" create="0" edit="0" delete="0">
+                <header>
+                    <button name="action_process_now" type="object" string="Processar Agora" class="btn-primary" invisible="status != 'queued'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="project_id" readonly="1"/>
+                            <field name="status" readonly="1"/>
+                            <field name="trigger_type" readonly="1"/>
+                            <field name="trigger_model" readonly="1"/>
+                            <field name="trigger_record_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="started_at" readonly="1"/>
+                            <field name="finished_at" readonly="1"/>
+                            <field name="payload_hash" readonly="1"/>
+                            <field name="published_commit_sha" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Quality Review">
+                        <group>
+                            <field name="quality_review_status" readonly="1"/>
+                            <field name="quality_review_blocking_count" readonly="1"/>
+                            <field name="quality_review_warning_count" readonly="1"/>
+                            <field name="included_scope_count" readonly="1"/>
+                            <field name="factual_scope_backlog_count" readonly="1"/>
+                            <field name="factual_scope_backlog_reason_summary" readonly="1"/>
+                            <field name="excluded_noise_count" readonly="1"/>
+                            <field name="excluded_noise_reason_summary" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="scope_signal_feedback" readonly="1" nolabel="1"/>
+                            <field name="quality_review_feedback" readonly="1" nolabel="1"/>
+                            <field name="factual_scope_backlog_feedback" readonly="1" nolabel="1"/>
+                            <field name="excluded_noise_feedback" readonly="1" nolabel="1"/>
+                        </group>
+                    </group>
+                    <group string="Artefactos Publicados">
+                        <group>
+                            <field name="published_project_file_sha" readonly="1"/>
+                            <field name="published_planning_file_sha" readonly="1"/>
+                            <field name="published_tasks_file_sha" readonly="1"/>
+                            <field name="published_chatter_file_sha" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="published_attachments_file_sha" readonly="1"/>
+                            <field name="published_history_file_sha" readonly="1"/>
+                            <field name="published_context_file_sha" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Resultado">
+                        <field name="message" readonly="1"/>
+                        <field name="log" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pg_project_mirror_sync_run" model="ir.actions.act_window">
+        <field name="name">Mirror Sync Runs</field>
+        <field name="res_model">pg.project.mirror.sync.run</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_project_config_pg_project_mirror_sync_run"
+        name="Runs do Espelho"
+        parent="pg_brodoo.menu_project_pg_ai_root"
+        action="action_pg_project_mirror_sync_run"
+        sequence="30"
+        groups="project.group_project_user"
+    />
+</odoo>

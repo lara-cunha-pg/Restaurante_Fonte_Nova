@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pg_ai_onboarding_wizard_form" model="ir.ui.view">
+        <field name="name">pg.ai.onboarding.wizard.form</field>
+        <field name="model">pg.ai.onboarding.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Brodoo Onboarding">
+                <sheet>
+                    <group>
+                        <group string="Ligação ao Projeto">
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="repository_id" options="{'no_create': True}"/>
+                            <field
+                                name="repository_branch_id"
+                                context="{'pg_ai_repository_id': repository_id}"
+                                options="{'no_create': True}"
+                            />
+                            <field name="scope_sync_enabled" string="Ativar Espelho do Projeto"/>
+                            <field name="status_sync_enabled" string="Ativar Espelho Operacional"/>
+                            <field name="scope_sync_mode"/>
+                        </group>
+                    </group>
+
+                    <group string="Contrato do Projeto">
+                        <group>
+                            <field name="client_unit" placeholder="Unidade ou frente principal do cliente"/>
+                            <field name="odoo_version" placeholder="19.0, 18.0, ..."/>
+                            <field name="odoo_edition"/>
+                            <field name="odoo_environment"/>
+                            <field name="urgency"/>
+                        </group>
+                        <group>
+                            <field name="standard_allowed"/>
+                            <field name="additional_modules_allowed"/>
+                            <field name="studio_allowed"/>
+                            <field name="custom_allowed"/>
+                            <field name="trigger_text" placeholder="O que desencadeou este projeto"/>
+                            <field name="frequency_text" placeholder="Frequência operacional esperada"/>
+                            <field name="volumes_text" placeholder="Volumes, cargas ou escala prevista"/>
+                        </group>
+                    </group>
+
+                    <group string="Contexto Base do Projeto">
+                        <group>
+                            <field name="project_summary" placeholder="Resumo curto do projeto"/>
+                            <field name="project_objective" placeholder="Objetivo principal do projeto"/>
+                            <field name="scope_included_text" placeholder="Uma linha por item incluído no âmbito"/>
+                            <field name="scope_excluded_text" placeholder="Uma linha por item excluído do âmbito"/>
+                            <field name="deliverables_text" placeholder="Uma linha por entregável principal"/>
+                        </group>
+                        <group>
+                            <field name="assumptions_text" placeholder="Uma linha por pressuposto relevante"/>
+                            <field name="restrictions_text" placeholder="Uma linha por restrição relevante"/>
+                            <field name="stakeholders_text" placeholder="Uma linha por stakeholder principal"/>
+                            <field name="milestones_text" placeholder="Uma linha por marco principal"/>
+                        </group>
+                    </group>
+
+                    <group string="Resultado do Onboarding">
+                        <field name="setup_feedback" readonly="1" nolabel="1"/>
+                        <group>
+                            <field name="last_validation_status" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="last_validation_message" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button
+                        name="action_sync_repository_branches"
+                        type="object"
+                        string="Sincronizar Branches"
+                        class="btn btn-secondary"
+                        icon="fa-refresh"
+                        invisible="not repository_id"
+                    />
+                    <button
+                        name="action_validate_publish_readiness"
+                        type="object"
+                        string="Validar Configuração"
+                        class="btn btn-secondary"
+                        icon="fa-check"
+                    />
+                    <button
+                        name="action_apply_onboarding"
+                        type="object"
+                        string="Aplicar Onboarding"
+                        class="btn btn-primary"
+                    />
+                    <button string="Fechar" special="cancel" class="btn btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pg_ai_onboarding_wizard" model="ir.actions.act_window">
+        <field name="name">Brodoo Onboarding</field>
+        <field name="res_model">pg.ai.onboarding.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="menu_project_config_pg_ai_onboarding"
+        name="Onboarding do Projeto"
+        parent="pg_brodoo.menu_project_pg_ai_root"
+        action="action_pg_ai_onboarding_wizard"
+        sequence="10"
+        groups="project.group_project_user"
+    />
+</odoo>

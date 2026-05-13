@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_task_form_ai_dev_assistant" model="ir.ui.view">
+        <field name="name">project.task.form.ai.dev.assistant</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_generate_prompt"
+                    type="object"
+                    string="Gerar Prompt AI"
+                    class="btn-secondary"
+                    icon="fa-magic"
+                    groups="project.group_project_user"
+                    invisible="not id or ai_status == 'running'"
+                />
+                <button
+                    name="action_run_codex"
+                    type="object"
+                    string="Executar com Codex"
+                    class="btn-primary"
+                    icon="fa-play"
+                    groups="project.group_project_user"
+                    invisible="not id or not ai_prompt_final or not ai_repo_id or ai_status in ('queued', 'running')"
+                />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="pg_brodoo" string="AI por Task (Legacy)">
+                    <notebook>
+                        <page string="Legado - Preparar">
+                            <div class="text-muted">
+                                O fluxo principal da V1 passa agora pelo espelho do projeto no repositório.
+                                Esta area de task continua disponivel como funcionalidade legacy para prefill consultivo e execução por task.
+                            </div>
+                            <div class="pg_ai_task_card">
+                                <div class="pg_ai_task_card_header">
+                                    <div>
+                                        <div class="pg_ai_panel_eyebrow">Guided Consultive Flow</div>
+                                        <div class="pg_ai_panel_title">Step-by-step task readiness</div>
+                                        <div class="pg_ai_panel_subtitle">
+                                            O fluxo consultivo fica organizado por discovery, fit-gap, recomendação final e gate antes de desbloquear AI.
+                                        </div>
+                                    </div>
+                                    <div class="pg_ai_status_wrap">
+                                        <field name="pg_ai_consultive_flow_stage" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                    </div>
+                                </div>
+
+                                <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_ai_discovery_step_state" class="o_light_label"/>
+                                        <field name="pg_ai_discovery_step_state" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                        <div class="pg_ai_field_hint">Contexto funcional minimo do projeto e da task.</div>
+                                    </div>
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_ai_fit_gap_step_state" class="o_light_label"/>
+                                        <field name="pg_ai_fit_gap_step_state" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                        <div class="pg_ai_field_hint">Análise mínima de standard antes da recomendação final.</div>
+                                    </div>
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_ai_recommendation_step_state" class="o_light_label"/>
+                                        <field name="pg_ai_recommendation_step_state" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                        <div class="pg_ai_field_hint">Classificação final da recomendacao e justificação obrigatória.</div>
+                                    </div>
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_ai_gate_step_state" class="o_light_label"/>
+                                        <field name="pg_ai_gate_step_state" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                        <div class="pg_ai_field_hint">Gate consultivo explicitamente marcado como pronto.</div>
+                                    </div>
+                                </div>
+
+                                <field
+                                    name="pg_ai_consultive_flow_feedback"
+                                    readonly="1"
+                                    class="pg_ai_textarea pg_ai_textarea--timeline"
+                                    placeholder="O passo consultivo atual e o que falta completar aparecem aqui."
+                                />
+                            </div>
+
+                            <div class="pg_ai_task_card">
+                                <div class="pg_ai_task_card_header">
+                                    <div>
+                                        <div class="pg_ai_panel_eyebrow">Consultive Gate</div>
+                                        <div class="pg_ai_panel_title">Minimum consultive readiness</div>
+                                        <div class="pg_ai_panel_subtitle">
+                                            O fluxo AI fica bloqueado ate existir análise mínima registada e o gate ser marcado como pronto.
+                                        </div>
+                                    </div>
+                                    <div class="pg_ai_status_wrap">
+                                        <field name="pg_ai_consultive_gate_state" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                    </div>
+                                </div>
+
+                                <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_ai_consultive_gate_checked_by_id" class="o_light_label"/>
+                                        <field name="pg_ai_consultive_gate_checked_by_id" readonly="1" options="{'no_open': True}"/>
+                                        <div class="pg_ai_field_hint">Utilizador que validou a prontidão consultiva desta task.</div>
+                                    </div>
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_ai_consultive_gate_checked_at" class="o_light_label"/>
+                                        <field name="pg_ai_consultive_gate_checked_at" readonly="1"/>
+                                        <div class="pg_ai_field_hint">Momento em que o gate consultivo foi validado.</div>
+                                    </div>
+                                </div>
+
+                                <field
+                                    name="pg_ai_consultive_gate_feedback"
+                                    readonly="1"
+                                    class="pg_ai_textarea pg_ai_textarea--timeline"
+                                    placeholder="Os requisitos mínimos do gate consultivo aparecem aqui."
+                                />
+
+                                <field
+                                    name="pg_ai_consultive_gate_notes"
+                                    placeholder="Regista aqui a analise consultiva minima que sustenta o uso do fluxo AI."
+                                    class="pg_ai_textarea pg_ai_textarea--prompt"
+                                />
+
+                                <div class="pg_ai_button_row">
+                                    <button
+                                        name="action_mark_ai_consultive_gate_ready"
+                                        type="object"
+                                        string="Marcar Gate Consultivo Pronto"
+                                        class="btn btn-secondary"
+                                        icon="fa-check-circle"
+                                        groups="project.group_project_user"
+                                        invisible="pg_ai_consultive_gate_state == 'ready'"
+                                    />
+                                    <button
+                                        name="action_reopen_ai_consultive_gate"
+                                        type="object"
+                                        string="Reabrir Gate Consultivo"
+                                        class="btn btn-secondary"
+                                        icon="fa-undo"
+                                        groups="project.group_project_user"
+                                        invisible="pg_ai_consultive_gate_state != 'ready'"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="pg_ai_task_card">
+                                <div class="pg_ai_task_card_header">
+                                    <div>
+                                        <div class="pg_ai_panel_eyebrow">Consultive Recommendation</div>
+                                        <div class="pg_ai_panel_title">Final recommendation classification</div>
+                                        <div class="pg_ai_panel_subtitle">
+                                            Antes de usar AI, a task tem de ficar classificada como standard, modulo adicional, Studio ou custom.
+                                        </div>
+                                    </div>
+                                    <div class="pg_ai_status_wrap">
+                                        <field name="pg_ai_recommendation_class" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                    </div>
+                                </div>
+
+                                <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_ai_recommendation_class" class="o_light_label"/>
+                                        <field name="pg_ai_recommendation_class"/>
+                                        <div class="pg_ai_field_hint">Classificacao consultiva final que sustenta o fluxo AI desta task.</div>
+                                    </div>
+                                    <div class="pg_ai_field_card" invisible="pg_ai_recommendation_class != 'additional_module'">
+                                        <label for="pg_ai_recommended_module" class="o_light_label"/>
+                                        <field name="pg_ai_recommended_module" placeholder="Ex.: approvals, documents, helpdesk"/>
+                                        <div class="pg_ai_field_hint">Obrigatorio quando a recomendação final for um modulo adicional do Odoo.</div>
+                                    </div>
+                                </div>
+
+                                <field
+                                    name="pg_ai_recommendation_feedback"
+                                    readonly="1"
+                                    class="pg_ai_textarea pg_ai_textarea--timeline"
+                                    placeholder="Os requisitos mínimos da classificação consultiva aparecem aqui."
+                                />
+
+                                <div class="pg_ai_button_row">
+                                    <button
+                                        name="action_generate_consultive_prefill"
+                                        type="object"
+                                        string="Gerar Draft Consultivo"
+                                        class="btn btn-secondary"
+                                        icon="fa-magic"
+                                        groups="project.group_project_user"
+                                    />
+                                    <button
+                                        name="action_apply_consultive_prefill"
+                                        type="object"
+                                        string="Aplicar Draft Consultivo"
+                                        class="btn btn-secondary"
+                                        icon="fa-check-circle"
+                                        groups="project.group_project_user"
+                                        invisible="pg_ai_consultive_prefill_status == 'empty' or pg_ai_consultive_prefill_status == 'applied' or pg_ai_consultive_prefill_status == 'dismissed'"
+                                    />
+                                    <button
+                                        name="action_discard_consultive_prefill"
+                                        type="object"
+                                        string="Descartar Draft Consultivo"
+                                        class="btn btn-secondary"
+                                        icon="fa-times-circle"
+                                        groups="project.group_project_user"
+                                        invisible="pg_ai_consultive_prefill_status == 'empty' or pg_ai_consultive_prefill_status == 'applied' or pg_ai_consultive_prefill_status == 'dismissed'"
+                                    />
+                                </div>
+
+                                <div class="pg_ai_field_card" invisible="pg_ai_consultive_prefill_status == 'empty'">
+                                    <div class="pg_ai_panel_eyebrow">Assistive Draft</div>
+                                    <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                        <div class="pg_ai_field_card">
+                                            <label for="pg_ai_consultive_prefill_status" class="o_light_label"/>
+                                            <field name="pg_ai_consultive_prefill_status" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                            <div class="pg_ai_field_hint">Estado atual do draft consultivo sugerido.</div>
+                                        </div>
+                                        <div class="pg_ai_field_card">
+                                            <label for="pg_ai_consultive_prefill_confidence" class="o_light_label"/>
+                                            <field name="pg_ai_consultive_prefill_confidence" readonly="1"/>
+                                            <div class="pg_ai_field_hint">Score de confianca da sugestao atual.</div>
+                                        </div>
+                                        <div class="pg_ai_field_card">
+                                            <label for="pg_ai_recommendation_class_suggested" class="o_light_label"/>
+                                            <field name="pg_ai_recommendation_class_suggested" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                            <div class="pg_ai_field_hint">Classificacao consultiva sugerida antes da decisao final humana.</div>
+                                        </div>
+                                        <div class="pg_ai_field_card" invisible="not pg_ai_recommended_module_suggested">
+                                            <label for="pg_ai_recommended_module_suggested" class="o_light_label"/>
+                                            <field name="pg_ai_recommended_module_suggested" readonly="1"/>
+                                            <div class="pg_ai_field_hint">Modulo sugerido quando a via mais provavel e um modulo adicional.</div>
+                                        </div>
+                                    </div>
+
+                                    <field
+                                        name="pg_ai_consultive_prefill_feedback"
+                                        readonly="1"
+                                        class="pg_ai_textarea pg_ai_textarea--timeline"
+                                        placeholder="O racional do draft consultivo aparece aqui."
+                                    />
+                                    <field
+                                        name="pg_ai_consultive_prefill_signal_feedback"
+                                        readonly="1"
+                                        class="pg_ai_textarea pg_ai_textarea--timeline"
+                                        placeholder="Os sinais de chatter usados por este draft aparecem aqui."
+                                    />
+
+                                    <field
+                                        name="pg_ai_standard_review_suggested"
+                                        readonly="1"
+                                        class="pg_ai_textarea pg_ai_textarea--prompt"
+                                        placeholder="Sugestão de Standard Review."
+                                    />
+                                    <field
+                                        name="pg_ai_additional_module_review_suggested"
+                                        readonly="1"
+                                        class="pg_ai_textarea pg_ai_textarea--prompt"
+                                        placeholder="Sugestão de Additional Module Review."
+                                        invisible="not pg_ai_additional_module_review_suggested"
+                                    />
+                                    <field
+                                        name="pg_ai_studio_review_suggested"
+                                        readonly="1"
+                                        class="pg_ai_textarea pg_ai_textarea--prompt"
+                                        placeholder="Sugestão de Studio Review."
+                                        invisible="not pg_ai_studio_review_suggested"
+                                    />
+                                    <field
+                                        name="pg_ai_recommendation_justification_suggested"
+                                        readonly="1"
+                                        class="pg_ai_textarea pg_ai_textarea--prompt"
+                                        placeholder="Sugestão de Justificação de Recomendação."
+                                    />
+                                </div>
+
+                                <field
+                                    name="pg_ai_standard_review"
+                                    placeholder="Regista aqui o que foi validado no standard ja existente no projeto."
+                                    class="pg_ai_textarea pg_ai_textarea--prompt"
+                                />
+                                <field
+                                    name="pg_ai_additional_module_review"
+                                    placeholder="Regista aqui a avaliação de módulos standard adicionais do Odoo."
+                                    class="pg_ai_textarea pg_ai_textarea--prompt"
+                                    invisible="pg_ai_recommendation_class not in ('additional_module', 'studio', 'custom')"
+                                />
+                                <field
+                                    name="pg_ai_studio_review"
+                                    placeholder="Regista aqui a avaliação da via Studio antes de concluir Studio ou custom."
+                                    class="pg_ai_textarea pg_ai_textarea--prompt"
+                                    invisible="pg_ai_recommendation_class not in ('studio', 'custom')"
+                                />
+                                <field
+                                    name="pg_ai_recommendation_justification"
+                                    placeholder="Justifica aqui porque esta é a classificação final recomendada para a task."
+                                    class="pg_ai_textarea pg_ai_textarea--prompt"
+                                />
+                            </div>
+                        </page>
+                        <page string="Legado - Executar">
+                            <div class="pg_ai_task_workspace">
+                                <div class="pg_ai_task_hero">
+                                    <div class="pg_ai_task_card pg_ai_task_card--accent">
+                                        <div class="pg_ai_task_card_header">
+                                            <div>
+                                                <div class="pg_ai_panel_eyebrow">Execution</div>
+                                                <div class="pg_ai_panel_title">AI delivery workspace</div>
+                                                <div class="pg_ai_panel_subtitle">
+                                                    Seleciona o repositorio, escolhe a branch base e acompanha a entrega gerada.
+                                                </div>
+                                            </div>
+                                            <div class="pg_ai_status_wrap">
+                                                <field name="ai_status" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                            <div class="pg_ai_field_card">
+                                                <label for="ai_repo_id" class="o_light_label"/>
+                                                <field name="ai_repo_id" options="{'no_create': True}"/>
+                                                <div class="pg_ai_field_hint">Repositorio GitHub onde o Codex vai trabalhar.</div>
+                                            </div>
+                                            <div class="pg_ai_field_card">
+                                                <label for="ai_base_branch_id" class="o_light_label"/>
+                                                <field
+                                                    name="ai_base_branch_id"
+                                                    context="{'pg_ai_repository_id': ai_repo_id}"
+                                                    options="{'no_create': True}"
+                                                />
+                                                <div class="pg_ai_field_hint">Branch onde o commit e push serao feitos.</div>
+                                            </div>
+                                            <div class="pg_ai_field_card">
+                                                <label for="ai_branch" class="o_light_label"/>
+                                                <field name="ai_branch" readonly="1"/>
+                                                <div class="pg_ai_field_hint">Branch efetivamente usada pelo fluxo nesta task.</div>
+                                            </div>
+                                            <div class="pg_ai_field_card">
+                                                <label for="ai_commit_sha" class="o_light_label"/>
+                                                <field name="ai_commit_sha" readonly="1"/>
+                                                <div class="pg_ai_field_hint">Ultimo commit gerado pelo fluxo AI nesta task.</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="pg_ai_button_row">
+                                            <button
+                                                name="action_sync_ai_branches"
+                                                type="object"
+                                                string="Sincronizar Branches"
+                                                class="btn btn-secondary"
+                                                icon="fa-code-fork"
+                                                invisible="not ai_repo_id"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div class="pg_ai_task_card">
+                                        <div class="pg_ai_task_card_header">
+                                            <div>
+                                                <div class="pg_ai_panel_eyebrow">Delivery</div>
+                                                <div class="pg_ai_panel_title">GitHub outcome</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="pg_ai_metrics_list">
+                                            <div class="pg_ai_metric_item">
+                                                <div class="pg_ai_metric_label">Delivery Branch</div>
+                                                <field name="ai_branch" readonly="1"/>
+                                            </div>
+                                            <div class="pg_ai_metric_item">
+                                                <div class="pg_ai_metric_label">Commit SHA</div>
+                                                <field name="ai_commit_sha" readonly="1"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="pg_ai_info_note">
+                                            O resultado final, incluindo o resumo e qualquer erro do Codex, aparece mais abaixo neste separador. Neste modo o fluxo faz push direto na branch selecionada.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pg_ai_section_heading">Prompts</div>
+                                <div class="pg_ai_dual_column">
+                                    <div class="pg_ai_task_card">
+                                        <div class="pg_ai_task_card_header">
+                                            <div>
+                                                <div class="pg_ai_panel_eyebrow">Generated</div>
+                                                <div class="pg_ai_panel_title">Prompt AI Draft</div>
+                                            </div>
+                                        </div>
+                                        <field
+                                            name="ai_prompt_draft"
+                                            readonly="1"
+                                            placeholder="O draft gerado pela OpenAI aparece aqui."
+                                            class="pg_ai_textarea pg_ai_textarea--prompt"
+                                        />
+                                    </div>
+
+                                    <div class="pg_ai_task_card">
+                                        <div class="pg_ai_task_card_header">
+                                            <div>
+                                                <div class="pg_ai_panel_eyebrow">Validated</div>
+                                                <div class="pg_ai_panel_title">Prompt AI Final</div>
+                                            </div>
+                                        </div>
+                                        <field
+                                            name="ai_prompt_final"
+                                            placeholder="Edite ou valide aqui o prompt que será enviado ao Codex cloud."
+                                            class="pg_ai_textarea pg_ai_textarea--prompt"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="pg_ai_section_heading">Resultado</div>
+                                <div class="pg_ai_task_card pg_ai_task_card--result">
+                                    <div class="pg_ai_task_card_header">
+                                        <div>
+                                            <div class="pg_ai_panel_eyebrow">Codex</div>
+                                            <div class="pg_ai_panel_title">Execution output</div>
+                                        </div>
+                                    </div>
+                                    <field
+                                        name="ai_response"
+                                        readonly="1"
+                                        placeholder="O output final do Codex aparece aqui."
+                                        class="pg_ai_textarea pg_ai_textarea--result"
+                                    />
+                                    <field
+                                        name="ai_error_message"
+                                        readonly="1"
+                                        placeholder="Sem erros."
+                                        class="pg_ai_textarea pg_ai_textarea--error"
+                                        invisible="ai_status != 'error' and not ai_error_message"
+                                    />
+                                </div>
+                            </div>
+                        </page>
+                        <page string="Avançado (Legacy)">
+                            <group string="Ações Técnicas" col="4">
+                                <button
+                                    name="action_sync_ai_repositories"
+                                    type="object"
+                                    string="Sincronizar Repositórios"
+                                    class="btn-secondary"
+                                    icon="fa-refresh"
+                                    groups="project.group_project_user"
+                                    invisible="not id"
+                                />
+                                <button
+                                    name="action_refresh_chatter_signals"
+                                    type="object"
+                                    string="Atualizar Sinais do Chatter"
+                                    class="btn-secondary"
+                                    icon="fa-comments"
+                                    groups="project.group_project_user"
+                                    invisible="not id"
+                                />
+                                <button
+                                    name="action_view_chatter_signals"
+                                    type="object"
+                                    string="Ver Sinais do Chatter"
+                                    class="btn-secondary"
+                                    icon="fa-list-ul"
+                                    groups="project.group_project_user"
+                                    invisible="not id"
+                                />
+                            </group>
+
+                            <div class="pg_ai_task_card">
+                                <div class="pg_ai_task_card_header">
+                                    <div>
+                                        <div class="pg_ai_panel_eyebrow">Mirror Eligibility</div>
+                                        <div class="pg_ai_panel_title">Minimum publication signals</div>
+                                        <div class="pg_ai_panel_subtitle">
+                                            Sinais minimos para perceber se esta task ja esta suficientemente limpa para o espelho factual.
+                                        </div>
+                                    </div>
+                                    <div class="pg_ai_status_wrap">
+                                        <field name="pg_mirror_task_eligibility_status" widget="badge" readonly="1" class="pg_ai_status_badge"/>
+                                    </div>
+                                </div>
+
+                                <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_mirror_task_eligibility_warning_count" class="o_light_label"/>
+                                        <field name="pg_mirror_task_eligibility_warning_count" readonly="1"/>
+                                        <div class="pg_ai_field_hint">Contagem minima de sinais a rever antes de confiar na task como fonte factual.</div>
+                                    </div>
+                                </div>
+
+                                <field
+                                    name="pg_mirror_task_eligibility_feedback"
+                                    readonly="1"
+                                    class="pg_ai_textarea pg_ai_textarea--timeline"
+                                    placeholder="Os sinais minimos de elegibilidade para espelho aparecem aqui."
+                                />
+                            </div>
+
+                            <div class="pg_ai_task_card">
+                                <div class="pg_ai_task_card_header">
+                                    <div>
+                                        <div class="pg_ai_panel_eyebrow">Chatter Signals</div>
+                                        <div class="pg_ai_panel_title">Filtered project/task chatter cues</div>
+                                        <div class="pg_ai_panel_subtitle">
+                                            Sinais relevantes do chatter entram como grounding auditavel, sem usar mensagens brutas como source of truth.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pg_ai_settings_grid pg_ai_settings_grid--compact">
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_chatter_signals_dirty" class="o_light_label"/>
+                                        <field name="pg_chatter_signals_dirty" readonly="1"/>
+                                        <div class="pg_ai_field_hint">Indica se os sinais precisam de refresh.</div>
+                                    </div>
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_chatter_last_scanned_at" class="o_light_label"/>
+                                        <field name="pg_chatter_last_scanned_at" readonly="1"/>
+                                        <div class="pg_ai_field_hint">Momento da ultima leitura do chatter para esta task.</div>
+                                    </div>
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_chatter_signal_total_count" class="o_light_label"/>
+                                        <field name="pg_chatter_signal_total_count" readonly="1"/>
+                                        <div class="pg_ai_field_hint">Total de sinais associados a esta task.</div>
+                                    </div>
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_chatter_signal_validated_count" class="o_light_label"/>
+                                        <field name="pg_chatter_signal_validated_count" readonly="1"/>
+                                        <div class="pg_ai_field_hint">Sinais validados automaticamente.</div>
+                                    </div>
+                                    <div class="pg_ai_field_card">
+                                        <label for="pg_chatter_signal_candidate_count" class="o_light_label"/>
+                                        <field name="pg_chatter_signal_candidate_count" readonly="1"/>
+                                        <div class="pg_ai_field_hint">Sinais ainda candidatos a revisao.</div>
+                                    </div>
+                                </div>
+
+                                <field
+                                    name="pg_chatter_signal_feedback"
+                                    readonly="1"
+                                    class="pg_ai_textarea pg_ai_textarea--timeline"
+                                    placeholder="Resumo do estado atual dos sinais do chatter."
+                                />
+                            </div>
+
+                            <div class="pg_ai_task_card">
+                                <div class="pg_ai_task_card_header">
+                                    <div>
+                                        <div class="pg_ai_panel_eyebrow">Decision Trail</div>
+                                        <div class="pg_ai_panel_title">Consultive decision history</div>
+                                        <div class="pg_ai_panel_subtitle">
+                                            Historico minimo das decisoes consultivas que sustentaram o gate, o prompt e a execução Brodoo.
+                                        </div>
+                                    </div>
+                                </div>
+                                <field name="pg_ai_consultive_decision_ids" readonly="1" nolabel="1">
+                                    <list create="0" delete="0" edit="0" open_form_view="1">
+                                        <field name="decided_at"/>
+                                        <field name="user_id"/>
+                                        <field name="decision_type"/>
+                                        <field name="recommendation_class"/>
+                                        <field name="ai_target_branch" optional="show"/>
+                                        <field name="decision_summary"/>
+                                    </list>
+                                </field>
+                            </div>
+
+                            <div class="pg_ai_section_heading">Timeline</div>
+                            <div class="pg_ai_task_card">
+                                <div class="pg_ai_task_card_header">
+                                    <div>
+                                        <div class="pg_ai_panel_eyebrow">Live Progress</div>
+                                        <div class="pg_ai_panel_title">Execution timeline</div>
+                                        <div class="pg_ai_panel_subtitle">
+                                            O fluxo corre em background. Os passos sao registados aqui e atualizados automaticamente.
+                                        </div>
+                                    </div>
+                                </div>
+                                <field
+                                    name="ai_progress_log"
+                                    readonly="1"
+                                    placeholder="A timeline da execução Brodoo aparece aqui."
+                                    class="pg_ai_textarea pg_ai_textarea--timeline"
+                                />
+                            </div>
+
+                            <div class="pg_ai_section_heading">Task Memory</div>
+                            <div class="pg_ai_task_card">
+                                <div class="pg_ai_task_card_header">
+                                    <div>
+                                        <div class="pg_ai_panel_eyebrow">Continuity</div>
+                                        <div class="pg_ai_panel_title">Accumulated context</div>
+                                        <div class="pg_ai_panel_subtitle">
+                                            Este contexto e construido automaticamente a partir dos prompts e execucoes anteriores da task.
+                                        </div>
+                                    </div>
+                                </div>
+                                <field
+                                    name="ai_context_summary"
+                                    readonly="1"
+                                    placeholder="A memoria acumulada da task aparece aqui."
+                                    class="pg_ai_textarea pg_ai_textarea--timeline"
+                                />
+                            </div>
+                        </page>
+                    </notebook>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

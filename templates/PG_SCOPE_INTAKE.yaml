@@ -1,0 +1,43 @@
+# PG_SCOPE_INTAKE
+# Fonte estruturada local para ambito inicial do projeto.
+# Este ficheiro nao substitui o PG_CONTEXT.md.
+# Serve para semear e atualizar blocos auto-geridos do contexto.
+
+project_name: [PREENCHER]
+client_unit: [PREENCHER]
+repository_summary: [PREENCHER]
+project_phase: [PONTO POR VALIDAR]
+odoo_edition: [PONTO POR VALIDAR]
+odoo_environment: [PONTO POR VALIDAR]
+standard_allowed: [PONTO POR VALIDAR]
+additional_modules_allowed: [PONTO POR VALIDAR]
+studio_allowed: [PONTO POR VALIDAR]
+custom_allowed: [PONTO POR VALIDAR]
+additional_contract_restrictions: [PONTO POR VALIDAR]
+business_goal: [PREENCHER]
+current_request: [PREENCHER]
+current_process: [PREENCHER]
+problem_or_need: [PREENCHER]
+business_impact: [PREENCHER]
+trigger: [PREENCHER]
+frequency: [PREENCHER]
+volumes: [PREENCHER]
+urgency: [PREENCHER]
+acceptance_criteria:
+  - [PREENCHER]
+users_and_roles:
+  - [PREENCHER]
+known_exceptions:
+  - [PREENCHER]
+approvals:
+  - [PREENCHER]
+documents:
+  - [PREENCHER]
+integrations:
+  - [PREENCHER]
+reporting_needs:
+  - [PREENCHER]
+standard_attempted_or_validated:
+  - [PREENCHER]
+why_standard_was_insufficient:
+  - [PREENCHER]

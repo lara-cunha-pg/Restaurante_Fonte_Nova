@@ -1,0 +1,24 @@
+# Odoo source local (referencia tecnica; nunca versionar)
+/vendor/odoo_core
+/vendor/odoo_src
+/.pg_framework
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Logs / runtime
+*.log
+*.pid
+*.tmp
+*.sqlite*
+
+# IDEs
+.vscode/
+.idea/
+.claude/settings.local.json
+CLAUDE.local.md
+
+# OS
+.DS_Store
+Thumbs.db

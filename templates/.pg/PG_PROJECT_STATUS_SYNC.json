@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "project_name": null,
+  "last_update_at": null,
+  "phase": null,
+  "status_summary": null,
+  "milestones": [],
+  "blockers": [],
+  "risks": [],
+  "next_steps": [],
+  "pending_decisions": [],
+  "go_live_target": null,
+  "owner": null,
+  "source_reference": null,
+  "source_system": "odoo_parametro_global",
+  "source_model": "project.project",
+  "source_record_id": null,
+  "source_record_url": null,
+  "sync_published_at": null,
+  "sync_published_by": null,
+  "sync_trigger": "manual_button",
+  "repo_branch": null
+}

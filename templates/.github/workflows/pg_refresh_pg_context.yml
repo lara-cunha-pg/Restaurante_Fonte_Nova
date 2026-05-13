@@ -1,0 +1,62 @@
+name: PG Refresh Context
+
+on:
+  push:
+    paths:
+      - '.pg/PG_SCOPE_SYNC.json'
+      - '.pg/PG_PROJECT_STATUS_SYNC.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pg-refresh-context-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  refresh-pg-context:
+    if: github.actor != 'github-actions[bot]' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate template access secret
+        shell: bash
+        run: |
+          if [ -z "${{ secrets.PG_TEMPLATE_REPO_TOKEN }}" ]; then
+            echo "PG_TEMPLATE_REPO_TOKEN secret is required to checkout the shared _pg_template repository." >&2
+            exit 1
+          fi
+
+      - name: Checkout shared _pg_template runtime
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.PG_TEMPLATE_REPO != '' && vars.PG_TEMPLATE_REPO || 'bruno-pinheiro-pg/_pg_template' }}
+          ref: ${{ vars.PG_TEMPLATE_REF != '' && vars.PG_TEMPLATE_REF || 'main' }}
+          path: _pg_template_runtime
+          token: ${{ secrets.PG_TEMPLATE_REPO_TOKEN }}
+          fetch-depth: 1
+
+      - name: Refresh PG_CONTEXT.md from snapshots
+        shell: pwsh
+        run: |
+          & "${{ github.workspace }}/_pg_template_runtime/scripts/pg_refresh_pg_context.ps1" -RepoPath "${{ github.workspace }}"
+
+      - name: Commit refreshed PG_CONTEXT.md
+        shell: bash
+        run: |
+          if git diff --quiet -- PG_CONTEXT.md; then
+            echo "No PG_CONTEXT.md changes detected."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PG_CONTEXT.md
+          git commit -m "chore(pg-sync): refresh PG_CONTEXT from snapshots [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
