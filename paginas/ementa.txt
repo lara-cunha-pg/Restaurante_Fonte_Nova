@@ -1,0 +1,552 @@
+<t t-call="website.layout">
+  <t t-set="pageName" t-value="'ementa'"/>
+  <div id="wrap" class="oe_structure">
+
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;family=Great+Vibes&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap');
+
+:root {
+  --fn-black:  #1c1916;
+  --fn-dark:   #231a0e;
+  --fn-brown:  #5c3d1e;
+  --fn-beige:  #f4ede1;
+  --fn-cream:  #faf7f2;
+  --fn-gold:   #b8952a;
+  --fn-gold-l: #d4af58;
+  --fn-blue:   #1B79C4;
+  --fn-blue-d: #0d4f8c;
+  --fn-white:  #ffffff;
+}
+
+#wrap {
+  font-family: 'Inter', sans-serif;
+  color: var(--fn-black);
+  background: var(--fn-cream);
+  overflow-x: hidden;
+}
+
+.fn-serif    { font-family: 'Cormorant Garamond', serif; }
+.fn-kicker {
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: .38em; text-transform: uppercase; color: var(--fn-gold);
+}
+.fn-line { width: 56px; height: 1px; background: var(--fn-gold); margin: 1.6rem 0; }
+.fn-line-c { margin: 1.6rem auto; }
+.fn-script {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400; line-height: 1.35;
+}
+.fn-btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: 1rem 2.2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: .8rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; transition: all .22s ease;
+}
+.fn-btn-gold { background: var(--fn-gold); color: #fff; border: 0; }
+.fn-btn-gold:hover { background: #9a7a20; color: #fff; text-decoration: none; }
+.fn-btn-wh { background: transparent; border: 1.5px solid rgba(255,255,255,.75); color: #fff; }
+.fn-btn-wh:hover { background: rgba(255,255,255,.12); color: #fff; text-decoration: none; }
+.fn-btn-dk { background: transparent; border: 1.5px solid var(--fn-black); color: var(--fn-black); }
+.fn-btn-dk:hover { background: var(--fn-black); color: #fff; text-decoration: none; }
+
+.fn-wa-float {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+  width: 58px; height: 58px; background: #25D366;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 22px rgba(37,211,102,.42);
+  text-decoration: none; transition: transform .22s, box-shadow .22s;
+}
+.fn-wa-float:hover { transform: scale(1.12); }
+.fn-wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+/* ==============================
+   HERO PEQUENO
+   ============================== */
+.fn-hero-sm {
+  position: relative; min-height: 50vh;
+  display: flex; align-items: flex-end; overflow: hidden; padding-bottom: 5rem;
+}
+.fn-hero-sm-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(13,35,78,.32) 0%, rgba(8,22,55,.82) 100%);
+}
+.fn-hero-sm-cnt {
+  position: relative; z-index: 2;
+  max-width: 1280px; margin: 0 auto; padding: 0 2rem; width: 100%;
+}
+.fn-hero-sm-cnt .fn-kicker { color: rgba(255,255,255,.75); margin-bottom: .8rem; }
+.fn-hero-sm h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  font-weight: 400; color: #fff; line-height: 1.1; margin: 0 0 1rem;
+}
+.fn-hero-sm p { font-size: 1.05rem; color: rgba(255,255,255,.78); line-height: 1.65; max-width: 500px; }
+
+/* ==============================
+   FILTRO DE CATEGORIAS
+   ============================== */
+.fn-cat-nav {
+  background: var(--fn-white);
+  border-bottom: 1px solid rgba(28,25,22,.1);
+  position: sticky; top: 0; z-index: 100;
+  padding: 0 1.5rem;
+}
+.fn-cat-nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; gap: 0; overflow-x: auto;
+}
+.fn-cat-nav-inner::-webkit-scrollbar { display: none; }
+.fn-cat-link {
+  padding: 1.2rem 1.8rem;
+  font-size: .78rem; font-weight: 600;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: #8a7060; text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap; transition: all .2s;
+}
+.fn-cat-link:hover, .fn-cat-link.active {
+  color: var(--fn-gold);
+  border-bottom-color: var(--fn-gold);
+  text-decoration: none;
+}
+
+/* ==============================
+   SECÇÃO DE CATEGORIA
+   ============================== */
+.fn-menu-sec {
+  padding: 6rem 1.5rem;
+  max-width: 1200px; margin: 0 auto;
+}
+.fn-menu-sec:nth-child(even) { background: transparent; }
+.fn-menu-sec-hdr {
+  display: flex; align-items: center; gap: 2rem;
+  margin-bottom: 3.5rem;
+}
+.fn-menu-sec-hdr .fn-kicker { flex: none; }
+.fn-menu-sec-line { flex: 1; height: 1px; background: rgba(28,25,22,.12); }
+.fn-menu-sec-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+  font-weight: 400; color: var(--fn-black); margin: 0;
+}
+
+/* Grid pratos — 2 colunas: imagem grande + lista */
+.fn-prato-row {
+  display: grid; grid-template-columns: 1fr 1.4fr;
+  gap: 4rem; align-items: start; margin-bottom: 5rem;
+}
+.fn-prato-row.reverse { direction: rtl; }
+.fn-prato-row.reverse &gt; * { direction: ltr; }
+.fn-prato-img { position: relative; overflow: hidden; }
+.fn-prato-img img {
+  width: 100%; height: 380px;
+  object-fit: cover; display: block;
+  transition: transform .5s ease;
+}
+.fn-prato-img:hover img { transform: scale(1.04); }
+.fn-prato-img-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(28,25,22,.85), transparent);
+  padding: 1.5rem;
+}
+.fn-prato-img-label span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; color: #fff; font-weight: 400;
+}
+.fn-prato-list { display: flex; flex-direction: column; gap: 1.8rem; }
+.fn-prato-item { border-bottom: 1px solid rgba(28,25,22,.1); padding-bottom: 1.8rem; }
+.fn-prato-item:last-child { border-bottom: none; }
+.fn-prato-nome {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 500;
+  color: var(--fn-black); margin: 0 0 .4rem; line-height: 1.2;
+}
+.fn-prato-desc { font-size: .92rem; color: #7a6050; line-height: 1.7; margin: 0; }
+.fn-prato-tag {
+  display: inline-block; margin-top: .6rem;
+  font-size: .68rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--fn-gold); border: 1px solid rgba(184,149,42,.35);
+  padding: .2rem .7rem;
+}
+
+/* Grid pratos — cards simples */
+.fn-prato-cards {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 2rem;
+}
+.fn-prato-card {
+  background: var(--fn-white);
+  border: 1px solid rgba(28,25,22,.08);
+  overflow: hidden;
+  transition: box-shadow .25s;
+}
+.fn-prato-card:hover { box-shadow: 0 8px 32px rgba(28,25,22,.12); }
+.fn-prato-card img {
+  width: 100%; height: 220px;
+  object-fit: cover; display: block;
+  transition: transform .45s;
+}
+.fn-prato-card:hover img { transform: scale(1.04); }
+.fn-prato-card-body { padding: 1.5rem; }
+.fn-prato-card-body h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 500; margin: 0 0 .5rem;
+}
+.fn-prato-card-body p { font-size: .88rem; color: #7a6050; line-height: 1.65; margin: 0; }
+
+/* ==============================
+   BANNER DESTAQUE (cabrito)
+   ============================== */
+.fn-destaque {
+  position: relative; min-height: 420px;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.fn-destaque-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(8,22,55,.92) 45%, rgba(13,50,110,.35) 100%);
+}
+.fn-destaque-cnt {
+  position: relative; z-index: 2;
+  max-width: 1100px; margin: 0 auto; padding: 4rem 2rem;
+}
+.fn-destaque-cnt .fn-kicker { color: var(--fn-gold-l); }
+.fn-destaque-cnt h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 400; color: #fff; margin: 1rem 0 1.2rem; line-height: 1.1;
+}
+.fn-destaque-cnt p { font-size: 1rem; color: rgba(255,255,255,.78); max-width: 460px; line-height: 1.75; margin-bottom: 2rem; }
+
+/* ==============================
+   CTA RESERVAR (fundo beige)
+   ============================== */
+.fn-menu-cta {
+  background: var(--fn-beige); padding: 6rem 1.5rem; text-align: center;
+}
+.fn-menu-cta h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  font-weight: 400; margin: 1rem 0 .8rem;
+}
+.fn-menu-cta p { font-size: 1rem; color: #7a6050; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.fn-menu-cta-btns { display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center; }
+
+/* ==============================
+   DIVISORES POR SECÇÃO
+   ============================== */
+.fn-sec-divider {
+  background: linear-gradient(135deg, #0d1e42 0%, #132952 100%);
+  padding: 3rem 1.5rem; text-align: center;
+}
+.fn-sec-divider h3 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.2rem;
+  color: var(--fn-gold-l); font-weight: 400; margin: 0;
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+@media(max-width:1100px) {
+  .fn-prato-cards { grid-template-columns: repeat(2,1fr); }
+}
+@media(max-width:991px) {
+  .fn-prato-row { grid-template-columns: 1fr; gap: 2rem; }
+  .fn-prato-row.reverse { direction: ltr; }
+  .fn-prato-img img { height: 280px; }
+}
+@media(max-width:767px) {
+  .fn-prato-cards { grid-template-columns: 1fr; }
+  .fn-cat-link { padding: 1rem 1.2rem; font-size: .7rem; }
+  .fn-menu-sec-hdr { flex-direction: column; align-items: flex-start; gap: .8rem; }
+  .fn-menu-sec-line { width: 80px; flex: none; height: 1px; }
+}
+</style>
+
+
+<section class="fn-hero-sm o_colored_level oe_img_bg o_bg_img_center o_bg_img_origin_border_box" style="background-position: center 40%; background-image: url(&quot;/web/image/1290-48538e5b/491947500_1444879596518957_2898930701636407324_n.webp&quot;);" data-scroll-background-ratio="0" data-attachment-id="1287" data-format-mimetype="image/webp" data-resize-width="1920" data-original-id="1287" data-original-src="/web/image/1287-48538e5b/491947500_1444879596518957_2898930701636407324_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp">
+  <div class="fn-hero-sm-ov"/>
+  <div class="fn-hero-sm-cnt">
+    <div class="fn-kicker">Gastronomia Portuguesa</div>
+    <h1 class="fn-serif">A Nossa<br/>Ementa</h1>
+    <p>Pratos com alma, feitos com os melhores ingredientes e a tradição de mais de quarenta anos.</p>
+  </div>
+</section>
+
+
+<nav class="fn-cat-nav o_colored_level">
+  <div class="fn-cat-nav-inner">
+    <a href="#entradas" class="fn-cat-link">Entradas</a>
+    <a href="#carnes" class="fn-cat-link">Carnes &amp;amp; Assados</a>
+    <a href="#peixe" class="fn-cat-link">Peixe &amp;amp; Bacalhau</a>
+    <a href="#grelhados" class="fn-cat-link">Grelhados</a>
+    <a href="#sobremesas" class="fn-cat-link">Sobremesas</a>
+    <a href="#vinhos" class="fn-cat-link">Vinhos</a>
+  </div>
+</nav>
+
+
+<section class="fn-destaque o_colored_level oe_img_bg o_bg_img_center o_bg_img_origin_border_box" style="background-image: url(&quot;/web/image/1288-291c920d/491966645_1449875292686054_4183720613877471663_n.webp&quot;); background-size: cover; background-position: center 45%;" data-attachment-id="1209" data-format-mimetype="image/webp" data-resize-width="1920" data-original-id="1209" data-original-src="/web/image/1209-291c920d/491966645_1449875292686054_4183720613877471663_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp">
+  <div class="fn-destaque-ov"/>
+  <div class="fn-destaque-cnt">
+    <div class="fn-kicker">Especialidade da Casa</div>
+    <h2 class="fn-serif">Cabrito Assado<br/>no Forno</h2>
+    <p>O prato que nos define. Cabrito assado lentamente em forno de pedra com azeite, alho, louro e ervas aromáticas da região. Servido em tacho de barro com arroz do forno.</p>
+    <p class="fn-script" style="font-size:2.4rem;color:rgba(255,255,255,.88);margin:1.5rem 0 2rem;line-height:1.3;">"A receita da felicidade é simples: boa mesa, boa companhia."</p>
+    <a href="/contactos" class="fn-btn fn-btn-gold">Reservar para Provar →</a>
+  </div>
+</section>
+
+
+<div id="entradas" style="background:var(--fn-cream);">
+  <div class="fn-menu-sec o_colored_level">
+    <div class="fn-menu-sec-hdr">
+      <div class="fn-kicker">Para Começar</div>
+      <div class="fn-menu-sec-line"/>
+      <h2 class="fn-serif">Entradas</h2>
+    </div>
+    <div class="fn-prato-row">
+      <div class="fn-prato-img">
+        <img src="/web/image/1296-c42276b7/491947500_1444879596518957_2898930701636407324_n.jpg" alt="" data-attachment-id="1287" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="680" data-original-id="1287" data-original-src="/web/image/1287-48538e5b/491947500_1444879596518957_2898930701636407324_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+        <div class="fn-prato-img-label"><span>Petiscos da Casa</span></div>
+      </div>
+      <div class="fn-prato-list">
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Tábua de Enchidos e Queijos</div>
+          <p class="fn-prato-desc">Seleção de enchidos transmontanos e queijos regionais acompanhados de broa e azeite de qualidade. Uma entrada que celebra os sabores do norte de Portugal.</p>
+          <span class="fn-prato-tag">Partilhar</span>
+        </div>
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Alheira de Mirandela Frita</div>
+          <p class="fn-prato-desc">Alheira artesanal frita na perfeição, servida com migas de broa e legumes salteados. Um clássico da cozinha transmontana que nunca falha.</p>
+          <span class="fn-prato-tag">Tradicional</span>
+        </div>
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Pica-pau da Casa</div>
+          <p class="fn-prato-desc">Cubos de carne marinados em azeite, alho, mostarda e pickles, salteados ao momento. Petisco de eleição para os amigos do convívio.</p>
+          <span class="fn-prato-tag">Petisco</span>
+        </div>
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Presunto de Barroso</div>
+          <p class="fn-prato-desc">Presunto curado de origem rastreável, fatiado ao momento e servido com pão de centeio torrado e azeite virgem extra.</p>
+          <span class="fn-prato-tag">Regionais</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="carnes" style="background:var(--fn-beige);">
+  <div class="fn-menu-sec o_colored_level">
+    <div class="fn-menu-sec-hdr">
+      <div class="fn-kicker">Assados &amp;amp; Guisados</div>
+      <div class="fn-menu-sec-line"/>
+      <h2 class="fn-serif">Carnes e Assados</h2>
+    </div>
+    <div class="fn-prato-row reverse">
+      <div class="fn-prato-img">
+        <img src="/web/image/1294-7e33d084/491966645_1449875292686054_4183720613877471663_n.jpg" alt="" data-attachment-id="1209" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="680" data-original-id="1209" data-original-src="/web/image/1209-291c920d/491966645_1449875292686054_4183720613877471663_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+        <div class="fn-prato-img-label"><span>Assados Tradicionais</span></div>
+      </div>
+      <div class="fn-prato-list">
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Cabrito Assado no Forno</div>
+          <p class="fn-prato-desc">A nossa especialidade máxima. Cabrito assado lentamente com azeite, alho, louro e vinho branco em tacho de barro. Acompanhado de arroz do forno e batatas assadas.</p>
+          <span class="fn-prato-tag">Especialidade da Casa</span>
+        </div>
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Anho Assado</div>
+          <p class="fn-prato-desc">Borrego novo assado com ervas aromáticas, servido com batata a murro e nabiças salteadas. Textura sublime e sabor inconfundível.</p>
+          <span class="fn-prato-tag">Tradicional</span>
+        </div>
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Cozido à Portuguesa</div>
+          <p class="fn-prato-desc">Cozido generoso com os melhores enchidos, carnes e legumes cozidos juntos no tacho de barro. Uma refeição completa que aquece a alma.</p>
+          <span class="fn-prato-tag">Receita de Família</span>
+        </div>
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Vitela Assada com Arroz de Forno</div>
+          <p class="fn-prato-desc">Vitela regional assada no próprio molho, acompanhada de arroz de forno estaladiço. Um prato que combina simplicidade e excelência.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="fn-sec-divider o_colored_level">
+  <h3>"A cozinha portuguesa é um ato de amor ao passado."</h3>
+</div>
+
+
+<div id="peixe" style="background:var(--fn-cream);">
+  <div class="fn-menu-sec o_colored_level">
+    <div class="fn-menu-sec-hdr">
+      <div class="fn-kicker">Do Mar à Mesa</div>
+      <div class="fn-menu-sec-line"/>
+      <h2 class="fn-serif">Peixe &amp;amp; Bacalhau</h2>
+    </div>
+    <div class="fn-prato-row">
+      <div class="fn-prato-img">
+        <img src="/web/image/1292-d83b44c7/494586857_1457311651942418_3939663401736974428_n.jpg" alt="" data-attachment-id="1218" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="680" data-original-id="1218" data-original-src="/web/image/1218-5a25a257/494586857_1457311651942418_3939663401736974428_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+        <div class="fn-prato-img-label"><span>O Fiel Amigo</span></div>
+      </div>
+      <div class="fn-prato-list">
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Bacalhau à Fonte Nova</div>
+          <p class="fn-prato-desc">Lombo de bacalhau gratinado com broa e ervas frescas, servido com batata a murro e nabiças salteadas em azeite e alho. A nossa interpretação do clássico.</p>
+          <span class="fn-prato-tag">Assinatura</span>
+        </div>
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Bacalhau com Broa e Grelos</div>
+          <p class="fn-prato-desc">Bacalhau assado com crosta de broa de milho, azeite e alho, acompanhado de grelos salteados. Uma combinação perfeita da tradição minhota.</p>
+          <span class="fn-prato-tag">Tradicional</span>
+        </div>
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Sardinha Assada na Brasa</div>
+          <p class="fn-prato-desc">Sardinha fresca assada na brasa, servida com pão de milho, salada de pimentos e azeite. Simples, autêntica e inesquecível.</p>
+          <span class="fn-prato-tag">Sazonal</span>
+        </div>
+        <div class="fn-prato-item">
+          <div class="fn-prato-nome">Polvo à Lagareiro</div>
+          <p class="fn-prato-desc">Polvo assado no forno com batata a murro, azeite virgem extra, alho e salsa. Um clássico português executado com mestria.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="grelhados" style="background:var(--fn-beige);">
+  <div class="fn-menu-sec o_colored_level">
+    <div class="fn-menu-sec-hdr">
+      <div class="fn-kicker">Na Brasa</div>
+      <div class="fn-menu-sec-line"/>
+      <h2 class="fn-serif">Grelhados</h2>
+    </div>
+    <div class="fn-prato-cards">
+      <div class="fn-prato-card">
+        <img src="/web/image/1289-05c52b5a/492198655_1449874116019505_7471438736440574042_n.jpg" alt="" data-attachment-id="1212" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="541" data-original-id="1212" data-original-src="/web/image/1212-abfd97bf/492198655_1449874116019505_7471438736440574042_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+        <div class="fn-prato-card-body">
+          <h3>Bife da Vazia</h3>
+          <p>Bife de vaca regional grelhado na perfeição, acompanhado de batata frita e salada verde fresca. Simples e imaculado.</p>
+        </div>
+      </div>
+      <div class="fn-prato-card">
+        <img src="/web/image/1293-e147b95a/488712531_1432320781108172_8937012227924201898_n.jpg" alt="" data-attachment-id="1203" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="541" data-original-id="1203" data-original-src="/web/image/1203-7758d16f/488712531_1432320781108172_8937012227924201898_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+        <div class="fn-prato-card-body">
+          <h3>Costeletinhas de Cabrito</h3>
+          <p>Costeletinhas de cabrito grelhadas na brasa com sal grosso e limão. Acompanhadas de batata a murro e salada.</p>
+          <span class="fn-prato-tag">Especialidade</span>
+        </div>
+      </div>
+      <div class="fn-prato-card">
+        <img src="/web/image/1291-4bc06289/492008390_1467899740883609_9002522002843485957_n.jpg" alt="" data-attachment-id="1210" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="541" data-original-id="1210" data-original-src="/web/image/1210-4e97d71c/492008390_1467899740883609_9002522002843485957_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+        <div class="fn-prato-card-body">
+          <h3>Frango do Campo Grelhado</h3>
+          <p>Meio frango do campo marinado em azeite, limão e ervas, grelhado lentamente para ficar suculento. Um clássico intemporão.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="sobremesas" style="background:var(--fn-cream);">
+  <div class="fn-menu-sec o_colored_level">
+    <div class="fn-menu-sec-hdr">
+      <div class="fn-kicker">Adoçar a Refeição</div>
+      <div class="fn-menu-sec-line"/>
+      <h2 class="fn-serif">Sobremesas</h2>
+    </div>
+    <div class="fn-prato-cards">
+      <div class="fn-prato-card">
+        <img src="/web/image/1288" alt="Pudim Abade de Priscos"/>
+        <div class="fn-prato-card-body">
+          <h3>Pudim Abade de Priscos</h3>
+          <p>O pudim mais famoso de Portugal, feito com a receita tradicional do Abade de Priscos. Cremoso, doce e absolutamente irresistível.</p>
+          <span class="fn-prato-tag">Regional</span>
+        </div>
+      </div>
+      <div class="fn-prato-card">
+        <img src="/web/image/1288" alt="Arroz Doce à Moda do Minho"/>
+        <div class="fn-prato-card-body">
+          <h3>Arroz Doce à Moda do Minho</h3>
+          <p>Arroz doce cremoso com canela e casca de limão, preparado com leite gordo e ovos frescos. A sobremesa que nos liga às avós.</p>
+          <span class="fn-prato-tag">Tradicional</span>
+        </div>
+      </div>
+      <div class="fn-prato-card">
+        <img src="/web/image/1288" alt="Leite Creme com Casca"/>
+        <div class="fn-prato-card-body">
+          <h3>Leite Creme com Casca</h3>
+          <p>Leite creme com casca queimada na hora, perfumado com canela e limão. Uma sobremesa clássica que fecha qualquer refeição com elegância.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="vinhos" style="background:var(--fn-dark);">
+  <div class="fn-menu-sec o_colored_level" style="max-width:1200px;padding:6rem 2rem;">
+    <div class="fn-menu-sec-hdr">
+      <div class="fn-kicker" style="color:var(--fn-gold-l);">Carta de Vinhos</div>
+      <div class="fn-menu-sec-line" style="background:rgba(255,255,255,.15);"/>
+      <h2 class="fn-serif" style="color:#fff;">Vinhos</h2>
+    </div>
+    <div class="fn-prato-row" style="color:#fff;">
+      <div class="fn-prato-img">
+        <img src="/web/image/1295-7295457b/492538545_1450710295935887_1188117270761810830_n.jpg" alt="" data-attachment-id="1213" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="670" data-original-id="1213" data-original-src="/web/image/1213-67efe3e1/492538545_1450710295935887_1188117270761810830_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+      </div>
+      <div class="fn-prato-list">
+        <div class="fn-prato-item" style="border-bottom-color:rgba(255,255,255,.12);">
+          <div class="fn-prato-nome" style="color:#fff;">Vinhos do Douro</div>
+          <p class="fn-prato-desc" style="color:rgba(255,255,255,.65);">Seleção de tintos e brancos das melhores quintas do Douro, escolhidos para harmonizar com a nossa cozinha robusta e tradicional.</p>
+          <span class="fn-prato-tag">Tintos · Brancos · Rosés</span>
+        </div>
+        <div class="fn-prato-item" style="border-bottom-color:rgba(255,255,255,.12);">
+          <div class="fn-prato-nome" style="color:#fff;">Vinhos Verdes</div>
+          <p class="fn-prato-desc" style="color:rgba(255,255,255,.65);">Frescos e aromáticos, ideais para os meses quentes e para acompanhar peixe e entradas. Produtores regionais com identidade.</p>
+          <span class="fn-prato-tag">Brancos · Rosés</span>
+        </div>
+        <div class="fn-prato-item" style="border-bottom-color:rgba(255,255,255,.12);">
+          <div class="fn-prato-nome" style="color:#fff;">Vinhos do Alentejo</div>
+          <p class="fn-prato-desc" style="color:rgba(255,255,255,.65);">Encorpados e complexos, para quem aprecia um vinho com estrutura. Perfeitos com os nossos assados de cabrito e vitela.</p>
+          <span class="fn-prato-tag">Tintos Reserve</span>
+        </div>
+        <div class="fn-prato-item" style="border-bottom:none;">
+          <div class="fn-prato-nome" style="color:#fff;">Porto e Digestivos</div>
+          <p class="fn-prato-desc" style="color:rgba(255,255,255,.65);">Vinho do Porto tawny e ruby para terminar em beleza, acompanhados de licores artesanais e aguardentes tradicionais.</p>
+          <span class="fn-prato-tag">Para Terminar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section class="fn-menu-cta o_colored_level">
+  <div class="fn-kicker">Reserve a Sua Experiência</div>
+  <h2 class="fn-serif">Pronto para Provar?</h2>
+  <p>Ligue-nos ou envie mensagem para reservar a sua mesa. Estamos à sua espera em Baião, com os melhores pratos da cozinha portuguesa.</p>
+  <div class="fn-menu-cta-btns">
+    <a href="/contactos" class="fn-btn fn-btn-gold">Reservar Mesa</a>
+    <a href="tel:+351 255 541 257" class="fn-btn fn-btn-dk">Ligar Agora</a>
+  </div>
+</section>
+
+
+<a href="https://wa.me/351XXXXXXXXX" class="fn-wa-float" target="_blank" rel="noopener" title="Reservar por WhatsApp">
+  <svg viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+  </div>
+</t>

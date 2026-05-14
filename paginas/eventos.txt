@@ -1,0 +1,425 @@
+<t t-call="website.layout">
+  <t t-set="pageName" t-value="'eventos'"/>
+  <div id="wrap" class="oe_structure">
+
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;family=Great+Vibes&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap');
+
+:root {
+  --fn-black:  #1c1916;
+  --fn-dark:   #231a0e;
+  --fn-brown:  #5c3d1e;
+  --fn-beige:  #f4ede1;
+  --fn-cream:  #faf7f2;
+  --fn-gold:   #b8952a;
+  --fn-gold-l: #d4af58;
+  --fn-blue:   #1B79C4;
+  --fn-blue-d: #0d4f8c;
+  --fn-white:  #ffffff;
+}
+
+#wrap {
+  font-family: 'Inter', sans-serif;
+  color: var(--fn-black);
+  background: var(--fn-cream);
+  overflow-x: hidden;
+}
+
+.fn-serif { font-family: 'Cormorant Garamond', serif; }
+.fn-kicker {
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: .38em; text-transform: uppercase; color: var(--fn-gold);
+}
+.fn-line { width: 56px; height: 1px; background: var(--fn-gold); margin: 1.6rem 0; }
+.fn-line-c { margin: 1.6rem auto; }
+.fn-script {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400; line-height: 1.35;
+}
+.fn-btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: 1rem 2.2rem; font-family: 'Inter', sans-serif;
+  font-size: .8rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; transition: all .22s ease;
+}
+.fn-btn-gold { background: var(--fn-gold); color: #fff; border: 0; }
+.fn-btn-gold:hover { background: #9a7a20; color: #fff; text-decoration: none; }
+.fn-btn-wh { background: transparent; border: 1.5px solid rgba(255,255,255,.75); color: #fff; }
+.fn-btn-wh:hover { background: rgba(255,255,255,.12); color: #fff; text-decoration: none; }
+.fn-btn-dk { background: transparent; border: 1.5px solid var(--fn-black); color: var(--fn-black); }
+.fn-btn-dk:hover { background: var(--fn-black); color: #fff; text-decoration: none; }
+
+.fn-wa-float {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+  width: 58px; height: 58px; background: #25D366;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 22px rgba(37,211,102,.42); text-decoration: none;
+  transition: transform .22s;
+}
+.fn-wa-float:hover { transform: scale(1.12); }
+.fn-wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+/* ==============================
+   HERO GRANDE (EVENTOS)
+   ============================== */
+.fn-hero-evt {
+  position: relative; min-height: 75vh;
+  display: flex; align-items: center; overflow: hidden;
+}
+.fn-hero-evt-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(8,22,55,.90) 40%,
+    rgba(13,50,110,.45) 100%
+  );
+}
+.fn-hero-evt-cnt {
+  position: relative; z-index: 2;
+  max-width: 1280px; margin: 0 auto; padding: 5rem 2rem; width: 100%;
+}
+.fn-hero-evt-cnt .fn-kicker { color: var(--fn-gold-l); }
+.fn-hero-evt-cnt h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  font-weight: 400; color: #fff; line-height: 1.08; margin: 1rem 0 1.5rem;
+}
+.fn-hero-evt-cnt h1 em { font-style: italic; color: var(--fn-gold-l); }
+.fn-hero-evt-cnt p {
+  font-size: 1.1rem; color: rgba(255,255,255,.82);
+  line-height: 1.72; max-width: 520px; margin-bottom: 2.5rem;
+}
+.fn-hero-evt-btns { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+
+/* ==============================
+   NOITES DE FADO (destaque)
+   ============================== */
+.fn-fado {
+  background: linear-gradient(135deg, #0d1e42 0%, #132952 100%); padding: 0;
+}
+.fn-fado-grid {
+  display: grid; grid-template-columns: 1.2fr 1fr;
+  min-height: 640px;
+}
+.fn-fado-img { position: relative; overflow: hidden; }
+.fn-fado-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fn-fado-img-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(27,121,196,.25), rgba(13,30,65,.65));
+}
+.fn-fado-txt {
+  padding: 6rem 5.5rem; display: flex; flex-direction: column; justify-content: center; color: #fff;
+}
+.fn-fado-txt h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4.5vw, 5rem);
+  font-weight: 400; color: #fff; margin: 1rem 0 1.5rem; line-height: 1.1;
+}
+.fn-fado-txt h2 em { font-style: italic; color: var(--fn-gold-l); }
+.fn-fado-txt p { font-size: 1rem; color: rgba(255,255,255,.75); line-height: 1.82; max-width: 440px; margin-bottom: 1rem; }
+.fn-proxima-data {
+  background: rgba(184,149,42,.15);
+  border: 1px solid rgba(184,149,42,.35);
+  padding: 1.5rem 2rem; margin: 2rem 0;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.fn-proxima-data .data {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem; font-weight: 300; color: var(--fn-gold-l); line-height: 1;
+  text-align: center;
+}
+.fn-proxima-data .data span {
+  display: block; font-size: .8rem; letter-spacing: .15em;
+  text-transform: uppercase; color: rgba(255,255,255,.55); margin-top: .3rem;
+}
+.fn-proxima-data .info { color: rgba(255,255,255,.85); }
+.fn-proxima-data .info strong { display: block; font-size: 1rem; margin-bottom: .2rem; }
+.fn-proxima-data .info p { font-size: .88rem; color: rgba(255,255,255,.6); margin: 0; line-height: 1.5; }
+
+/* ==============================
+   TIPOS DE EVENTOS
+   ============================== */
+.fn-tipos {
+  background: var(--fn-beige); padding: 7rem 1.5rem;
+}
+.fn-tipos-hdr { text-align: center; margin-bottom: 4.5rem; }
+.fn-tipos-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4.5vw, 4.8rem);
+  font-weight: 400; margin: 1rem 0;
+}
+.fn-tipos-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(2,1fr);
+  gap: 2rem;
+}
+.fn-tipo-card {
+  display: grid; grid-template-columns: 260px 1fr;
+  overflow: hidden;
+  background: var(--fn-white);
+  box-shadow: 0 2px 18px rgba(28,25,22,.08);
+  transition: box-shadow .25s;
+}
+.fn-tipo-card:hover { box-shadow: 0 8px 36px rgba(28,25,22,.15); }
+.fn-tipo-img { position: relative; overflow: hidden; }
+.fn-tipo-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.fn-tipo-card:hover .fn-tipo-img img { transform: scale(1.06); }
+.fn-tipo-body {
+  padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;
+}
+.fn-tipo-body .fn-kicker { font-size: .68rem; }
+.fn-tipo-body h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem; font-weight: 500; margin: .6rem 0 .8rem;
+}
+.fn-tipo-body p { font-size: .9rem; color: #7a6050; line-height: 1.72; margin: 0 0 1.2rem; }
+.fn-tipo-link {
+  font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--fn-gold); text-decoration: none;
+}
+.fn-tipo-link:hover { color: var(--fn-brown); text-decoration: none; }
+
+/* ==============================
+   GALERIA EVENTOS
+   ============================== */
+.fn-gal-evt {
+  background: linear-gradient(135deg, #0d1e42 0%, #132952 100%); padding: 7rem 1.5rem;
+}
+.fn-gal-evt-hdr { text-align: center; margin-bottom: 3.5rem; }
+.fn-gal-evt-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 400; color: #fff; margin: 1rem 0;
+}
+.fn-gal-evt-hdr p { font-size: 1rem; color: rgba(255,255,255,.65); max-width: 500px; margin: 0 auto; }
+.fn-gal-evt-grid {
+  max-width: 1280px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-template-rows: 250px 250px;
+  gap: 1rem;
+}
+.fn-gal-evt-grid .tall { grid-row: span 2; }
+.fn-gal-evt-item { overflow: hidden; }
+.fn-gal-evt-item img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .5s;
+}
+.fn-gal-evt-item:hover img { transform: scale(1.06); }
+
+/* ==============================
+   FORMULÁRIO DE CONTACTO EVENTOS
+   ============================== */
+.fn-form-evt {
+  background: var(--fn-cream); padding: 7rem 1.5rem;
+}
+.fn-form-evt-inner {
+  max-width: 780px; margin: 0 auto;
+}
+.fn-form-evt-hdr { text-align: center; margin-bottom: 3.5rem; }
+.fn-form-evt-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 400; margin: 1rem 0;
+}
+.fn-form-evt-hdr p { font-size: 1rem; color: #7a6050; line-height: 1.72; max-width: 540px; margin: 0 auto; }
+.fn-tel-cta {
+  text-align: center; margin-top: 3rem;
+  display: flex; flex-direction: column; align-items: center; gap: 1.8rem;
+}
+.fn-tel-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400; color: var(--fn-black);
+  text-decoration: none; letter-spacing: .02em;
+  transition: color .2s;
+}
+.fn-tel-num:hover { color: var(--fn-gold); text-decoration: none; }
+.fn-horario-note {
+  font-size: .88rem; color: #9a8070;
+  letter-spacing: .06em; margin: 0;
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+@media(max-width:1199px) {
+  .fn-tipos-grid { grid-template-columns: 1fr; }
+  .fn-tipo-card { grid-template-columns: 220px 1fr; }
+  .fn-gal-evt-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: auto; }
+  .fn-gal-evt-grid .tall { grid-row: span 1; }
+  .fn-gal-evt-item { height: 220px; }
+}
+@media(max-width:991px) {
+  .fn-fado-grid { grid-template-columns: 1fr; }
+  .fn-fado-img { height: 380px; }
+  .fn-fado-txt { padding: 4rem 2.5rem; }
+  .fn-tipo-card { grid-template-columns: 1fr; }
+  .fn-tipo-img { height: 220px; }
+  .fn-form-row { grid-template-columns: 1fr; }
+}
+@media(max-width:767px) {
+  .fn-gal-evt-grid { grid-template-columns: 1fr; }
+  .fn-gal-evt-item { height: 220px; }
+  .fn-fado-txt { padding: 3rem 1.5rem; }
+  .fn-hero-evt-cnt h1 { font-size: 3rem; }
+}
+</style>
+
+
+<section class="fn-hero-evt o_colored_level oe_img_bg o_bg_img_center o_bg_img_origin_border_box" style="background-image: url(&quot;/web/image/1232-c53ee6a5/495686950_1462037301469853_4826235900507169977_n.webp&quot;); background-size: cover; background-position: center 35%;" data-attachment-id="1221" data-format-mimetype="image/webp" data-resize-width="1600" data-original-id="1221" data-original-src="/web/image/1221-c53ee6a5/495686950_1462037301469853_4826235900507169977_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp">
+  <div class="fn-hero-evt-ov"/>
+  <div class="fn-hero-evt-cnt">
+    <div class="fn-kicker">Momentos Inesquecíveis</div>
+    <h1 class="fn-serif">Eventos &amp;amp;<br/><em>Noites de Fado</em></h1>
+    <p>O Fonte Nova é mais do que um restaurante. É um palco para memórias que ficam para a vida — noites de fado, celebrações privadas e jantares de grupo com a alma portuguesa.</p>
+    <div class="fn-hero-evt-btns">
+      <a class="fn-btn fn-btn-gold" href="/contactos">Solicitar Proposta</a>
+      <a class="fn-btn fn-btn-wh" href="/eventos">Ver Tipos de Eventos</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="fn-fado o_colored_level">
+  <div class="fn-fado-grid">
+    <div class="fn-fado-img">
+      <img src="/web/image/1279-c53ee6a5/495686950_1462037301469853_4826235900507169977_n.jpg" alt="" data-attachment-id="1221" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="1600" data-original-id="1221" data-original-src="/web/image/1221-c53ee6a5/495686950_1462037301469853_4826235900507169977_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" srcset="/web/image/1280-d6e00975/495686950_1462037301469853_4826235900507169977_n.jpg 750w, /web/image/1281-73b08b5d/495686950_1462037301469853_4826235900507169977_n.jpg 900w, /web/image/1282-6662a8b5/495686950_1462037301469853_4826235900507169977_n.jpg 1080w, /web/image/1283-24aedca0/495686950_1462037301469853_4826235900507169977_n.jpg 1280w, /web/image/1279-c53ee6a5/495686950_1462037301469853_4826235900507169977_n.jpg 1600w"/><img src="/web/image/FOTO_FADO" alt="Noite de Fado no Restaurante Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+      <div class="fn-fado-img-ov"/>
+    </div>
+    <div class="fn-fado-txt">
+      <div class="fn-kicker" style="color:var(--fn-gold-l);">O Nosso Diferencial</div>
+      <h2 class="fn-serif"><em>Noites de Fado</em><br/>no Fonte Nova</h2>
+      <div class="fn-line" style="background:var(--fn-gold-l);"/>
+      <p>O fado é a alma de Portugal e nós levamo-lo a sério. As nossas noites de fado são eventos ímpares que combinam a gastronomia autêntica com a música mais portuguesa que existe.</p>
+      <p>Mesa posta, vinho no copo, o fado a rasgar a alma. Há experiências que não têm preço — esta é uma delas.</p>
+      <p class="fn-script" style="font-size:2.2rem;color:var(--fn-gold-l);margin:1.5rem 0 2rem;line-height:1.3;">"Uma noite onde a alma canta."</p>
+      <div class="fn-proxima-data">
+        <div class="data">
+          EM BREVE<span>Próxima Data</span>
+        </div>
+        <div class="info">
+          <strong>Noite de Fado Fonte Nova</strong>
+          <p>Jantar incluído · Música ao vivo · Reserva obrigatória</p>
+        </div>
+      </div>
+      <a class="fn-btn fn-btn-gold" href="/contactos">Reservar para a Próxima Noite →</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="fn-tipos o_colored_level" id="tipos">
+  <div class="fn-tipos-hdr">
+    <div class="fn-kicker">Para Cada Ocasião</div>
+    <h2 class="fn-serif">Que Tipo de Evento<br/>está a Planear?</h2>
+    <div class="fn-line fn-line-c"/>
+  </div>
+  <div class="fn-tipos-grid">
+    <div class="fn-tipo-card">
+      <div class="fn-tipo-img">
+        <img src="/web/image/1268-9444ed5a/496007031_1462038071469776_8115888537588636128_n.jpg" alt="" data-attachment-id="1224" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="390" data-original-id="1224" data-original-src="/web/image/1224-d296bfd6/496007031_1462038071469776_8115888537588636128_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+      </div>
+      <div class="fn-tipo-body">
+        <div class="fn-kicker">Grande Grupo</div>
+        <h3>Jantares de Grupo</h3>
+        <p>Desde uma equipa de empresa a uma reunião de família, organizamos jantares para grupos com menus especiais, espaço reservado e atendimento personalizado.</p>
+        <a class="fn-tipo-link" href="/contactos">Solicitar Proposta →</a>
+      </div>
+    </div>
+    <div class="fn-tipo-card">
+      <div class="fn-tipo-img">
+        <img src="/web/image/1269-abbedacb/672574972_1756342032039377_8622992223396896450_n.jpg" alt="" data-attachment-id="1226" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="390" data-original-id="1226" data-original-src="/web/image/1226-1d8560a3/672574972_1756342032039377_8622992223396896450_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+      </div>
+      <div class="fn-tipo-body">
+        <div class="fn-kicker">Celebração</div>
+        <h3>Aniversários</h3>
+        <p>Tornamos o seu aniversário ou o de quem ama numa celebração inesquecível. Decoração, menu personalizado e toda a atenção que merece neste dia especial.</p>
+        <a class="fn-tipo-link" href="/contactos">Solicitar Proposta →</a>
+      </div>
+    </div>
+    <div class="fn-tipo-card">
+      <div class="fn-tipo-img">
+        <img src="/web/image/1270-33ab2894/496003932_3999684770271078_2671284346950999882_n.jpg" alt="" data-attachment-id="1223" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="390" data-original-id="1223" data-original-src="/web/image/1223-01ec3a35/496003932_3999684770271078_2671284346950999882_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+      </div>
+      <div class="fn-tipo-body">
+        <div class="fn-kicker">Empresas</div>
+        <h3>Eventos Empresariais</h3>
+        <p>Almoços de negócios, festas de Natal, team buildings gastronómicos. Um ambiente sofisticado e reservado para a sua empresa, com serviço impecável.</p>
+        <a class="fn-tipo-link" href="/contactos">Solicitar Proposta →</a>
+      </div>
+    </div>
+    <div class="fn-tipo-card">
+      <div class="fn-tipo-img">
+        <img src="/web/image/1272-59086442/621187510_1684142609259320_3804104287770093544_n.jpg" alt="" data-attachment-id="1255" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="390" data-original-id="1255" data-original-src="/web/image/1255-679c7224/621187510_1684142609259320_3804104287770093544_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+      </div>
+      <div class="fn-tipo-body">
+        <div class="fn-kicker">Cultura</div>
+        <h3>Noites Temáticas</h3>
+        <p>Noites de fado, jantares medievais, festas regionais — organizamos experiências culturais gastronómicas únicas que ficam na memória de quem participa.</p>
+        <a class="fn-tipo-link" href="/contactos">Solicitar Proposta →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="fn-gal-evt o_colored_level">
+  <div class="fn-gal-evt-hdr">
+    <div class="fn-kicker" style="color:var(--fn-gold-l);">Momentos Vividos</div>
+    <h2 class="fn-serif">Memórias do Fonte Nova</h2>
+    <div class="fn-line fn-line-c" style="background:var(--fn-gold);"/>
+    <p>Cada evento é único. Cada momento, uma memória que fica.</p>
+  </div>
+  <div class="fn-gal-evt-grid">
+    <div class="fn-gal-evt-item tall">
+      <img src="/web/image/1277-a7ef4940/672574972_1756342032039377_8622992223396896450_n.jpg" alt="" data-attachment-id="1226" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="462" data-original-id="1226" data-original-src="/web/image/1226-1d8560a3/672574972_1756342032039377_8622992223396896450_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+    <div class="fn-gal-evt-item">
+      <img src="/web/image/1275-4879f2b8/677670717_1763961257944121_7816655430835910869_n.jpg" alt="" data-attachment-id="1257" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="462" data-original-id="1257" data-original-src="/web/image/1257-6ebc3e88/677670717_1763961257944121_7816655430835910869_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+    <div class="fn-gal-evt-item">
+      <img src="/web/image/1273-8b074f29/686967133_1771238020549778_1620675870049820712_n.jpg" alt="" data-attachment-id="1258" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="462" data-original-id="1258" data-original-src="/web/image/1258-467401b5/686967133_1771238020549778_1620675870049820712_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+    <div class="fn-gal-evt-item">
+      <img src="/web/image/1278-f90668aa/687039666_1773982810275299_8314330527980853585_n.jpg" alt="" data-attachment-id="1259" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="462" data-original-id="1259" data-original-src="/web/image/1259-ab5b430e/687039666_1773982810275299_8314330527980853585_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+    <div class="fn-gal-evt-item">
+      <img src="/web/image/1276-31c39939/668462318_1753077679032479_3882870531798373494_n.jpg" alt="" data-attachment-id="1260" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="462" data-original-id="1260" data-original-src="/web/image/1260-c2b8c2ff/668462318_1753077679032479_3882870531798373494_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+    <div class="fn-gal-evt-item">
+      <img src="/web/image/1274-b34c25ed/629289950_1696086154731632_6712033387700943302_n.jpg" alt="" data-attachment-id="1266" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="462" data-original-id="1266" data-original-src="/web/image/1266-ad217481/629289950_1696086154731632_6712033387700943302_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+    <div class="fn-gal-evt-item">
+      <img src="/web/image/1271-e1ecb0fe/649974236_1724165978590316_4440442586095081489_n.jpg" alt="" data-attachment-id="1263" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="462" data-original-id="1263" data-original-src="/web/image/1263-2af74c0d/649974236_1724165978590316_4440442586095081489_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+  </div>
+</section>
+
+
+<section class="fn-form-evt o_colored_level" id="contactar">
+  <div class="fn-form-evt-inner">
+    <div class="fn-form-evt-hdr">
+      <div class="fn-kicker">Vamos Conversar</div>
+      <h2 class="fn-serif">Solicitar Proposta<br/>para o Seu Evento</h2>
+      <div class="fn-line fn-line-c"/>
+      <p>Para eventos, jantares de grupo e noites especiais, fale diretamente connosco. Estamos disponíveis para preparar uma proposta à medida.</p>
+    </div>
+    <div class="fn-tel-cta">
+      <a href="tel:+351255541257" class="fn-tel-num">+351 255 541 257</a>
+      <a href="tel:+351255541257" class="fn-btn fn-btn-gold">Ligar Agora</a>
+      <p class="fn-horario-note">Terça a Domingo · 12h–15h e 19h–22h30</p>
+    </div>
+  </div>
+</section>
+
+
+<a href="https://wa.me/351XXXXXXXXX" class="fn-wa-float" target="_blank" rel="noopener" title="Reservar por WhatsApp">
+  <svg viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+  </div>
+</t>

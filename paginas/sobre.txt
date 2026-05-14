@@ -1,0 +1,513 @@
+<t t-call="website.layout">
+  <t t-set="pageName" t-value="'sobre'"/>
+  <div id="wrap" class="oe_structure">
+
+<!--
+==========================================================
+  RESTAURANTE FONTE NOVA — PÁGINA SOBRE
+==========================================================
+  MAPEAMENTO DE IMAGENS:
+  FOTO_LOGO        → images/logo.jpg
+  FOTO_HERO_SOBRE  → images/487824430_1432320831108167_5305339745903201177_n.jpg
+  FOTO_DONO        → images/Dono.jpg
+  FOTO_DONO_MEDIA  → images/490483626_1441465683527015_4717581956696371820_n.jpg
+  FOTO_INTERIOR    → images/487824430_1432320831108167_5305339745903201177_n.jpg
+  FOTO_EVENTO_OLD  → images/496003932_3999684770271078_2671284346950999882_n.jpg
+  FOTO_CRAVOS      → images/677670717_1763961257944121_7816655430835910869_n.jpg
+  FOTO_VINHOS      → images/492538545_1450710295935887_1188117270761810830_n.jpg
+  FOTO_CABRITO     → images/Hero.jpg
+  FOTO_COZIDO      → images/568342834_1604431220563793_6425853711027548368_n.jpg
+==========================================================
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;family=Great+Vibes&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap');
+
+:root {
+  --fn-black:  #1c1916;
+  --fn-dark:   #231a0e;
+  --fn-brown:  #5c3d1e;
+  --fn-beige:  #f4ede1;
+  --fn-cream:  #faf7f2;
+  --fn-gold:   #b8952a;
+  --fn-gold-l: #d4af58;
+  --fn-blue:   #1B79C4;
+  --fn-blue-d: #0d4f8c;
+  --fn-white:  #ffffff;
+}
+
+#wrap {
+  font-family: 'Inter', sans-serif;
+  color: var(--fn-black);
+  background: var(--fn-cream);
+  overflow-x: hidden;
+}
+
+.fn-serif      { font-family: 'Cormorant Garamond', serif; }
+.fn-kicker {
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: .38em; text-transform: uppercase;
+  color: var(--fn-gold);
+}
+.fn-line {
+  width: 56px; height: 1px;
+  background: var(--fn-gold); margin: 1.6rem 0;
+}
+.fn-line-c { margin: 1.6rem auto; }
+.fn-script {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400; line-height: 1.35;
+}
+.fn-btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: 1rem 2.2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: .8rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; transition: all .22s ease;
+}
+.fn-btn-gold { background: var(--fn-gold); color: #fff; border: 0; }
+.fn-btn-gold:hover { background: #9a7a20; color: #fff; text-decoration: none; }
+.fn-btn-dk {
+  background: transparent;
+  border: 1.5px solid var(--fn-black);
+  color: var(--fn-black);
+}
+.fn-btn-dk:hover { background: var(--fn-black); color: #fff; text-decoration: none; }
+.fn-btn-wh {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,.75);
+  color: #fff;
+}
+.fn-btn-wh:hover { background: rgba(255,255,255,.12); color: #fff; text-decoration: none; }
+
+/* WhatsApp flutuante */
+.fn-wa-float {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+  width: 58px; height: 58px; background: #25D366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 22px rgba(37,211,102,.42);
+  text-decoration: none;
+  transition: transform .22s, box-shadow .22s;
+}
+.fn-wa-float:hover { transform: scale(1.12); }
+.fn-wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+/* ==============================
+   HERO PEQUENO (SOBRE)
+   ============================== */
+.fn-hero-sm {
+  position: relative; min-height: 55vh;
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+  padding-bottom: 5rem;
+}
+.fn-hero-sm-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(13,35,78,.32) 0%,
+    rgba(8,22,55,.80) 100%
+  );
+}
+.fn-hero-sm-cnt {
+  position: relative; z-index: 2;
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 2rem; width: 100%;
+}
+.fn-hero-sm-cnt .fn-kicker { color: rgba(255,255,255,.75); margin-bottom: .8rem; }
+.fn-hero-sm h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  font-weight: 400; color: #fff;
+  line-height: 1.1; margin: 0 0 1rem;
+}
+.fn-hero-sm p {
+  font-size: 1.1rem; color: rgba(255,255,255,.8);
+  line-height: 1.65; max-width: 500px; font-weight: 300;
+}
+
+/* ==============================
+   INTRO EMOCIONAL
+   ============================== */
+.fn-intro {
+  background: var(--fn-cream);
+  padding: 7rem 1.5rem; text-align: center;
+}
+.fn-intro-inner { max-width: 780px; margin: 0 auto; }
+.fn-intro h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  font-weight: 300; font-style: italic;
+  color: var(--fn-black); margin: 1rem 0 2rem;
+  line-height: 1.3;
+}
+.fn-intro p {
+  font-size: 1.05rem; line-height: 1.85;
+  color: #5a4535; margin-bottom: 1.2rem;
+}
+
+/* ==============================
+   TIMELINE — HISTÓRIA
+   ============================== */
+.fn-timeline {
+  background: var(--fn-beige);
+  padding: 7rem 1.5rem;
+}
+.fn-timeline-inner {
+  max-width: 900px; margin: 0 auto;
+}
+.fn-timeline-hdr {
+  text-align: center; margin-bottom: 5rem;
+}
+.fn-timeline-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+  font-weight: 400; margin: 1rem 0;
+}
+.fn-tl-item {
+  display: grid; grid-template-columns: 120px 1fr;
+  gap: 2.5rem; margin-bottom: 3.5rem;
+  align-items: start;
+}
+.fn-tl-year {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.2rem; font-weight: 300;
+  color: var(--fn-gold); line-height: 1;
+  text-align: right; padding-top: .2rem;
+  position: relative;
+}
+.fn-tl-year::after {
+  content: '';
+  position: absolute; right: -1.5rem; top: .85rem;
+  width: 10px; height: 10px;
+  background: var(--fn-gold); border-radius: 50%;
+}
+.fn-tl-body {
+  border-left: 1px solid rgba(184,149,42,.3);
+  padding-left: 2rem; padding-bottom: 2rem;
+}
+.fn-tl-body h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; font-weight: 500;
+  margin: 0 0 .7rem; color: var(--fn-black);
+}
+.fn-tl-body p {
+  font-size: .96rem; line-height: 1.8;
+  color: #6a5040; margin: 0;
+}
+
+/* ==============================
+   DONO / FILOSOFIA
+   ============================== */
+.fn-dono { background: linear-gradient(135deg, #0d1e42 0%, #132952 100%); }
+.fn-dono-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 620px;
+}
+.fn-dono-img { position: relative; overflow: hidden; }
+.fn-dono-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.fn-dono-txt {
+  padding: 6rem 5.5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  color: #fff;
+}
+.fn-dono-txt h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4vw, 4.5rem);
+  font-weight: 400; color: #fff; margin: 1rem 0 1.5rem;
+  line-height: 1.12;
+}
+.fn-dono-txt p {
+  font-size: 1rem; color: rgba(255,255,255,.78);
+  line-height: 1.82; max-width: 460px; margin-bottom: 1.2rem;
+}
+.fn-dono-quote {
+  border-left: 3px solid var(--fn-gold);
+  padding-left: 1.5rem; margin: 2rem 0;
+}
+.fn-dono-quote blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-style: italic;
+  color: var(--fn-gold-l); line-height: 1.5;
+  margin: 0; border: 0; padding: 0;
+}
+
+/* ==============================
+   FILOSOFIA / VALORES
+   ============================== */
+.fn-filos {
+  background: var(--fn-cream);
+  padding: 7rem 1.5rem;
+}
+.fn-filos-hdr { text-align: center; margin-bottom: 4.5rem; }
+.fn-filos-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+  font-weight: 400; margin: 1rem 0;
+}
+.fn-filos-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 3rem;
+}
+.fn-filos-item { text-align: center; }
+.fn-filos-icon {
+  width: 72px; height: 72px; margin: 0 auto 1.5rem;
+  background: var(--fn-beige);
+  border: 1px solid rgba(184,149,42,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+}
+.fn-filos-item h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 500;
+  margin: 0 0 .8rem; color: var(--fn-black);
+}
+.fn-filos-item p {
+  font-size: .95rem; color: #6a5040; line-height: 1.75;
+}
+
+/* ==============================
+   GALERIA (sobre)
+   ============================== */
+.fn-galeria-sobre {
+  background: var(--fn-beige); padding: 7rem 1.5rem;
+}
+.fn-galeria-sobre-hdr { text-align: center; margin-bottom: 3.5rem; }
+.fn-galeria-sobre-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 400; margin: 1rem 0;
+}
+.fn-gal-grid-sobre {
+  max-width: 1280px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: 280px 280px;
+  gap: 1rem;
+}
+.fn-gal-grid-sobre .big { grid-column: span 2; }
+.fn-gal-item { overflow: hidden; }
+.fn-gal-item img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .55s ease;
+}
+.fn-gal-item:hover img { transform: scale(1.05); }
+
+/* ==============================
+   CTA RESERVAR
+   ============================== */
+.fn-cta-strip {
+  background: linear-gradient(135deg, #0d1e42 0%, #132952 100%);
+  padding: 6rem 1.5rem; text-align: center;
+}
+.fn-cta-strip h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  font-weight: 400; color: #fff; margin: 1rem 0 .8rem;
+}
+.fn-cta-strip p {
+  font-size: 1rem; color: rgba(255,255,255,.7);
+  max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7;
+}
+.fn-cta-btns {
+  display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center;
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+@media(max-width:991px){
+  .fn-dono-grid { grid-template-columns: 1fr; }
+  .fn-dono-img { height: 380px; }
+  .fn-dono-txt { padding: 4rem 2.5rem; }
+  .fn-filos-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .fn-gal-grid-sobre {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .fn-gal-grid-sobre .big { grid-column: span 1; }
+  .fn-gal-item { height: 220px; }
+  .fn-tl-item { grid-template-columns: 80px 1fr; }
+  .fn-tl-year { font-size: 2.2rem; }
+}
+@media(max-width:767px){
+  .fn-tl-item { grid-template-columns: 1fr; gap: 1rem; }
+  .fn-tl-year { text-align: left; }
+  .fn-tl-year::after { display: none; }
+  .fn-tl-body { border-left: 3px solid rgba(184,149,42,.3); }
+  .fn-gal-grid-sobre { grid-template-columns: 1fr; }
+  .fn-gal-item { height: 240px; }
+  .fn-dono-txt { padding: 3rem 1.5rem; }
+}
+</style>
+
+<!-- ===== HERO ===== -->
+<section class="fn-hero-sm o_colored_level oe_img_bg o_bg_img_center" style="background-image: url('/web/image/FOTO_HERO_SOBRE'); background-size: cover; background-position: center 40%;">
+  <div class="fn-hero-sm-ov"/>
+  <div class="fn-hero-sm-cnt">
+    <div class="fn-kicker">Desde 1983 em Baião</div>
+    <h1 class="fn-serif">A Nossa<br/>História</h1>
+    <p>Mais de quarenta anos a servir gastronomia portuguesa com autenticidade e paixão.</p>
+  </div>
+</section>
+
+<!-- ===== INTRO ===== -->
+<section class="fn-intro o_colored_level">
+  <div class="fn-intro-inner">
+    <div class="fn-kicker">O nosso compromisso</div>
+    <h2>"Diz-me o que comes,<br/>dir-te-ei quem és."</h2>
+    <div class="fn-line fn-line-c"/>
+    <p>No Restaurante Fonte Nova, cada prato é um ato de amor pela cultura portuguesa. Fundado em Baião em 1983, crescemos com a comunidade, alimentámos famílias inteiras, celebrámos vidas e preservámos receitas que fazem parte da memória coletiva desta região.</p>
+    <p>O nosso segredo nunca foi um segredo: ingredientes frescos, respeito pela tradição e o calor humano de quem recebe com o coração aberto.</p>
+  </div>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<section class="fn-timeline o_colored_level">
+  <div class="fn-timeline-inner">
+    <div class="fn-timeline-hdr">
+      <div class="fn-kicker">A Nossa Trajetória</div>
+      <h2 class="fn-serif">Quatro Décadas<br/>de História</h2>
+      <div class="fn-line fn-line-c"/>
+    </div>
+    <div class="fn-tl-item">
+      <div class="fn-tl-year">1983</div>
+      <div class="fn-tl-body">
+        <h3>O Início em Baião</h3>
+        <p>O Restaurante Fonte Nova abre as suas portas em Baião com uma visão clara: servir gastronomia portuguesa genuína num ambiente familiar e acolhedor. A receita do cabrito assado torna-se desde o primeiro dia a grande especialidade da casa.</p>
+      </div>
+    </div>
+    <div class="fn-tl-item">
+      <div class="fn-tl-year">1990s</div>
+      <div class="fn-tl-body">
+        <h3>Crescimento e Reconhecimento</h3>
+        <p>A reputação do Fonte Nova cresce além de Baião. Famílias de toda a região passam a fazer da visita ao restaurante uma tradição. Os fins de semana enchem-se de grupos e celebrações, tornando o espaço num ponto de referência gastronómico do concelho.</p>
+      </div>
+    </div>
+    <div class="fn-tl-item">
+      <div class="fn-tl-year">2000s</div>
+      <div class="fn-tl-body">
+        <h3>Novas Experiências</h3>
+        <p>O restaurante evolui para além da ementa tradicional, introduzindo as noites temáticas e os eventos privados. As noites de fado surgem como uma proposta cultural que combina música, gastronomia e convívio — um diferencial que se tornaria marca registada do Fonte Nova.</p>
+      </div>
+    </div>
+    <div class="fn-tl-item">
+      <div class="fn-tl-year">2010s</div>
+      <div class="fn-tl-body">
+        <h3>Modernização com Alma</h3>
+        <p>O espaço é renovado mantendo sempre a essência que os clientes amam. Novos menus, maior capacidade para eventos e uma presença crescente nas redes sociais aproximam o Fonte Nova de novas gerações sem perder a fidelidade dos clientes históricos.</p>
+      </div>
+    </div>
+    <div class="fn-tl-item">
+      <div class="fn-tl-year">Hoje</div>
+      <div class="fn-tl-body">
+        <h3>Uma Referência Regional</h3>
+        <p>Mais de quarenta anos depois, o Restaurante Fonte Nova continua a ser o que sempre foi: um lugar com alma, história e uma cozinha que respeita a tradição. Uma referência gastronómica em Baião que continua a crescer, a inovar e — sobretudo — a alimentar memórias.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DONO / VOZ DA CASA ===== -->
+<section class="fn-dono o_colored_level">
+  <div class="fn-dono-grid">
+    <div class="fn-dono-img">
+      <img src="/web/image/FOTO_DONO" alt="O anfitrião do Restaurante Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-dono-txt">
+      <div class="fn-kicker" style="color:var(--fn-gold-l);">A Voz da Casa</div>
+      <h2 class="fn-serif">Tradição,<br/>trabalho &amp; um sorriso</h2>
+      <div class="fn-line" style="background:var(--fn-gold-l);"/>
+      <p>Por trás de cada prato do Fonte Nova há uma história de dedicação, de amor pela cozinha portuguesa e de respeito pelos clientes que nos honram com a sua presença.</p>
+      <p>Receber bem faz parte do nosso ADN. Não é um serviço — é uma forma de ser.</p>
+      <div class="fn-dono-quote">
+        <blockquote class="fn-script" style="font-size:32px;">"A liberdade também se vive à mesa."</blockquote>
+      </div>
+      <a href="/contactos" class="fn-btn fn-btn-gold">Reservar Mesa →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FILOSOFIA / VALORES ===== -->
+<section class="fn-filos o_colored_level">
+  <div class="fn-filos-hdr">
+    <div class="fn-kicker">Os Nossos Valores</div>
+    <h2 class="fn-serif">A Filosofia<br/>Fonte Nova</h2>
+    <div class="fn-line fn-line-c"/>
+  </div>
+  <div class="fn-filos-grid">
+    <div class="fn-filos-item">
+      <div class="fn-filos-icon">🌿</div>
+      <h3>Ingredientes Frescos</h3>
+      <p>Trabalhamos com produtores locais e ingredientes sazonais. A qualidade começa na escolha da matéria-prima e reflete-se em cada prato que servimos.</p>
+    </div>
+    <div class="fn-filos-item">
+      <div class="fn-filos-icon">🏺</div>
+      <h3>Receitas Tradicionais</h3>
+      <p>As nossas receitas são herança cultural. Preservamos técnicas e sabores que têm raízes profundas na gastronomia portuguesa, com especial orgulho nas especialidades transmontanas e beirãs.</p>
+    </div>
+    <div class="fn-filos-item">
+      <div class="fn-filos-icon">❤</div>
+      <h3>Atendimento Familiar</h3>
+      <p>Tratamos cada cliente como um convidado em nossa casa. O calor humano é um ingrediente que não entra na ementa, mas está presente em cada interação.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALERIA (sobre) ===== -->
+<section class="fn-galeria-sobre o_colored_level">
+  <div class="fn-galeria-sobre-hdr">
+    <div class="fn-kicker">O Nosso Espaço</div>
+    <h2 class="fn-serif">Momentos do Fonte Nova</h2>
+    <div class="fn-line fn-line-c"/>
+  </div>
+  <div class="fn-gal-grid-sobre">
+    <div class="fn-gal-item big">
+      <img src="/web/image/FOTO_INTERIOR" alt="Sala principal do Restaurante Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_CABRITO" alt="Cabrito assado" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_COZIDO" alt="Cozido à portuguesa em tacho de barro" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_EVENTO_OLD" alt="Sala preparada para evento" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_CRAVOS" alt="Mesa com cravos" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_DONO_MEDIA" alt="Fonte Nova na comunicação social" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:3.5rem;">
+    <a href="/galeria" class="fn-btn fn-btn-dk">Ver Galeria Completa →</a>
+  </div>
+</section>
+
+<!-- ===== CTA RESERVAR ===== -->
+<section class="fn-cta-strip o_colored_level">
+  <div class="fn-kicker" style="color:var(--fn-gold-l);">Venha Conhecer-nos</div>
+  <h2 class="fn-serif">Reserve a Sua Mesa</h2>
+  <p>Estamos em Baião, prontos para recebê-lo com a tradição e o calor que nos define desde 1983.</p>
+  <div class="fn-cta-btns">
+    <a href="/contactos" class="fn-btn fn-btn-gold">Reservar Mesa</a>
+    <a href="/ementa" class="fn-btn fn-btn-wh">Ver Ementa</a>
+  </div>
+</section>
+
+<!-- ===== WHATSAPP FLUTUANTE ===== -->
+<a href="https://wa.me/351XXXXXXXXX" class="fn-wa-float" target="_blank" rel="noopener" title="Reservar por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+  </div>
+</t>

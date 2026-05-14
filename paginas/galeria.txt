@@ -1,0 +1,435 @@
+<t t-call="website.layout">
+  <t t-set="pageName" t-value="'galeria'"/>
+  <div id="wrap" class="oe_structure">
+
+<!--
+==========================================================
+  RESTAURANTE FONTE NOVA — GALERIA
+==========================================================
+  Todas as imagens da pasta images/ são usadas aqui.
+  Substituir os placeholders FOTO_[N] pelos IDs reais
+  após upload para o Odoo.
+
+  Sugestão de organização por categoria:
+  — COMIDA (FOTO_C01 a FOTO_C08):
+    Hero.jpg, 568342834...jpg, 647330815...jpg,
+    688954633...jpg, 504379477...jpg, 503214475...jpg,
+    494586857...jpg, 495077028...jpg
+
+  — ESPAÇO (FOTO_E01 a FOTO_E04):
+    487824430...jpg, 496003932...jpg,
+    492538545...jpg, 677670717...jpg
+
+  — EQUIPA (FOTO_Q01 a FOTO_Q02):
+    Dono.jpg, 490483626...jpg
+
+  — EVENTOS (FOTO_EV01 a FOTO_EV04):
+    496003932...jpg, 495686950...jpg,
+    496007031...jpg, 496054131...jpg
+==========================================================
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;family=Great+Vibes&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap');
+
+:root {
+  --fn-black:  #1c1916;
+  --fn-dark:   #231a0e;
+  --fn-brown:  #5c3d1e;
+  --fn-beige:  #f4ede1;
+  --fn-cream:  #faf7f2;
+  --fn-gold:   #b8952a;
+  --fn-gold-l: #d4af58;
+  --fn-blue:   #1B79C4;
+  --fn-blue-d: #0d4f8c;
+  --fn-white:  #ffffff;
+}
+
+#wrap {
+  font-family: 'Inter', sans-serif;
+  color: var(--fn-black);
+  background: var(--fn-cream);
+  overflow-x: hidden;
+}
+
+.fn-serif { font-family: 'Cormorant Garamond', serif; }
+.fn-kicker {
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: .38em; text-transform: uppercase; color: var(--fn-gold);
+}
+.fn-line { width: 56px; height: 1px; background: var(--fn-gold); margin: 1.6rem 0; }
+.fn-line-c { margin: 1.6rem auto; }
+.fn-script {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400; line-height: 1.35;
+}
+.fn-btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: 1rem 2.2rem; font-family: 'Inter', sans-serif;
+  font-size: .8rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; transition: all .22s ease;
+}
+.fn-btn-gold { background: var(--fn-gold); color: #fff; border: 0; }
+.fn-btn-gold:hover { background: #9a7a20; color: #fff; text-decoration: none; }
+.fn-btn-dk { background: transparent; border: 1.5px solid var(--fn-black); color: var(--fn-black); }
+.fn-btn-dk:hover { background: var(--fn-black); color: #fff; text-decoration: none; }
+.fn-btn-wh { background: transparent; border: 1.5px solid rgba(255,255,255,.75); color: #fff; }
+.fn-btn-wh:hover { background: rgba(255,255,255,.12); color: #fff; text-decoration: none; }
+
+.fn-wa-float {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+  width: 58px; height: 58px; background: #25D366;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 22px rgba(37,211,102,.42); text-decoration: none; transition: transform .22s;
+}
+.fn-wa-float:hover { transform: scale(1.12); }
+.fn-wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+/* ==============================
+   HERO
+   ============================== */
+.fn-hero-gal {
+  position: relative; min-height: 48vh;
+  display: flex; align-items: flex-end; overflow: hidden; padding-bottom: 5rem;
+  background: var(--fn-dark);
+}
+.fn-hero-gal-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(13,35,78,.45) 0%, rgba(8,22,55,.88) 100%);
+}
+.fn-hero-gal-cnt {
+  position: relative; z-index: 2;
+  max-width: 1280px; margin: 0 auto; padding: 0 2rem; width: 100%;
+}
+.fn-hero-gal-cnt .fn-kicker { color: rgba(255,255,255,.7); margin-bottom: .8rem; }
+.fn-hero-gal h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  font-weight: 400; color: #fff; line-height: 1.1; margin: 0 0 1rem;
+}
+.fn-hero-gal p { font-size: 1rem; color: rgba(255,255,255,.75); max-width: 480px; line-height: 1.65; }
+
+/* ==============================
+   FILTRO DE CATEGORIAS
+   ============================== */
+.fn-gal-filter {
+  background: var(--fn-white);
+  border-bottom: 1px solid rgba(28,25,22,.1);
+  position: sticky; top: 0; z-index: 100;
+  padding: 0 1.5rem;
+}
+.fn-gal-filter-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; gap: 0; overflow-x: auto;
+}
+.fn-gal-filter-inner::-webkit-scrollbar { display: none; }
+.fn-gal-btn {
+  padding: 1.1rem 1.8rem;
+  font-size: .76rem; font-weight: 600;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: #8a7060; text-decoration: none;
+  border-bottom: 2px solid transparent; white-space: nowrap;
+  transition: all .2s; cursor: pointer; background: none; border-left: 0; border-right: 0; border-top: 0;
+}
+.fn-gal-btn:hover, .fn-gal-btn.ativo {
+  color: var(--fn-gold); border-bottom-color: var(--fn-gold);
+}
+
+/* ==============================
+   SECÇÃO GALERIA COM TÍTULO
+   ============================== */
+.fn-gal-sec { padding: 5rem 1.5rem; }
+.fn-gal-sec:nth-child(even) { background: var(--fn-beige); }
+.fn-gal-sec:nth-child(odd) { background: var(--fn-cream); }
+
+.fn-gal-sec-hdr { max-width: 1280px; margin: 0 auto 2.5rem; }
+.fn-gal-sec-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400; margin: .5rem 0 0;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.fn-gal-sec-hdr h2::after {
+  content: ''; flex: 1; height: 1px; background: rgba(28,25,22,.12);
+}
+
+/* ==============================
+   GRID MASONRY ESTILO
+   ============================== */
+.fn-masonry {
+  max-width: 1280px; margin: 0 auto;
+  columns: 4; column-gap: 1rem;
+}
+.fn-masonry-item {
+  break-inside: avoid; margin-bottom: 1rem;
+  overflow: hidden; position: relative;
+}
+.fn-masonry-item img {
+  width: 100%; display: block;
+  transition: transform .5s ease;
+}
+.fn-masonry-item:hover img { transform: scale(1.04); }
+.fn-masonry-item .fn-img-caption {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(28,25,22,.75), transparent 50%);
+  opacity: 0; transition: opacity .3s;
+  display: flex; align-items: flex-end; padding: 1.2rem;
+}
+.fn-masonry-item:hover .fn-img-caption { opacity: 1; }
+.fn-masonry-item .fn-img-caption span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-style: italic; color: #fff;
+}
+
+/* Grid 3 colunas uniforme */
+.fn-gal-grid-3 {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem;
+}
+.fn-gal-grid-3 .tall { grid-row: span 2; }
+.fn-gal-grid-3 .wide { grid-column: span 2; }
+.fn-gal-item { overflow: hidden; }
+.fn-gal-item img {
+  width: 100%; height: 280px;
+  object-fit: cover; display: block;
+  transition: transform .5s;
+}
+.fn-gal-item:hover img { transform: scale(1.05); }
+.fn-gal-item.tall img { height: 100%; }
+.fn-gal-item.wide img { height: 280px; }
+
+/* Grid 4 colunas uniforme */
+.fn-gal-grid-4 {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem;
+}
+.fn-gal-grid-4 .fn-gal-item img { height: 260px; }
+
+/* ==============================
+   INSTAGRAM CTA
+   ============================== */
+.fn-insta-cta {
+  background: linear-gradient(135deg, #0d1e42 0%, #132952 100%); padding: 5rem 1.5rem; text-align: center;
+}
+.fn-insta-cta h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-weight: 400; color: #fff; margin: 1rem 0 .8rem;
+}
+.fn-insta-cta p { font-size: 1rem; color: rgba(255,255,255,.65); max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+.fn-insta-handle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-style: italic;
+  color: var(--fn-gold-l); margin-bottom: 2rem;
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+@media(max-width:1100px) {
+  .fn-masonry { columns: 3; }
+  .fn-gal-grid-4 { grid-template-columns: repeat(2,1fr); }
+}
+@media(max-width:767px) {
+  .fn-masonry { columns: 2; }
+  .fn-gal-grid-3 { grid-template-columns: 1fr 1fr; }
+  .fn-gal-grid-3 .wide { grid-column: span 1; }
+}
+@media(max-width:480px) {
+  .fn-masonry { columns: 1; }
+  .fn-gal-grid-3 { grid-template-columns: 1fr; }
+  .fn-gal-grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ==============================
+   JS FILTRO (simples)
+   ============================== */
+</style>
+
+<!-- ===== HERO ===== -->
+<section class="fn-hero-gal o_colored_level oe_img_bg o_bg_img_center" style="background-image: url('/web/image/FOTO_C01'); background-size: cover; background-position: center;">
+  <div class="fn-hero-gal-ov"/>
+  <div class="fn-hero-gal-cnt">
+    <div class="fn-kicker">Imagens do Fonte Nova</div>
+    <h1 class="fn-serif">Galeria</h1>
+    <p>Uma janela para a nossa cozinha, o nosso espaço e os momentos que fazem parte da história do Fonte Nova.</p>
+  </div>
+</section>
+
+<!-- ===== FILTRO ===== -->
+<nav class="fn-gal-filter o_colored_level">
+  <div class="fn-gal-filter-inner">
+    <button class="fn-gal-btn ativo" onclick="filtrarGaleria('todos', this)">Tudo</button>
+    <button class="fn-gal-btn" onclick="filtrarGaleria('comida', this)">Gastronomia</button>
+    <button class="fn-gal-btn" onclick="filtrarGaleria('espaco', this)">Espaço</button>
+    <button class="fn-gal-btn" onclick="filtrarGaleria('eventos', this)">Eventos</button>
+    <button class="fn-gal-btn" onclick="filtrarGaleria('equipa', this)">Equipa</button>
+  </div>
+</nav>
+
+<!-- ===== GASTRONOMIA ===== -->
+<section class="fn-gal-sec o_colored_level" data-categoria="comida" id="gastronomia">
+  <div class="fn-gal-sec-hdr">
+    <div class="fn-kicker">Sabores do Norte</div>
+    <h2 class="fn-serif">Gastronomia</h2>
+  </div>
+  <div class="fn-masonry">
+    <div class="fn-masonry-item">
+      <img src="/web/image/FOTO_C01" alt="Cabrito assado no forno" class="img img-fluid o_we_custom_image" loading="lazy"/>
+      <div class="fn-img-caption"><span>Cabrito Assado</span></div>
+    </div>
+    <div class="fn-masonry-item">
+      <img src="/web/image/FOTO_C02" alt="Cozido à portuguesa em tacho de barro" class="img img-fluid o_we_custom_image" loading="lazy"/>
+      <div class="fn-img-caption"><span>Cozido à Portuguesa</span></div>
+    </div>
+    <div class="fn-masonry-item">
+      <img src="/web/image/FOTO_C03" alt="Bacalhau à moda do Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+      <div class="fn-img-caption"><span>Bacalhau</span></div>
+    </div>
+    <div class="fn-masonry-item">
+      <img src="/web/image/FOTO_C04" alt="Entradas tradicionais em tabuleiro de madeira" class="img img-fluid o_we_custom_image" loading="lazy"/>
+      <div class="fn-img-caption"><span>Entradas Tradicionais</span></div>
+    </div>
+    <div class="fn-masonry-item">
+      <img src="/web/image/FOTO_C05" alt="Prato de carne grelhada" class="img img-fluid o_we_custom_image" loading="lazy"/>
+      <div class="fn-img-caption"><span>Grelhados</span></div>
+    </div>
+    <div class="fn-masonry-item">
+      <img src="/web/image/FOTO_C06" alt="Pizza Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+      <div class="fn-img-caption"><span>Pizza da Casa</span></div>
+    </div>
+    <div class="fn-masonry-item">
+      <img src="/web/image/FOTO_C07" alt="Prato de carne com batata a murro" class="img img-fluid o_we_custom_image" loading="lazy"/>
+      <div class="fn-img-caption"><span>Assados</span></div>
+    </div>
+    <div class="fn-masonry-item">
+      <img src="/web/image/FOTO_C08" alt="Especialidade da casa" class="img img-fluid o_we_custom_image" loading="lazy"/>
+      <div class="fn-img-caption"><span>Sabores do Fonte Nova</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ESPAÇO ===== -->
+<section class="fn-gal-sec o_colored_level" data-categoria="espaco" id="espaco">
+  <div class="fn-gal-sec-hdr">
+    <div class="fn-kicker">Ambiente e Decoração</div>
+    <h2 class="fn-serif">O Nosso Espaço</h2>
+  </div>
+  <div class="fn-gal-grid-3">
+    <div class="fn-gal-item tall">
+      <img src="/web/image/FOTO_E01" alt="Sala principal do Restaurante Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy" style="height:100%;"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_E02" alt="Decoração do Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_E03" alt="Mesa decorada com cravos" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item wide">
+      <img src="/web/image/FOTO_E04" alt="Bar e garrafeira do Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EVENTOS ===== -->
+<section class="fn-gal-sec o_colored_level" data-categoria="eventos" id="eventos-gal">
+  <div class="fn-gal-sec-hdr">
+    <div class="fn-kicker">Celebrações e Noites Especiais</div>
+    <h2 class="fn-serif">Eventos</h2>
+  </div>
+  <div class="fn-gal-grid-4">
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_EV01" alt="Sala preparada para evento" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_EV02" alt="Jantar de grupo no Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_EV03" alt="Aniversário no Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_EV04" alt="Noite de fado" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_E03" alt="Mesa com cravos vermelhos" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_E02" alt="Decoração de evento" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_E01" alt="Sala principal" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_EV01" alt="Celebração" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EQUIPA ===== -->
+<section class="fn-gal-sec o_colored_level" data-categoria="equipa" id="equipa">
+  <div class="fn-gal-sec-hdr">
+    <div class="fn-kicker">As Pessoas por Trás da Magia</div>
+    <h2 class="fn-serif">A Nossa Equipa</h2>
+  </div>
+  <div class="fn-gal-grid-3">
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_Q01" alt="O anfitrião do Restaurante Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_Q02" alt="O Fonte Nova na comunicação social" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+    <div class="fn-gal-item">
+      <img src="/web/image/FOTO_E01" alt="Sala do Fonte Nova" class="img img-fluid o_we_custom_image" loading="lazy"/>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSTAGRAM CTA ===== -->
+<section class="fn-insta-cta o_colored_level">
+  <div class="fn-kicker" style="color:var(--fn-gold-l);">Redes Sociais</div>
+  <h2 class="fn-serif">Acompanhe o Fonte Nova<br/>nas Redes Sociais</h2>
+  <p class="fn-script" style="font-size:40px;color:var(--fn-gold-l);margin:16px 0 24px;line-height:1.3;">"Alguns prazeres não envelhecem... apenas ganham carácter."</p>
+  <div class="fn-insta-handle">@restaurantefontenova</div>
+  <p>Novidades, pratos do dia, noites especiais e muito mais. Siga-nos e fique sempre a par do que acontece em Baião.</p>
+  <div style="display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;">
+    <a href="https://www.instagram.com/fontenova/" target="_blank" rel="noopener" class="fn-btn fn-btn-wh"
+       style="gap:.8rem;">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Instagram
+    </a>
+    <a href="https://www.facebook.com/fontenova/" target="_blank" rel="noopener" class="fn-btn fn-btn-wh"
+       style="gap:.8rem;">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Facebook
+    </a>
+  </div>
+</section>
+
+<!-- ===== SCRIPT FILTRO ===== -->
+<script>
+(function(){
+  function filtrarGaleria(cat, btn) {
+    var secoes = document.querySelectorAll('.fn-gal-sec');
+    var btns = document.querySelectorAll('.fn-gal-btn');
+    btns.forEach(function(b){ b.classList.remove('ativo'); });
+    btn.classList.add('ativo');
+    secoes.forEach(function(s){
+      if(cat === 'todos' || s.dataset.categoria === cat){
+        s.style.display = '';
+      } else {
+        s.style.display = 'none';
+      }
+    });
+  }
+  window.filtrarGaleria = filtrarGaleria;
+})();
+</script>
+
+<!-- ===== WHATSAPP FLUTUANTE ===== -->
+<a href="https://wa.me/351XXXXXXXXX" class="fn-wa-float" target="_blank" rel="noopener" title="Reservar por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+  </div>
+</t>

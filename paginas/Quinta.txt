@@ -1,0 +1,762 @@
+<t t-call="website.layout">
+  <t t-set="pageName" t-value="'homepage'"/>
+  <div id="wrap" class="oe_structure">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap');
+
+#wrap{
+  font-family:'Inter',sans-serif;
+  color:#17382f;
+  background:#f4f0e8;
+}
+
+.ch-title{
+  font-family:'Playfair Display',serif;
+  font-weight:400;
+  line-height:1.15;
+  color:#0f3b2d;
+}
+
+.ch-kicker{
+  color:#c28b45;
+  letter-spacing:.45em;
+  text-transform:uppercase;
+  font-size:.8rem;
+  font-weight:600;
+}
+
+.ch-line{
+  width:82px;
+  height:1px;
+  background:#c28b45;
+  margin:2rem auto;
+}
+
+.ch-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.8rem;
+  padding:1.1rem 2.5rem;
+  background:#c28b45;
+  color:#fff;
+  font-weight:700;
+  text-decoration:none;
+  transition:.2s;
+}
+
+.ch-btn:hover{
+  background:#a87535;
+  color:#fff;
+  text-decoration:none;
+}
+
+.ch-link{
+  color:#17382f;
+  font-weight:600;
+  text-decoration:none;
+  letter-spacing:.03em;
+}
+
+.ch-link:hover{
+  color:#c28b45;
+  text-decoration:none;
+}
+
+/* Header visual */
+.ch-header-spacer{
+  height:92px;
+}
+
+/* Hero */
+.ch-hero{
+  min-height:92vh;
+  background:url('/web/image/PLACEHOLDER-HERO') center/cover no-repeat;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+
+.ch-hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.35);
+}
+
+.ch-hero-content{
+  position:relative;
+  z-index:2;
+  max-width:1000px;
+  padding:2rem;
+}
+
+.ch-hero .ch-kicker{color:#fff;}
+.ch-hero h1{
+  font-size:clamp(4rem,9vw,8.5rem);
+  color:#fff;
+  margin:1.5rem 0;
+}
+
+.ch-hero p{
+  font-size:1.35rem;
+  color:#fff;
+  line-height:1.6;
+}
+
+.ch-hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1.5rem;
+  justify-content:center;
+  margin-top:3rem;
+}
+
+.ch-btn-light{
+  background:#fff;
+  color:#17382f;
+}
+
+.ch-btn-outline{
+  background:transparent;
+  border:2px solid #fff;
+  color:#fff;
+}
+
+/* Intro */
+.ch-intro{
+  background:#f4f0e8;
+  padding:8rem 1.5rem;
+  text-align:center;
+}
+
+.ch-intro h2{
+  font-size:clamp(3rem,5vw,5.5rem);
+  max-width:900px;
+  margin:auto;
+}
+
+.ch-intro p{
+  max-width:900px;
+  margin:0 auto 2rem;
+  font-size:1.3rem;
+  line-height:1.7;
+  color:#4b5565;
+}
+
+/* Wines */
+.ch-wines{
+  background:#f4f0e8;
+}
+
+.ch-wine-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:680px;
+}
+
+.ch-wine-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.ch-wine-text{
+  background:#fff;
+  padding:7rem 6rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.ch-wine-row:nth-child(even) .ch-wine-text{
+  background:#f4f0e8;
+}
+
+.ch-wine-text h3{
+  font-size:clamp(3rem,5vw,5.6rem);
+  margin:1rem 0;
+}
+
+.ch-wine-text h4{
+  font-size:2rem;
+  color:#5f6877;
+  font-weight:400;
+}
+
+.ch-wine-text p{
+  max-width:560px;
+  font-size:1.2rem;
+  line-height:1.7;
+  color:#4b5565;
+}
+
+/* Collection CTA */
+.ch-collection{
+  background:#0d382b;
+  color:#fff;
+  text-align:center;
+  padding:7rem 1.5rem;
+}
+
+.ch-collection h2{
+  color:#fff;
+  font-size:clamp(3rem,5vw,5rem);
+}
+
+.ch-collection p{
+  color:#fff;
+  font-size:1.2rem;
+  line-height:1.7;
+}
+
+/* Heritage */
+.ch-heritage{
+  background:#0d382b;
+  color:#fff;
+}
+
+.ch-heritage-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+}
+
+.ch-heritage-img img{
+  width:100%;
+  height:720px;
+  object-fit:cover;
+  display:block;
+}
+
+.ch-heritage-text{
+  padding:7rem 6rem;
+}
+
+.ch-heritage-text h2{
+  color:#fff;
+  font-size:clamp(3.5rem,5vw,6rem);
+}
+
+.ch-heritage-text p{
+  font-size:1.25rem;
+  line-height:1.7;
+  color:#fff;
+}
+
+.ch-stats{
+  border-top:1px solid rgba(255,255,255,.25);
+  margin-top:4rem;
+  padding-top:3rem;
+  display:flex;
+  gap:5rem;
+}
+
+.ch-stat strong{
+  display:block;
+  color:#c28b45;
+  font-family:'Playfair Display',serif;
+  font-size:3.4rem;
+  font-weight:400;
+}
+
+/* Experiences */
+.ch-experiences{
+  background:#fff;
+  padding:8rem 1.5rem;
+  text-align:center;
+}
+
+.ch-experiences h2{
+  font-size:clamp(3.5rem,6vw,6rem);
+}
+
+.ch-experiences-intro{
+  max-width:780px;
+  margin:auto;
+  font-size:1.35rem;
+  color:#4b5565;
+  line-height:1.7;
+}
+
+.ch-exp-grid{
+  max-width:1280px;
+  margin:5rem auto;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:2rem;
+}
+
+.ch-exp-main,
+.ch-exp-card{
+  position:relative;
+  overflow:hidden;
+}
+
+.ch-exp-main img,
+.ch-exp-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.ch-exp-main{
+  height:560px;
+}
+
+.ch-exp-side{
+  display:grid;
+  gap:2rem;
+}
+
+.ch-exp-card{
+  height:265px;
+}
+
+.ch-exp-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,.05));
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  text-align:left;
+  padding:2.5rem;
+}
+
+.ch-exp-overlay h3{
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;
+  color:#fff;
+}
+
+.ch-exp-card h3{
+  font-size:1.8rem;
+}
+
+/* Tradition */
+.ch-tradition{
+  background:#f4f0e8;
+  padding:8rem 0;
+}
+
+.ch-tradition-grid{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:5rem;
+  align-items:center;
+}
+
+.ch-tradition-text h2{
+  font-size:clamp(3.5rem,5vw,5.8rem);
+}
+
+.ch-tradition-text p{
+  font-size:1.25rem;
+  line-height:1.7;
+  color:#4b5565;
+}
+
+.ch-icons{
+  margin-top:3rem;
+  display:grid;
+  gap:1.7rem;
+}
+
+.ch-icon-item{
+  display:flex;
+  gap:1.5rem;
+  align-items:flex-start;
+}
+
+.ch-icon-box{
+  width:64px;
+  height:64px;
+  background:#0d382b;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.6rem;
+  flex:none;
+}
+
+.ch-gallery-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+}
+
+.ch-gallery-grid img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+}
+
+/* Recognition */
+.ch-recognition{
+  background:#fff;
+  padding:8rem 1.5rem;
+  text-align:center;
+}
+
+.ch-recognition h2{
+  font-size:clamp(3.5rem,5vw,5.8rem);
+}
+
+.ch-awards{
+  max-width:1150px;
+  margin:5rem auto 0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5rem;
+  text-align:left;
+}
+
+.ch-award-icon{
+  color:#c28b45;
+  font-size:2.2rem;
+  margin-bottom:1.5rem;
+}
+
+.ch-awards h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;
+}
+
+.ch-awards p{
+  color:#4b5565;
+  line-height:1.6;
+}
+
+/* Instagram */
+.ch-instagram{
+  background:#f4f0e8;
+  padding:8rem 1.5rem;
+  text-align:center;
+}
+
+.ch-instagram h2{
+  font-size:clamp(3.2rem,5vw,5.5rem);
+}
+
+.ch-insta-grid{
+  max-width:1220px;
+  margin:4rem auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+
+.ch-insta-grid img{
+  width:100%;
+  height:360px;
+  object-fit:cover;
+}
+
+/* Footer */
+.ch-footer{
+  background:#0d382b;
+  color:#fff;
+  padding:6rem 1.5rem 3rem;
+}
+
+.ch-footer-grid{
+  max-width:1280px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.7fr .8fr 1fr .8fr;
+  gap:4rem;
+}
+
+.ch-footer h3,
+.ch-footer h4{
+  color:#c28b45;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:.9rem;
+}
+
+.ch-footer-logo{
+  font-family:'Playfair Display',serif;
+  color:#fff;
+  font-size:2.7rem;
+  line-height:1;
+}
+
+.ch-footer a,
+.ch-footer p{
+  color:rgba(255,255,255,.82);
+  text-decoration:none;
+  line-height:1.8;
+}
+
+.ch-footer-bottom{
+  max-width:1280px;
+  margin:4rem auto 0;
+  padding-top:2rem;
+  border-top:1px solid rgba(255,255,255,.15);
+  display:flex;
+  justify-content:space-between;
+  color:rgba(255,255,255,.65);
+}
+
+/* Responsive */
+@media(max-width:991px){
+  .ch-wine-row,
+  .ch-heritage-grid,
+  .ch-tradition-grid,
+  .ch-exp-grid,
+  .ch-footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .ch-wine-text,
+  .ch-heritage-text{
+    padding:4rem 2rem;
+  }
+
+  .ch-wine-row:nth-child(even) .ch-wine-img{
+    order:-1;
+  }
+
+  .ch-awards,
+  .ch-insta-grid{
+    grid-template-columns:1fr;
+  }
+
+  .ch-hero h1{
+    font-size:4rem;
+  }
+
+  .ch-footer-bottom{
+    flex-direction:column;
+    gap:1rem;
+  }
+}
+</style>
+
+<section class="ch-hero o_colored_level oe_img_bg o_bg_img_center o_bg_img_origin_border_box" data-scroll-background-ratio="0" data-attachment-id="1186" data-format-mimetype="image/webp" style="background-image: url(&quot;/web/image/1197-66508bd8/vides.webp&quot;); background-size: cover;" data-resize-width="1536" data-original-id="1186" data-original-src="/web/image/1186-66508bd8/vides.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp">
+  <div class="ch-hero-content">
+    <div class="ch-kicker">Douro Verde</div>
+    <h1 class="ch-title">Vinhos com raiz<br/>no Douro</h1>
+    <p>Onde o terroir se transforma em experiência.<br/>Um solar histórico que cultiva tradição desde 1994.</p>
+    <div class="ch-hero-actions">
+      <a href="/shop" class="ch-btn ch-btn-light">Descobrir Vinhos →</a>
+      <a href="/experiencias" class="ch-btn ch-btn-outline">Visitar a Quinta →</a>
+    </div>
+  </div>
+</section>
+
+<section class="ch-intro o_colored_level">
+  <div class="container">
+    <div class="ch-kicker">A essência da Casa das Hortas</div>
+    <h2 class="ch-title">Uma paixão cultivada<br/>entre vinhas</h2>
+    <div class="ch-line"/>
+    <p>Casa das Hortas é mais do que um solar histórico no coração do Douro Verde. É o encontro entre tradição secular e visão contemporânea, onde cada garrafa conta a história do nosso terroir único.</p>
+    <p>Desde 1994, cultivamos vinhas com respeito pela terra e paixão pelo vinho. Das nossas colheitas manuais aos prémios internacionais, cada passo reflete o compromisso com a excelência artesanal.</p>
+  </div>
+</section>
+
+<section class="ch-wines o_colored_level">
+  <div class="ch-wine-row">
+    <div class="ch-wine-img">
+      <img src="/web/image/1198-2c311b47/d.o.c.jpg" alt="" data-attachment-id="1189" class="img img-fluid o_we_custom_image o_anim_fade_in o_animate o_animate_on_scroll" data-format-mimetype="image/webp" data-resize-width="1212" data-original-id="1189" data-original-src="/web/image/1189-5b7757db/d.o.c.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" srcset="/web/image/1199-52d86475/d.o.c.jpg 750w, /web/image/1200-17766268/d.o.c.jpg 900w, /web/image/1198-2c311b47/d.o.c.jpg 1212w" loading="eager" style="animation-name: dummy;" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+    </div>
+    <div class="ch-wine-text">
+      <div class="ch-kicker">Douro DOC</div>
+      <h3 class="ch-title">Cabeça de Gaio</h3>
+      <h4>Reserva Tinto</h4>
+      <div class="ch-line" style="margin-left:0"/>
+      <p>Elegante e estruturado, revela camadas de frutos vermelhos maduros, especiarias e notas de madeira tostada. Um vinho de caráter, que reflete a força do Douro.</p>
+      <a href="/shop" class="ch-link">Explorar este vinho →</a>
+    </div>
+  </div>
+
+  <div class="ch-wine-row">
+    <div class="ch-wine-text">
+      <div class="ch-kicker">Vinho Verde DOC</div>
+      <h3 class="ch-title">Saiote</h3>
+      <h4>Vinho Verde Rosé</h4>
+      <div class="ch-line" style="margin-left:0"/>
+      <p>Fresco e aromático, com notas florais e frutos vermelhos. Elegância e leveza numa garrafa que celebra momentos especiais.</p>
+      <a href="/shop" class="ch-link">Explorar este vinho →</a>
+    </div>
+    <div class="ch-wine-img">
+      <img src="/web/image/1201-59eccfb8/vinho%20verde.jpg" alt="" data-attachment-id="1190" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="1212" data-original-id="1190" data-original-src="/web/image/1190-cbfe0dd7/vinho%20verde.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" srcset="/web/image/1202-9bd7dc71/vinho%20verde.jpg 750w, /web/image/1203-73d7b416/vinho%20verde.jpg 900w, /web/image/1201-59eccfb8/vinho%20verde.jpg 1212w" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+    </div>
+  </div>
+
+  <div class="ch-wine-row">
+    <div class="ch-wine-img">
+      <img src="/web/image/1204-79ec62b1/reserva%20branco%20.jpg" alt="" data-attachment-id="1193" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="1212" data-original-id="1193" data-original-src="/web/image/1193-a2adc38e/reserva%20branco%20.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" srcset="/web/image/1205-4302c84e/reserva%20branco%20.jpg 750w, /web/image/1206-db588b43/reserva%20branco%20.jpg 900w, /web/image/1204-79ec62b1/reserva%20branco%20.jpg 1212w" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+    </div>
+    <div class="ch-wine-text">
+      <div class="ch-kicker">Douro DOC</div>
+      <h3 class="ch-title">Cabeça de Gaio</h3>
+      <h4>Reserva Branco</h4>
+      <div class="ch-line" style="margin-left:0"/>
+      <p>Complexo e mineral, equilibra frescura cítrica com notas florais e toque de madeira. Perfeito para gastronomia refinada.</p>
+      <a href="/shop" class="ch-link">Explorar este vinho →</a>
+    </div>
+  </div>
+
+  <div class="ch-wine-row">
+    <div class="ch-wine-text">
+      <div class="ch-kicker">Vinho Verde DOC</div>
+      <h3 class="ch-title">Portal das<br/>Hortas</h3>
+      <h4>Arinto Reserva</h4>
+      <div class="ch-line" style="margin-left:0"/>
+      <p>Vibrante acidez e mineralidade marcante. Aromas cítricos e tropicais que convidam à descoberta.</p>
+      <a href="/shop" class="ch-link">Explorar este vinho →</a>
+    </div>
+    <div class="ch-wine-img">
+      <img src="/web/image/1207-222278b7/arinto.jpg" alt="" data-attachment-id="1194" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="1212" data-original-id="1194" data-original-src="/web/image/1194-7f4b222a/arinto.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" srcset="/web/image/1208-82b52112/arinto.jpg 750w, /web/image/1209-86c0a2cc/arinto.jpg 900w, /web/image/1207-222278b7/arinto.jpg 1212w" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+    </div>
+  </div>
+</section>
+
+<section class="ch-collection o_colored_level">
+  <h2 class="ch-title">Descubra toda a nossa coleção</h2>
+  <p>Portal das Hortas, Cabeça de Gaio, Saiote e edições limitadas.<br/>Cada vinho conta uma história única do Douro.</p>
+  <br/><a href="/shop" class="ch-btn">Ver Todos os Vinhos</a></section>
+
+<section class="ch-heritage o_colored_level">
+  <div class="ch-heritage-grid">
+    <div class="ch-heritage-img">
+      <div data-oe-expression="//player.vimeo.com/video/705447680?autoplay=0&amp;dnt=1" class="media_iframe_video" style="width: 100% !important;"/>
+    </div>
+    <div class="ch-heritage-text">
+      <div class="ch-kicker">Heritage</div>
+      <h2 class="ch-title">Um solar<br/>com história</h2>
+      <div class="ch-line" style="margin-left:0"/>
+      <p>O nosso salão nobre é testemunha viva de décadas de tradição vinícola.</p>
+      <p>Com tetos trabalhados e arquitetura histórica preservada, cada detalhe conta a história de gerações dedicadas à arte do vinho. Desde 1994, honramos este legado combinando métodos tradicionais com inovação contemporânea.</p>
+      <div class="ch-stats">
+        <div class="ch-stat"><strong>1994</strong><span>Fundação</span></div>
+        <div class="ch-stat"><strong>30+</strong><span>Anos de tradição</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ch-experiences o_colored_level">
+  <div class="ch-kicker">Experiências</div>
+  <h2 class="ch-title">Viver a Casa das Hortas</h2>
+  <div class="ch-line"/>
+  <p class="ch-experiences-intro">Mais do que uma prova de vinhos. Uma imersão completa no universo do Douro, onde paisagem, gastronomia e tradição se encontram.</p>
+
+  <div class="ch-exp-grid">
+    <div class="ch-exp-main">
+      <img src="/web/image/1228-199ce5ed/provas-vista.jpg" alt="" data-attachment-id="1195" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="1536" data-original-id="1195" data-original-src="/web/image/1195-199ce5ed/provas-vista.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" srcset="/web/image/1229-c6fd642d/provas-vista.jpg 750w, /web/image/1230-f286c085/provas-vista.jpg 900w, /web/image/1231-5709f148/provas-vista.jpg 1080w, /web/image/1232-8b2b9e0f/provas-vista.jpg 1280w, /web/image/1228-199ce5ed/provas-vista.jpg 1536w" loading="lazy"/><img src="/web/image/PLACEHOLDER-PROVAS" alt="Provas com vista panorâmica" loading="lazy"/>
+      <div class="ch-exp-overlay">
+        <div class="ch-kicker">Experiência Premium</div>
+        <h3>Provas com Vista Panorâmica</h3>
+        <p>Na nossa sala de provas contemporânea, cada copo acompanha a paisagem do Douro numa experiência sensorial completa.</p>
+        <a href="/experiencias" class="ch-link"><font style="color: rgb(194, 139, 69);">Reservar →</font></a>
+      </div>
+    </div>
+
+    <div class="ch-exp-side">
+      <div class="ch-exp-card">
+        <img src="/web/image/1226-cc1e1f34/quinta.jpeg" alt="" data-attachment-id="1196" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="960" data-original-id="1196" data-original-src="/web/image/1196-cc1e1f34/quinta.jpeg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" srcset="/web/image/1227-8a421d0a/quinta.jpeg 750w, /web/image/1226-cc1e1f34/quinta.jpeg 960w" loading="lazy"/><img src="/web/image/PLACEHOLDER-PISCINA" alt="Experiências exclusivas" loading="lazy"/>
+        <div class="ch-exp-overlay">
+          <h3>Experiências Exclusivas</h3>
+          <p>Piscina e vinhas</p>
+        </div>
+      </div>
+
+      <div class="ch-exp-card">
+        <img src="/web/image/1216-9a513ac1/trator.jpg" alt="" data-attachment-id="1210" class="img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="660" data-original-id="1210" data-original-src="/web/image/1210-9a513ac1/trator.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="lazy"/><img src="/web/image/PLACEHOLDER-VINDIMAS" alt="Vindimas autênticas" loading="lazy"/>
+        <div class="ch-exp-overlay">
+          <h3>Vindimas Autênticas</h3>
+          <p>Colheita manual</p>
+        </div>
+      </div>
+    </div>
+  </div><a href="/contactos" class="ch-btn">Reservar Experiência →</a></section>
+
+<section class="ch-tradition o_colored_level">
+  <div class="container">
+    <div class="ch-tradition-grid">
+      <div class="ch-tradition-text">
+        <div class="ch-kicker">Do terroir à garrafa</div>
+        <h2 class="ch-title">Tradição<br/>artesanal</h2>
+        <div class="ch-line" style="margin-left:0"/>
+        <p>Cada garrafa começa nas nossas vinhas, cuidadosamente cultivadas no terroir único do Douro Verde.</p>
+        <p>A vindima manual, o cuidado em cada etapa da produção, e o respeito pela tradição garantem vinhos de caráter distintivo.</p>
+
+        <div class="ch-icons">
+          <div class="ch-icon-item">
+            <div class="ch-icon-box">⌖</div>
+            <div>
+              <h4>Terroir Único</h4>
+              <p>Vinhas no coração do Douro Verde com microclima excecional</p>
+            </div>
+          </div>
+          <div class="ch-icon-item">
+            <div class="ch-icon-box">◉</div>
+            <div>
+              <h4>Produção Artesanal</h4>
+              <p>Vindima manual e processos tradicionais preservados</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ch-gallery-grid">
+        <img src="/web/image/1222-8ad8e9fc/vides.jpg" alt="" data-attachment-id="1186" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="690" data-original-id="1186" data-original-src="/web/image/1186-66508bd8/vides.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+        <img src="/web/image/1215-9069c11a/uvas.jpg" alt="" data-attachment-id="1211" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="660" data-original-id="1211" data-original-src="/web/image/1211-9069c11a/uvas.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+        <img src="/web/image/1217-4756d3e6/cestos.jpg" alt="" data-attachment-id="1212" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="660" data-original-id="1212" data-original-src="/web/image/1212-4756d3e6/cestos.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+        <img src="/web/image/1220-eef248ce/trator-2.jpg" alt="" data-attachment-id="1213" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="690" data-original-id="1213" data-original-src="/web/image/1213-ee4ee3b7/trator-2.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ch-recognition o_colored_level">
+  <div class="ch-kicker">Reconhecimento</div>
+  <h2 class="ch-title">Presentes nos palcos<br/>internacionais</h2>
+  <div class="ch-line"/>
+  <p class="ch-experiences-intro">Dos nossos terroirs em Portugal aos maiores eventos vinícolas do mundo. A qualidade dos nossos vinhos é reconhecida internacionalmente.</p>
+
+  <div class="ch-awards">
+    <div>
+      <div class="ch-award-icon">⌑</div>
+      <h3>ProWein Düsseldorf</h3>
+      <p>Presença na maior feira de vinhos do mundo, representando a excelência portuguesa.</p>
+    </div>
+    <div>
+      <div class="ch-award-icon">⌑</div>
+      <h3>Wine Paris</h3>
+      <p>Distinções em competições internacionais que celebram a inovação.</p>
+    </div>
+    <div>
+      <div class="ch-award-icon">⌑</div>
+      <h3>Essência do Vinho</h3>
+      <p>Prémios nacionais de excelência que reconhecem a nossa qualidade.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ch-instagram o_colored_level">
+  <h2 class="ch-title">Acompanhe a vida na quinta</h2>
+  <p><strong>@casadashortas</strong></p>
+
+  <div class="ch-insta-grid">
+    <img src="/web/image/1219-51b6b12b/vides.jpg" alt="" data-attachment-id="1186" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="586" data-original-id="1186" data-original-src="/web/image/1186-66508bd8/vides.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+    <img src="/web/image/1218-e9ad6b5d/uvas.jpg" alt="" data-attachment-id="1211" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="586" data-original-id="1211" data-original-src="/web/image/1211-9069c11a/uvas.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+    <img src="/web/image/1223-144e191a/provas-vista.jpg" alt="" data-attachment-id="1195" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="586" data-original-id="1195" data-original-src="/web/image/1195-199ce5ed/provas-vista.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+    <img src="/web/image/1221-eb198b2a/vinho%20verde.jpg" alt="" data-attachment-id="1190" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="586" data-original-id="1190" data-original-src="/web/image/1190-cbfe0dd7/vinho%20verde.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+    <img src="/web/image/1224-9e63220e/cestos.jpg" alt="" data-attachment-id="1212" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="586" data-original-id="1212" data-original-src="/web/image/1212-4756d3e6/cestos.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+    <img src="/web/image/1225-4c49cf0f/quinta.jpeg" alt="" data-attachment-id="1196" class="img img-fluid o_we_custom_image o_animate o_animate_on_scroll o_anim_fade_in" data-format-mimetype="image/webp" data-resize-width="586" data-original-id="1196" data-original-src="/web/image/1196-cc1e1f34/quinta.jpeg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" loading="eager" data-scroll-zone-start="0" data-scroll-zone-end="100"/>
+  </div><a href="https://www.instagram.com/casahortas/" class="ch-link" target="_blank">Seguir no Instagram →</a></section>
+
+
+  </div>
+</t>

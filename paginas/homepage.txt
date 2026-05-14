@@ -1,0 +1,671 @@
+<t t-call="website.layout">
+  <t t-set="pageName" t-value="'homepage'"/>
+  <div id="wrap" class="oe_structure">
+
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;family=Great+Vibes&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap');
+
+:root {
+  --fn-black:  #1c1916;
+  --fn-dark:   #231a0e;
+  --fn-brown:  #5c3d1e;
+  --fn-beige:  #f4ede1;
+  --fn-cream:  #faf7f2;
+  --fn-gold:   #b8952a;
+  --fn-gold-l: #d4af58;
+  --fn-blue:   #1B79C4;
+  --fn-blue-d: #0d4f8c;
+  --fn-white:  #ffffff;
+}
+
+#wrap {
+  font-family: 'Inter', sans-serif;
+  color: var(--fn-black);
+  background: var(--fn-cream);
+  overflow-x: hidden;
+}
+
+/* — Utilitários — */
+.fn-serif      { font-family: 'Cormorant Garamond', serif; }
+.fn-kicker {
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: .38em; text-transform: uppercase;
+  color: var(--fn-gold);
+}
+.fn-line {
+  width: 56px; height: 1px;
+  background: var(--fn-gold);
+  margin: 1.6rem 0;
+}
+.fn-line-c { margin: 1.6rem auto; }
+.fn-script {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400; line-height: 1.35;
+}
+
+/* — Botões — */
+.fn-btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: 1rem 2.2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: .8rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; transition: all .22s ease;
+  cursor: pointer;
+}
+.fn-btn-gold { background: var(--fn-gold); color: #fff; border: 0; }
+.fn-btn-gold:hover { background: #9a7a20; color: #fff; text-decoration: none; }
+.fn-btn-wh {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,.75);
+  color: #fff;
+}
+.fn-btn-wh:hover { background: rgba(255,255,255,.12); color: #fff; text-decoration: none; }
+.fn-btn-dk {
+  background: transparent;
+  border: 1.5px solid var(--fn-black);
+  color: var(--fn-black);
+}
+.fn-btn-dk:hover { background: var(--fn-black); color: #fff; text-decoration: none; }
+
+/* ==============================
+   HERO
+   ============================== */
+.fn-hero {
+  position: relative; min-height: 96vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden;
+}
+.fn-hero-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(13, 35, 78, 0.45) 0%,
+    rgba(13, 50, 110, 0.58) 55%,
+    rgba(8, 22, 55, 0.84) 100%
+  );
+}
+.fn-hero-cnt {
+  position: relative; z-index: 2;
+  max-width: 900px; padding: 2rem 1.5rem;
+}
+.fn-hero-logo {
+  width: 120px; height: auto;
+  margin-bottom: 2.8rem;
+  filter: brightness(0) invert(1);
+}
+.fn-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.4rem, 7.5vw, 7.5rem);
+  font-weight: 400; color: #fff;
+  line-height: 1.08; margin: 0 0 1.5rem;
+}
+.fn-hero h1 em {
+  font-style: italic; color: var(--fn-gold-l);
+}
+.fn-hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,.85);
+  line-height: 1.7; max-width: 560px;
+  margin: 0 auto 3rem; font-weight: 300;
+}
+.fn-hero-actions {
+  display: flex; flex-wrap: wrap; gap: 1.2rem;
+  justify-content: center;
+}
+.fn-scroll-hint {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  color: rgba(255,255,255,.5); font-size: .68rem; letter-spacing: .28em; text-transform: uppercase;
+}
+.fn-scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.55), transparent);
+  animation: spulse 2.2s ease-in-out infinite;
+}
+@keyframes spulse {
+  0%,100% { opacity:.55; } 50% { opacity:1; }
+}
+
+/* ==============================
+   SOBRE (preview)
+   ============================== */
+.fn-sobre { background: var(--fn-cream); }
+.fn-sobre-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 680px;
+}
+.fn-sobre-img {
+  position: relative; overflow: hidden;
+  background-size: cover; background-position: center;
+}
+.fn-sobre-img-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(27,121,196,.32), transparent);
+}
+.fn-sobre-txt {
+  background: var(--fn-cream);
+  padding: 7rem 6rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.fn-sobre-txt h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4vw, 4.8rem);
+  font-weight: 400; color: var(--fn-black);
+  line-height: 1.12; margin: 1rem 0 1.5rem;
+}
+.fn-sobre-txt p {
+  font-size: 1.02rem; line-height: 1.82;
+  color: #5a4535; margin-bottom: 1.1rem;
+  max-width: 460px;
+}
+.fn-badge {
+  display: inline-flex; align-items: center; gap: 1.2rem;
+  background: var(--fn-dark); color: #fff;
+  padding: 1.2rem 2rem; margin-top: 1.5rem;
+}
+.fn-badge strong {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem; font-weight: 400;
+  color: var(--fn-gold-l); line-height: 1;
+}
+.fn-badge span {
+  font-size: .75rem; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.7);
+  line-height: 1.5;
+}
+
+/* ==============================
+   ESPECIALIDADES
+   ============================== */
+.fn-espec {
+  background: var(--fn-beige);
+  padding: 7rem 1.5rem;
+}
+.fn-sec-hdr {
+  text-align: center; margin-bottom: 4.5rem;
+}
+.fn-sec-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 5.2rem);
+  font-weight: 400; color: var(--fn-black);
+  margin: 1rem 0 .5rem;
+}
+.fn-sec-hdr p {
+  max-width: 540px; margin: 0 auto;
+  color: #6a5040; font-size: 1rem; line-height: 1.7;
+}
+.fn-esp-grid {
+  max-width: 1280px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+.fn-esp-card {
+  position: relative; overflow: hidden;
+  height: 420px;
+  background: #2a2420;
+}
+.fn-esp-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  z-index: 0; display: block;
+}
+.fn-esp-ov {
+  position: absolute; inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top,
+    rgba(28,25,22,.9) 0%,
+    rgba(28,25,22,.15) 55%);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem 1.8rem; color: #fff;
+  transition: background .3s ease;
+  pointer-events: none;
+}
+.fn-esp-card:hover .fn-esp-ov {
+  background: linear-gradient(to top, rgba(28,25,22,.95) 0%, rgba(28,25,22,.3) 55%);
+}
+.fn-esp-ov .fn-kicker { color: var(--fn-gold-l); }
+.fn-esp-ov h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem; font-weight: 400;
+  color: #fff; margin: .5rem 0 .5rem;
+  line-height: 1.15;
+}
+.fn-esp-ov p {
+  font-size: .85rem; color: rgba(255,255,255,.72);
+  line-height: 1.55; margin: 0;
+}
+.fn-esp-cta {
+  text-align: center; margin-top: 3.5rem;
+}
+
+/* ==============================
+   EXPERIÊNCIA (mosaico)
+   ============================== */
+.fn-exp {
+  background: linear-gradient(135deg, #0d1e42 0%, #132952 100%);
+  padding: 7rem 1.5rem; color: #fff;
+}
+.fn-exp-hdr {
+  text-align: center; margin-bottom: 4rem;
+}
+.fn-exp-hdr h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 400; color: #fff; margin: 1rem 0 .5rem;
+}
+.fn-exp-hdr p {
+  font-size: 1rem; color: rgba(255,255,255,.68);
+  max-width: 520px; margin: 0 auto; line-height: 1.7;
+}
+.fn-mosaic {
+  max-width: 1280px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr;
+  grid-template-rows: 290px 290px;
+  gap: 1rem;
+}
+.fn-mos-item {
+  overflow: hidden; position: relative;
+  background: #2a2420;
+}
+.fn-mos-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  z-index: 0; display: block;
+}
+.fn-mos-item.span2 { grid-row: span 2; }
+.fn-exp-cta { text-align: center; margin-top: 3.5rem; }
+
+/* ==============================
+   EVENTOS / FADO
+   ============================== */
+.fn-evt { background: var(--fn-beige); }
+.fn-evt-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 560px;
+}
+.fn-evt-img {
+  position: relative; overflow: hidden;
+  background-size: cover; background-position: center;
+}
+.fn-evt-img-ov {
+  position: absolute; inset: 0;
+  background: rgba(27, 121, 196, 0.42);
+}
+.fn-evt-blob {
+  position: absolute;
+  top: -70px; left: -70px;
+  width: 280px; height: 280px;
+  background: var(--fn-blue);
+  border-radius: 58% 42% 68% 32% / 52% 62% 38% 48%;
+  opacity: 0.82; z-index: 2; pointer-events: none;
+}
+.fn-evt-txt {
+  background: var(--fn-cream);
+  padding: 6rem 5.5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  color: var(--fn-black);
+}
+.fn-evt-txt h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4vw, 4.8rem);
+  font-weight: 400; color: var(--fn-black);
+  line-height: 1.12; margin: 1rem 0 1.5rem;
+}
+.fn-evt-txt h2 em { font-style: italic; color: var(--fn-gold); }
+.fn-evt-txt p {
+  font-size: 1rem; color: #5a4535;
+  line-height: 1.8; max-width: 440px; margin-bottom: 1rem;
+}
+.fn-evt-tags {
+  display: flex; flex-wrap: wrap; gap: .65rem;
+  margin: 1.5rem 0 2.5rem;
+}
+.fn-evt-tag {
+  padding: .38rem 1rem;
+  border: 1px solid rgba(212,175,88,.4);
+  color: var(--fn-gold-l);
+  font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
+}
+
+/* ==============================
+   REVIEWS
+   ============================== */
+.fn-revs {
+  background: var(--fn-cream);
+  padding: 7rem 1.5rem; text-align: center;
+}
+.fn-revs h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 4vw, 4.2rem);
+  font-weight: 400; color: var(--fn-black); margin: 1rem 0 4rem;
+}
+.fn-revs-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 2rem;
+}
+.fn-rev-card {
+  background: var(--fn-white);
+  padding: 2.5rem 2rem; text-align: left;
+  border-bottom: 3px solid var(--fn-gold);
+  box-shadow: 0 2px 18px rgba(28,25,22,.07);
+}
+.fn-stars { color: var(--fn-gold); font-size: 1.05rem; margin-bottom: 1.2rem; }
+.fn-rev-card blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.22rem; font-style: italic;
+  color: var(--fn-black); line-height: 1.65;
+  margin: 0 0 1.4rem; border: 0; padding: 0;
+}
+.fn-rev-author {
+  font-size: .8rem; font-weight: 600;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--fn-brown);
+}
+.fn-rev-src { font-size: .76rem; color: #999; margin-top: .2rem; }
+
+/* ==============================
+   CONTACTOS (strip)
+   ============================== */
+.fn-contact {
+  background: var(--fn-dark); padding: 7rem 1.5rem;
+}
+.fn-contact-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: start;
+}
+.fn-contact h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 4vw, 4.2rem);
+  font-weight: 400; color: #fff; margin: 1rem 0 2rem;
+}
+.fn-ct-item {
+  display: flex; gap: 1.2rem; align-items: flex-start;
+  margin-bottom: 1.8rem;
+}
+.fn-ct-icon {
+  width: 44px; height: 44px; flex: none;
+  background: rgba(184,149,42,.12);
+  border: 1px solid rgba(184,149,42,.28);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--fn-gold-l); font-size: 1.05rem;
+}
+.fn-ct-lbl {
+  font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.4); margin-bottom: .35rem;
+}
+.fn-ct-val {
+  font-size: 1rem; color: rgba(255,255,255,.88);
+  font-weight: 400; line-height: 1.55;
+  text-decoration: none;
+}
+.fn-ct-val:hover { color: var(--fn-gold-l); text-decoration: none; }
+.fn-map-box {
+  overflow: hidden; height: 360px;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.fn-map-box iframe {
+  width: 100%; height: 100%; border: 0; display: block;
+  filter: grayscale(25%) contrast(1.05);
+}
+.fn-wa-cta {
+  display: inline-flex; align-items: center; gap: .9rem;
+  background: #D4AF58; color: #fff;
+  padding: 1rem 2rem; margin-top: 2rem;
+  font-weight: 600; font-size: .88rem;
+  text-decoration: none; transition: .22s;
+}
+.fn-wa-cta:hover { background: #1aaa55; color: #fff; text-decoration: none; }
+
+/* ==============================
+   WHATSAPP FIXO
+   ============================== */
+.fn-wa-float {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+  width: 58px; height: 58px; background: #25D366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 22px rgba(37,211,102,.42);
+  text-decoration: none;
+  transition: transform .22s, box-shadow .22s;
+}
+.fn-wa-float:hover {
+  transform: scale(1.12);
+  box-shadow: 0 6px 30px rgba(37,211,102,.58);
+}
+.fn-wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+@media(max-width:1199px){
+  .fn-esp-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media(max-width:991px){
+  .fn-sobre-grid, .fn-evt-grid,
+  .fn-contact-grid { grid-template-columns: 1fr; }
+  .fn-sobre-txt, .fn-evt-txt { padding: 4rem 2.5rem; }
+  .fn-sobre-img { height: 380px; }
+  .fn-evt-img  { height: 320px; }
+  .fn-revs-grid { grid-template-columns: 1fr; }
+  .fn-mosaic {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .fn-mos-item.span2 { grid-row: span 1; }
+  .fn-mos-item { height: 240px; }
+}
+@media(max-width:767px){
+  .fn-hero h1 { font-size: 3rem; }
+  .fn-esp-grid { grid-template-columns: 1fr; }
+  .fn-esp-card img { height: 300px; }
+  .fn-mosaic { grid-template-columns: 1fr; }
+  .fn-mos-item { height: 220px; }
+  .fn-evt-txt { padding: 3rem 1.5rem; }
+  .fn-sobre-txt { padding: 3rem 1.5rem; }
+  .fn-contact-grid { gap: 3rem; }
+}
+</style>
+
+
+<section class="fn-hero o_colored_level oe_img_bg o_bg_img_center o_bg_img_origin_border_box" data-scroll-background-ratio="0" style="background-position: center 35%; background-image: url(&quot;/web/image/1201-343235f3/487824430_1432320831108167_5305339745903201177_n.webp&quot;);" data-attachment-id="1198" data-format-mimetype="image/webp" data-resize-width="960" data-original-id="1198" data-original-src="/web/image/1198-343235f3/487824430_1432320831108167_5305339745903201177_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp">
+  <div class="fn-hero-ov"/>
+  <div class="fn-hero-cnt">
+    
+    <h1 class="fn-serif">Tradição <em>à mesa</em><br/>desde 1983</h1>
+    <p class="fn-hero-sub fn-script" style="font-size:clamp(1.9rem,3.8vw,3rem);">Um espaço de excelência na gastronomia<br/>e tradição de sabores...</p>
+    <div class="fn-hero-actions">
+      <a href="/contactos" class="fn-btn fn-btn-gold">Reservar Mesa</a>
+      <a href="/ementa" class="fn-btn fn-btn-wh">Ver Ementa</a>
+    </div>
+  </div>
+  <div class="fn-scroll-hint">
+    <span>Descobrir</span>
+    <div class="fn-scroll-line"/>
+  </div>
+</section>
+
+
+<section class="fn-sobre o_colored_level oe_img_bg o_bg_img_center o_bg_img_origin_border_box" style="background-image: url(&quot;/web/image/1297-566dc5e6/505493936_1488184202188496_6482264044488706380_n.webp&quot;);" data-attachment-id="1284" data-format-mimetype="image/webp" data-resize-width="1920" data-original-id="1284" data-original-src="/web/image/1284-566dc5e6/505493936_1488184202188496_6482264044488706380_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp">
+  <div class="fn-sobre-grid">
+    <div class="fn-sobre-img oe_img_bg o_bg_img_center">
+      <div class="fn-sobre-img-ov"/>
+    </div>
+    <div class="fn-sobre-txt">
+      <div class="fn-kicker">A Nossa História</div>
+      <h2 class="fn-serif">Quatro décadas<br/>de sabor genuíno</h2>
+      <div class="fn-line"/>
+      <p>Fundado em 1983, o Restaurante Fonte Nova nasceu em Baião com uma missão simples: preservar a autenticidade da cozinha portuguesa e partilhá-la com quem aprecia o genuíno.</p>
+      <p>Aqui a tradição não é decoração — é o ingrediente principal. Cada prato conta uma história, cada refeição torna-se uma memória.</p>
+      <div class="fn-badge">
+        <strong>1983</strong>
+        <span>Fundação em<br/>Baião</span>
+      </div>
+      <br/><br/>
+      <a href="/sobre" class="fn-btn fn-btn-dk">Conhecer a Nossa História →</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="fn-espec o_colored_level">
+  <div class="fn-sec-hdr">
+    <div class="fn-kicker">Gastronomia Portuguesa</div>
+    <h2 class="fn-serif">As Nossas Especialidades</h2>
+    <div class="fn-line fn-line-c"/>
+    <p>Pratos feitos com ingredientes frescos, técnicas tradicionais e muito amor pela cozinha portuguesa.</p>
+  </div>
+  <div class="fn-esp-grid">
+    <div class="fn-esp-card">
+      <img src="/web/image/1326-ac832a41/488712531_1432320781108172_8937012227924201898_n.jpg" alt="" data-attachment-id="1285" class="fn-esp-bg img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="453" data-original-id="1285" data-original-src="/web/image/1285-7758d16f/488712531_1432320781108172_8937012227924201898_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+      <div class="fn-esp-ov">
+        <div class="fn-kicker">Especialidade da Casa</div>
+        <h3>Cabrito Assado<br/>no Forno</h3>
+        <p>A joia da nossa cozinha. Assado lentamente com ervas aromáticas da região, em tacho de barro.</p>
+      </div>
+    </div>
+    <div class="fn-esp-card">
+      <img src="/web/image/1327-ee25c734/495845768_1462038051469778_616913481648923128_n.jpg" alt="" data-attachment-id="1222" class="fn-esp-bg img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="453" data-original-id="1222" data-original-src="/web/image/1222-ed93833e/495845768_1462038051469778_616913481648923128_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+      <div class="fn-esp-ov">
+        <div class="fn-kicker">Tradição</div>
+        <h3>Cozido à<br/>Portuguesa</h3>
+        <p>Receita de família, feita com os melhores enchidos e legumes frescos da região, cozido no tacho de barro.</p>
+      </div>
+    </div>
+    <div class="fn-esp-card">
+      <img src="/web/image/1328-42272673/494586857_1457311651942418_3939663401736974428_n.jpg" alt="" data-attachment-id="1218" class="fn-esp-bg img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="453" data-original-id="1218" data-original-src="/web/image/1218-5a25a257/494586857_1457311651942418_3939663401736974428_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+      <div class="fn-esp-ov">
+        <div class="fn-kicker">Fiel Amigo</div>
+        <h3>Bacalhau<br/>à Nossa Moda</h3>
+        <p>Preparado com dedicação e carinho, o bacalhau que nos representa há mais de quarenta anos.</p>
+      </div>
+    </div>
+    <div class="fn-esp-card">
+      <img src="/web/image/1321-ce457703/491920320_1444880046518912_5572028550673405874_n.jpg" alt="" data-attachment-id="1286" class="fn-esp-bg img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="453" data-original-id="1286" data-original-src="/web/image/1286-754cb96c/491920320_1444880046518912_5572028550673405874_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+      <div class="fn-esp-ov">
+        <div class="fn-kicker">Para Começar</div>
+        <h3>Entradas<br/>Tradicionais</h3>
+        <p>Uma seleção de petiscos que abrem o apetite e contam a história da nossa cozinha.</p>
+      </div>
+    </div>
+  </div>
+  <div class="fn-esp-cta">
+    <a href="/ementa" class="fn-btn fn-btn-gold">Ver Ementa Completa →</a>
+  </div>
+</section>
+
+
+<section class="fn-exp o_colored_level">
+  <div class="fn-exp-hdr">
+    <div class="fn-kicker" style="color:var(--fn-gold-l);">Ambiente &amp;amp; Atmosfera</div>
+    <h2 class="fn-serif">A <em style="font-style:italic;color:var(--fn-gold-l);">Experiência</em> Fonte Nova</h2>
+    <div class="fn-line fn-line-c" style="background:var(--fn-gold-l);"/>
+    <p>Mais do que uma refeição. Uma visita que fica na memória.</p>
+  </div>
+  <div class="fn-mosaic">
+    <div class="fn-mos-item span2">
+      <img src="/web/image/1333-efa74976/491947500_1444879596518957_2898930701636407324_n.jpg" alt="" data-attachment-id="1287" class="fn-mos-bg img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="981" data-original-id="1287" data-original-src="/web/image/1287-48538e5b/491947500_1444879596518957_2898930701636407324_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp" srcset="/web/image/1334-86b9f4b3/491947500_1444879596518957_2898930701636407324_n.jpg 750w, /web/image/1333-efa74976/491947500_1444879596518957_2898930701636407324_n.jpg 981w"/>
+    </div>
+    <div class="fn-mos-item">
+      <img src="/web/image/1332-1685783b/688954633_1777573193249594_8603641893513069579_n.jpg" alt="" data-attachment-id="1256" class="fn-mos-bg img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="446" data-original-id="1256" data-original-src="/web/image/1256-83613eab/688954633_1777573193249594_8603641893513069579_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+    <div class="fn-mos-item">
+      <img src="/web/image/1329-d6f41562/494586857_1457311651942418_3939663401736974428_n.jpg" alt="" data-attachment-id="1218" class="fn-mos-bg img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="446" data-original-id="1218" data-original-src="/web/image/1218-5a25a257/494586857_1457311651942418_3939663401736974428_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+    <div class="fn-mos-item">
+      <img src="/web/image/1331-a0bf5a7c/491966645_1449875292686054_4183720613877471663_n.jpg" alt="" data-attachment-id="1209" class="fn-mos-bg img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="446" data-original-id="1209" data-original-src="/web/image/1209-291c920d/491966645_1449875292686054_4183720613877471663_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+    <div class="fn-mos-item">
+      <img src="/web/image/1330-7a085dd2/492008390_1467899740883609_9002522002843485957_n.jpg" alt="" data-attachment-id="1210" class="fn-mos-bg img img-fluid o_we_custom_image" data-format-mimetype="image/webp" data-resize-width="446" data-original-id="1210" data-original-src="/web/image/1210-4e97d71c/492008390_1467899740883609_9002522002843485957_n.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp"/>
+    </div>
+  </div>
+  <div class="fn-exp-cta">
+    <a href="/galeria" class="fn-btn fn-btn-wh">Ver Galeria Completa →</a>
+  </div>
+</section>
+
+
+<section class="fn-evt o_colored_level oe_img_bg o_bg_img_center o_bg_img_origin_border_box" data-attachment-id="1225" data-format-mimetype="image/webp" style="background-image: url(&quot;/web/image/1310-1cd5f307/Dono.webp&quot;);" data-resize-width="1920" data-original-id="1225" data-original-src="/web/image/1225-1cd5f307/Dono.jpg" data-mimetype-before-conversion="image/jpeg" data-mimetype="image/webp">
+  <div class="fn-evt-grid">
+    <div class="fn-evt-img oe_img_bg o_bg_img_center">
+      <div class="fn-evt-img-ov"/>
+      <div class="fn-evt-blob"/>
+    </div>
+    <div class="fn-evt-txt">
+      <div class="fn-kicker">Noites Especiais</div>
+      <h2 class="fn-serif">Eventos &amp;amp;<br/><em>Noites de Fado</em></h2>
+      <div class="fn-line"/>
+      <p>O Fonte Nova é palco de momentos inesquecíveis. Das noites de fado aos jantares de grupo, passando por aniversários e eventos privados.</p>
+      <p>Temos o espaço, a cozinha e a alma para tornar cada ocasião numa memória para a vida.</p>
+      <p class="fn-script" style="font-size:2.2rem;color:var(--fn-gold);margin:1.5rem 0 2rem;line-height:1.3;">"Uma noite onde a alma canta."</p>
+      <div class="fn-evt-tags">
+        <span class="fn-evt-tag">Noites de Fado</span>
+        <span class="fn-evt-tag">Jantares de Grupo</span>
+        <span class="fn-evt-tag">Aniversários</span>
+        <span class="fn-evt-tag">Eventos Privados</span>
+      </div>
+      <a href="/eventos" class="fn-btn fn-btn-gold">Ver Próximos Eventos →</a>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="fn-contact o_colored_level">
+  <div class="fn-contact-grid">
+    <div>
+      <div class="fn-kicker" style="color:var(--fn-gold-l);">Encontre-nos</div>
+      <h2 class="fn-serif">Venha<br/>Conhecer-nos</h2>
+      <div class="fn-line" style="background:var(--fn-gold);margin-bottom:2.5rem;"/>
+      <div class="fn-ct-item">
+
+        <div>
+          <div class="fn-ct-lbl">Morada</div>
+          <span class="fn-ct-val">Rua Dr. Agostinho Barbosa<br/>4640 Baião, Portugal</span>
+        </div>
+      </div>
+      <div class="fn-ct-item">
+      
+        <div>
+          <div class="fn-ct-lbl">Telefone / Reservas</div>
+          <a href="tel:+351 255 541 257" class="fn-ct-val">+351 255 541 257</a></div>
+      </div>
+      <div class="fn-ct-item">
+        
+        <div>
+          <div class="fn-ct-lbl">Email</div>
+          <a href="mailto:geral@fontenova.pt" class="fn-ct-val">geral@fontenova.pt</a>
+        </div>
+      </div>
+      <div class="fn-ct-item">
+     
+        <div>
+          <div class="fn-ct-lbl">Horário de Funcionamento</div>
+          <span class="fn-ct-val">Terça a Domingo: 12h–15h · 19h–22h30<br/>Segunda: Encerrado</span>
+        </div>
+      </div><a href="tel:+351 255 541 257" target="_blank" rel="noopener" class="fn-wa-cta">Reservar por Telefone&amp;nbsp;</a>
+    </div>
+    <div class="fn-map-box">
+      <iframe src="https://maps.google.com/maps?q=Restaurante+Fonte+Nova,+Rua+Dr.+Agostinho+Barbosa,+4640+Bai%C3%A3o,+Portugal&amp;output=embed&amp;hl=pt&amp;z=16" allowfullscreen="" loading="lazy" title="Localização do Restaurante Fonte Nova em Baião"/>
+    </div>
+  </div>
+</section>
+
+
+<a href="https://wa.me/351XXXXXXXXX" class="fn-wa-float" target="_blank" rel="noopener" title="Reservar por WhatsApp">
+  <svg viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+  </div>
+</t>
