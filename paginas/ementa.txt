@@ -495,7 +495,7 @@
 </div>
 
 
-<div id="vinhos" style="background:var(--fn-dark);">
+<div id="vinhos" style="background:#0D1E42;">
   <div class="fn-menu-sec o_colored_level" style="max-width:1200px;padding:6rem 2rem;">
     <div class="fn-menu-sec-hdr">
       <div class="fn-kicker" style="color:var(--fn-gold-l);">Carta de Vinhos</div>

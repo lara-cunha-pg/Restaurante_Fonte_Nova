@@ -444,17 +444,17 @@
   </div>
   <div class="fn-filos-grid">
     <div class="fn-filos-item">
-      <div class="fn-filos-icon">🌿</div>
+  
       <h3>Ingredientes Frescos</h3>
       <p>Trabalhamos com produtores locais e ingredientes sazonais. A qualidade começa na escolha da matéria-prima e reflete-se em cada prato que servimos.</p>
     </div>
     <div class="fn-filos-item">
-      <div class="fn-filos-icon">🏺</div>
+     
       <h3>Receitas Tradicionais</h3>
       <p>As nossas receitas são herança cultural. Preservamos técnicas e sabores que têm raízes profundas na gastronomia portuguesa, com especial orgulho nas especialidades transmontanas e beirãs.</p>
     </div>
     <div class="fn-filos-item">
-      <div class="fn-filos-icon">❤</div>
+ 
       <h3>Atendimento Familiar</h3>
       <p>Tratamos cada cliente como um convidado em nossa casa. O calor humano é um ingrediente que não entra na ementa, mas está presente em cada interação.</p>
     </div>
@@ -488,9 +488,7 @@
       <img src="/web/image/FOTO_DONO_MEDIA" alt="Fonte Nova na comunicação social" class="img img-fluid o_we_custom_image" loading="lazy"/>
     </div>
   </div>
-  <div style="text-align:center;margin-top:3.5rem;">
-    <a href="/galeria" class="fn-btn fn-btn-dk">Ver Galeria Completa →</a>
-  </div>
+ 
 </section>
 
 <!-- ===== CTA RESERVAR ===== -->
